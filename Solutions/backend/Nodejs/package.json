@@ -1,0 +1,15 @@
+{
+  "jwtConfig": {
+    "secretKey": "your_secret_key",
+    "accessTokenExpiry": "2m",
+    "refreshTokenExpiry": "7d"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.5"
+  }
+}
