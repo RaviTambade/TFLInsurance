@@ -73,9 +73,9 @@ function ResetPassword() {
         <div className="container mt-5 mb-5">
 
            <div className="row justify-content-center">
-                <div className="col-lg-8">
+                <div className="col-12 col-md-8 col-lg-6 col-xl-5">
 
-                <div className="card shadow-lg">
+                <div className="card shadow-lg mx-auto" style={{ maxWidth: "520px" }}>
                 <div className="card-header bg-primary text-white">
                     <h3>Reset User Password</h3>
                 </div>
@@ -84,40 +84,48 @@ function ResetPassword() {
 
                     <form onSubmit={resetPassword}>
 
-                        <div className="mb-3">
-                            <label className="form-label">
+                        <div className="mb-3 text-center">
+                            <label className="form-label d-block">
                                 New Password
                             </label>
-                            <br/>
-                            <input
-                                type="password"
-                                name="newPassword"
-                                value={formData.newPassword}
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="d-flex justify-content-center">
+                                <input
+                                    type="password"
+                                    name="newPassword"
+                                    className="form-control"
+                                    style={{ maxWidth: "400px" }}
+                                    value={formData.newPassword}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
                         </div>
 
-                        <div className="mb-3">
-                            <label className="form-label">
+                        <div className="mb-3 text-center">
+                            <label className="form-label d-block">
                                 Confirm Password
                             </label>
-                            <br/>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="d-flex justify-content-center">
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    className="form-control"
+                                    style={{ maxWidth: "400px" }}
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
                         </div>
 
-                        <button
-                            type="submit"
-                            className="btn btn-success"
-                        >
-                            Reset Password
-                        </button>
+                        <div className="d-flex justify-content-center">
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                            >
+                                Reset Password
+                            </button>
+                        </div>
 
                     </form>
 

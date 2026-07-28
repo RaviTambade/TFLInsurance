@@ -41,119 +41,94 @@ function CustomerList() {
     }, []);
 
     return (
+        <div className="container mt-5">
+            <h2 className="text-center mb-4">Customer Directory</h2>
 
-       <div className="container mt-5">
+            <div className="d-flex justify-content-center gap-2 mb-4">
+                <button className="btn btn-outline-primary" onClick={activeCustomers}>
+                    Active Customers
+                </button>
+                <button className="btn btn-outline-secondary" onClick={deactiveCustomers}>
+                    DeActive Customers
+                </button>
+            </div>
 
-    <h2 className="text-center mb-4">
-        Customers List
-    </h2>
+            {Array.isArray(customers) && customers.length > 0 ? (
+                <div className="row gx-4 gy-4">
+                    {customers.map((customer) => (
+                        <div className="col-12 col-lg-6" key={customer.CustomerId}>
+                            <div className="card shadow-sm h-100">
+                                <div className="card-header d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 className="card-title mb-1">
+                                            {customer.FirstName} {customer.LastName}
+                                        </h5>
+                                        <p className="card-subtitle text-muted mb-0">
+                                            {customer.CustomerCode}
+                                        </p>
+                                    </div>
+                                    <span className={`badge ${customer.IsActive ? 'bg-success' : 'bg-secondary'}`}>
+                                        {customer.IsActive ? 'Active' : 'Inactive'}
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">Personal</h6>
+                                            <p className="mb-1"><strong>DOB:</strong> {customer.DateOfBirth}</p>
+                                            <p className="mb-1"><strong>Gender:</strong> {customer.Gender}</p>
+                                            <p className="mb-1"><strong>Occupation:</strong> {customer.Occupation || 'N/A'}</p>
+                                            <p className="mb-1"><strong>Annual Income:</strong> {customer.AnnualIncome || 'N/A'}</p>
+                                        </div>
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">Contact</h6>
+                                            <p className="mb-1"><strong>Email:</strong> {customer.Email}</p>
+                                            <p className="mb-1"><strong>Phone:</strong> {customer.MobileNumber}</p>
+                                            <p className="mb-1"><strong>City:</strong> {customer.City}, {customer.State}</p>
+                                            <p className="mb-1"><strong>Postal Code:</strong> {customer.PostalCode}</p>
+                                        </div>
+                                    </div>
 
-    <div className="row justify-content-center">
+                                    <div className="row">
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">Address</h6>
+                                            <p className="mb-1">{customer.AddressLine1}</p>
+                                            {customer.AddressLine2 && <p className="mb-1">{customer.AddressLine2}</p>}
+                                            <p className="mb-1"><strong>Country:</strong> {customer.Country}</p>
+                                        </div>
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">Nominee</h6>
+                                            <p className="mb-1"><strong>Name:</strong> {customer.NomineeName}</p>
+                                            <p className="mb-1"><strong>Relationship:</strong> {customer.NomineeRelationship}</p>
+                                            <p className="mb-1"><strong>Contact:</strong> {customer.NomineeContactNumber}</p>
+                                        </div>
+                                    </div>
 
-        <div className="col-md-8">
-
-            <table className="table table-bordered table-striped shadow">
-                
-                 <thead>
-                    <tr>
-                        <th>CustomerId</th>
-                        <th>Customer Code</th>
-                        <th>First name</th>
-                        <th>Last Name</th>
-                        <th>Date of Birth</th>
-                        <th>Gender</th>
-                        <th>Email</th>
-                        <th>Mobile Number</th>
-                        <th>Address Line 1</th>
-                        <th>Address Line 2</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Postal Code</th>
-                        <th>Country</th>
-                        <th>PAN Number</th>
-                        <th>Adhar Number</th>
-                        <th>Occupation </th>
-                        <th>Annual Income</th>
-                        <th>Nominee Name</th>
-                        <th>Nominee Relationship</th>
-                        <th>Nominee Contact Number</th>
-                        <th>Registration Date</th>
-                        <th>IsActive</th>
-                        <th>Total Policies Purchased</th>
-                    </tr>
-                </thead>
-
-                        <tbody>
-                            {Array.isArray(customers) && customers.length > 0 ? (
-                                customers.map((customer) => (
-                                    <tr
-                                        key={customer.CustomerId }
-                                    >
-                                        <td>{customer.CustomerId}</td>
-                                        <td>{customer.CustomerCode}</td>
-                                        <td>{customer.FirstName}</td>
-                                        <td>{customer.LastName}</td>
-                                        <td>{customer.DateOfBirth}</td>
-                                        <td>{customer.Gender}</td>
-                                        <td>{customer.Email}</td>
-                                        <td>{customer.MobileNumber}</td>
-                                        <td>{customer.AddressLine1}</td>
-                                        <td>{customer.AddressLine2}</td>
-                                        <td>{customer.City}</td>
-                                        <td>{customer.State}</td>
-                                        <td>{customer.PostalCode}</td>
-                                        <td>{customer.Country}</td>
-                                        <td>{customer.PANNumber}</td>
-                                        <td>{customer.AdharNumber}</td>
-                                        <td>{customer.Occupation}</td>
-                                        <td>{customer.AnnualIncome}</td>
-                                        <td>{customer.NomineeName}</td>
-                                        <td>{customer.NomineeRelationship}</td>
-                                        <td>{customer.NomineeContactNumber}</td>
-                                        <td>{customer.RegistrationDate}</td>
-                                        <td>{customer.IsActive ? "Yes" : "No"}</td>
-                                        <td>{customer.TotalPoliciesPurchased}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={UpdateProfile}
-                                            >
-                                                Update Profile
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="27" className="text-center">
-                                        No customers found.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-
-                    <div className="d-flex justify-content-center gap-2 mt-3">
-                        <button className="btn btn-primary" onClick={activeCustomers}>
-                            Active Customers
-                        </button>
-                        <button className="btn btn-primary" onClick={deactiveCustomers}>
-                            DeActive Customers
-                        </button>
-                    </div>
-
-        
-               <div className="text-center mt-3">
-
-    
-
-
-</div>
-
-</div>
-</div>
-          
-
+                                    <div className="row">
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">Policy Summary</h6>
+                                            <p className="mb-1"><strong>Purchased:</strong> {customer.TotalPoliciesPurchased || 0}</p>
+                                            <p className="mb-1"><strong>Registered:</strong> {customer.RegistrationDate}</p>
+                                        </div>
+                                        <div className="col-12 col-md-6 mb-3">
+                                            <h6 className="text-uppercase text-muted fs-7">IDs</h6>
+                                            <p className="mb-1"><strong>PAN:</strong> {customer.PANNumber}</p>
+                                            <p className="mb-1"><strong>Aadhar:</strong> {customer.AdharNumber}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-footer bg-white border-0 d-flex justify-content-end">
+                                    <button className="btn btn-primary btn-sm" onClick={UpdateProfile}>
+                                        Update Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="alert alert-info text-center">No customers found.</div>
+            )}
         </div>
     );
 }

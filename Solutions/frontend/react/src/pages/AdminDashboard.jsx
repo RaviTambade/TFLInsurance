@@ -87,50 +87,50 @@ function AdminDashboard() {
 
                         <div className="row">
 
-                            <div className="col-md-3">
+                            <div className="col-md-3 mb-3">
 
-                                <div className="card bg-success text-white">
+                                <div className="card bg-maroon-soft text-dark">
 
-                                    <button className="card bg-success text-white" onClick={() => navigate("/CustomerList")}>
-                                        <h5>Total Customers </h5>
-                                           <h2>{customerCount}</h2>
+                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/CustomerList") }>
+                                        <h5>Total Customers</h5>
+                                        <h2>{customerCount}</h2>
                                     </button>
 
-                                    </div>
+                                </div>
 
                             </div>
 
-                            <div className="col-md-3">
+                            <div className="col-md-3 mb-3">
 
-                                <div className="card bg-warning text-dark">
+                                <div className="card bg-maroon-light text-dark">
 
-                                    <button className="card bg-warning text-dark" onClick={() => navigate("/PolicyListForAdmin")}>
-                                        <h5>Total Policies </h5>
-                                           <h2>{policyCount}</h2>
+                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/PolicyListForAdmin") }>
+                                        <h5>Total Policies</h5>
+                                        <h2>{policyCount}</h2>
                                     </button>
 
-                                    </div>
+                                </div>
 
                             </div>
 
-                            <div className="col-md-3">
+                            <div className="col-md-3 mb-3">
 
-                                <div className="card bg-warning text-dark">
+                                <div className="card bg-maroon-light text-dark">
 
-                                    <button className="card bg-warning text-dark" onClick={() => navigate("/UserListForAdmin")}>
-                                        <h5>Total Users </h5>
-                                           <h2>{userCount}</h2>
+                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/UserListForAdmin") }>
+                                        <h5>Total Users</h5>
+                                        <h2>{userCount}</h2>
                                     </button>
 
-                                    </div>
+                                </div>
 
                             </div>
 
-                            <div className="col-md-3">
+                            <div className="col-md-3 mb-3">
 
-                                <div className="card bg-danger text-white">
+                                <div className="card bg-maroon-strong text-white">
 
-                                    <div className="card-body">
+                                    <div className="card-body p-4">
 
                                         <h5>Premium Collection</h5>
 

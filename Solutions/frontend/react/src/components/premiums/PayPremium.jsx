@@ -329,7 +329,7 @@ function PayPremium() {
 
                                                 <button
                                                     type="submit"
-                                                    className="btn btn-success me-3"
+                                                    className="btn btn-primary me-3"
                                                 >
                                                     Pay Premium
                                                 </button>

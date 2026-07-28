@@ -78,9 +78,9 @@ const Login = () => {
 
         <div className="row justify-content-center">
 
-            <div className="col-lg-8">
+            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
 
-                <div className="card shadow-lg">
+                <div className="card shadow-lg mx-auto" style={{ maxWidth: "520px" }}>
 
                     <div className="card-header bg-primary text-white text-center">
                         <h3>Customer Login</h3>
@@ -90,35 +90,37 @@ const Login = () => {
 
             <form onSubmit={onUserLogin}>
 
-                <div>
-                    <label>Username</label>
-                    <br />
-
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                <div className="mb-3 text-center">
+                    <label className="form-label d-block">Username</label>
+                    <div className="d-flex justify-content-center">
+                        <input
+                            type="text"
+                            className="form-control"
+                            style={{ maxWidth: "300px" }}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
                 </div>
 
-                <br />
-
-                <div>
-                    <label>Password</label>
-                    <br />
-
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <div className="mb-3 text-center">
+                    <label className="form-label d-block">Password</label>
+                    <div className="d-flex justify-content-center">
+                        <input
+                            type="password"
+                            className="form-control"
+                            style={{ maxWidth: "300px" }}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
                 </div>
 
-                <br />
-
-                <button type="submit"  className="btn btn-success px-5">
-                    Login
-                </button>
+                <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-primary px-5">
+                        Login
+                    </button>
+                </div>
 
             </form>
 

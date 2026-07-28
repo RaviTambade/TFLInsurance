@@ -62,282 +62,277 @@ function RegisterCustomer() {
 
         <div className="row justify-content-center">
 
-            <div className="col-lg-8">
+            <div className="col-xl-9 col-lg-10">
 
-                <div className="card shadow-lg">
+                <div className="card shadow-lg border-0 rounded-4">
 
-                    <div className="card-header bg-primary text-white text-center">
-                        <h3>Customer Registration</h3>
+                    <div className="card-header bg-primary text-white text-center py-4">
+                        <h3 className="mb-1">Customer Registration</h3>
+                        <p className="mb-0 text-white-75">Fill in the customer profile details to complete registration.</p>
                     </div>
 
-                    <div className="card-body">
+                    <div className="card-body p-4">
 
                         <form onSubmit={saveCustomer}>
 
-                            <table className="table table-bordered align-middle">
+                            <div className="mb-4">
+                                <h5 className="mb-3">Personal information</h5>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label className="form-label">Customer Code</label>
+                                        <input
+                                            type="text"
+                                            name="CustomerCode"
+                                            className="form-control"
+                                            value={customer.CustomerCode}
+                                            onChange={handleChange}
+                                            placeholder="CUST-001"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Date of Birth</label>
+                                        <input
+                                            type="date"
+                                            name="DateOfBirth"
+                                            className="form-control"
+                                            value={customer.DateOfBirth}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">First Name</label>
+                                        <input
+                                            type="text"
+                                            name="FirstName"
+                                            className="form-control"
+                                            value={customer.FirstName}
+                                            onChange={handleChange}
+                                            placeholder="First name"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="LastName"
+                                            className="form-control"
+                                            value={customer.LastName}
+                                            onChange={handleChange}
+                                            placeholder="Last name"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Gender</label>
+                                        <select
+                                            name="Gender"
+                                            className="form-control"
+                                            value={customer.Gender}
+                                            onChange={handleChange}
+                                            required
+                                        >
+                                            <option value="">Select gender</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Occupation</label>
+                                        <input
+                                            type="text"
+                                            name="Occupation"
+                                            className="form-control"
+                                            value={customer.Occupation}
+                                            onChange={handleChange}
+                                            placeholder="Occupation"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                <tbody>
+                            <div className="mb-4">
+                                <h5 className="mb-3">Contact details</h5>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label className="form-label">Email</label>
+                                        <input
+                                            type="email"
+                                            name="Email"
+                                            className="form-control"
+                                            value={customer.Email}
+                                            onChange={handleChange}
+                                            placeholder="email@example.com"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Mobile Number</label>
+                                        <input
+                                            type="tel"
+                                            name="MobileNumber"
+                                            className="form-control"
+                                            value={customer.MobileNumber}
+                                            onChange={handleChange}
+                                            placeholder="1234567890"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <tr>
-                                        <th width="35%">Customer Code</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="CustomerCode"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                            <div className="mb-4">
+                                <h5 className="mb-3">Address</h5>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label className="form-label">Address Line 1</label>
+                                        <input
+                                            type="text"
+                                            name="AddressLine1"
+                                            className="form-control"
+                                            value={customer.AddressLine1}
+                                            onChange={handleChange}
+                                            placeholder="Street address"
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Address Line 2</label>
+                                        <input
+                                            type="text"
+                                            name="AddressLine2"
+                                            className="form-control"
+                                            value={customer.AddressLine2}
+                                            onChange={handleChange}
+                                            placeholder="Apartment, suite, etc."
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <label className="form-label">City</label>
+                                        <input
+                                            type="text"
+                                            name="City"
+                                            className="form-control"
+                                            value={customer.City}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <label className="form-label">State</label>
+                                        <input
+                                            type="text"
+                                            name="State"
+                                            className="form-control"
+                                            value={customer.State}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <label className="form-label">Postal Code</label>
+                                        <input
+                                            type="text"
+                                            name="PostalCode"
+                                            className="form-control"
+                                            value={customer.PostalCode}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Country</label>
+                                        <input
+                                            type="text"
+                                            name="Country"
+                                            className="form-control"
+                                            value={customer.Country}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <tr>
-                                        <th>First Name</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="FirstName"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                            <div className="mb-4">
+                                <h5 className="mb-3">Government details</h5>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label className="form-label">PAN Number</label>
+                                        <input
+                                            type="text"
+                                            name="PanNumber"
+                                            className="form-control"
+                                            value={customer.PanNumber}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Aadhaar Number</label>
+                                        <input
+                                            type="text"
+                                            name="AadhaarNumber"
+                                            className="form-control"
+                                            value={customer.AadhaarNumber}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Annual Income</label>
+                                        <input
+                                            type="number"
+                                            name="AnnualIncome"
+                                            className="form-control"
+                                            value={customer.AnnualIncome}
+                                            onChange={handleChange}
+                                            placeholder="Annual income"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <tr>
-                                        <th>Last Name</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="LastName"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                            <div className="mb-4">
+                                <h5 className="mb-3">Nominee details</h5>
+                                <div className="row g-3">
+                                    <div className="col-md-4">
+                                        <label className="form-label">Nominee Name</label>
+                                        <input
+                                            type="text"
+                                            name="NomineeName"
+                                            className="form-control"
+                                            value={customer.NomineeName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <label className="form-label">Relationship</label>
+                                        <input
+                                            type="text"
+                                            name="NomineeRelationship"
+                                            className="form-control"
+                                            value={customer.NomineeRelationship}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <label className="form-label">Contact Number</label>
+                                        <input
+                                            type="tel"
+                                            name="NomineeContactNumber"
+                                            className="form-control"
+                                            value={customer.NomineeContactNumber}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <tr>
-                                        <th>Date Of Birth</th>
-                                        <td>
-                                            <input
-                                                type="date"
-                                                name="DateOfBirth"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Gender</th>
-                                        <td>
-                                            <select
-                                                name="Gender"
-                                                className="form-select"
-                                                onChange={handleChange}
-                                            >
-                                                <option value="">Select Gender</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Email</th>
-                                        <td>
-                                            <input
-                                                type="email"
-                                                name="Email"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Mobile Number</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="MobileNumber"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Address Line 1</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="AddressLine1"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Address Line 2</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="AddressLine2"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>City</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="City"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>State</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="State"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Postal Code</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="PostalCode"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Country</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="Country"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>PAN Number</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="PanNumber"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Aadhaar Number</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="AadhaarNumber"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Occupation</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="Occupation"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Annual Income</th>
-                                        <td>
-                                            <input
-                                                type="number"
-                                                name="AnnualIncome"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Nominee Name</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="NomineeName"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Nominee Relationship</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="NomineeRelationship"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Nominee Contact Number</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="NomineeContactNumber"
-                                                className="form-control"
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colSpan="2" className="text-center">
-
-                                            <button
-                                                type="submit"
-                                                className="btn btn-success px-5"
-                                            >
-                                                Register Customer
-                                            </button>
-
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
+                            <div className="text-center mt-4">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-lg px-5"
+                                >
+                                    Register Customer
+                                </button>
+                            </div>
 
                         </form>
 
