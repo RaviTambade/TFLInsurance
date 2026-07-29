@@ -1,6 +1,5 @@
 const { request, response } = require("express");
 var userService = require("../services/userService");
-const bcrypt = require("bcrypt");
 
 
 exports.getAllUsers=(request,response)=>{
@@ -93,3 +92,35 @@ exports.deleteUser = (req, res) => {
                     
                     
     )}
+
+
+    // Update Role
+exports.updateRole = (req, res) => {
+
+    const id = req.params.id;
+    const { role } = req.body;
+
+    if (!role) {
+        return res.status(400).json({
+            success: false,
+            message: "Role is required"
+        });
+    }
+
+    userService.updateRole(id, role, (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Role updated successfully"
+        });
+
+    });
+
+};

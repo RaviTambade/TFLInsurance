@@ -13,4 +13,6 @@ router.put("/resetPassword/:id",verifyToken,authorize("Admin"),controller.resetP
 
 router.delete("/:id", controller.deleteUser);
 
+router.put("/updateRole/:id",verifyToken,authorize("Admin"),controller.updateRole);
+
 module.exports = router;

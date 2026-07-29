@@ -28,6 +28,19 @@ exports.resetPassword = (id, newPassword, callback) => {
 
 };
 
+// Update Role
+exports.updateRole = (id, role, result) => {
+
+    const allowedRoles = ["Admin", "Customer", "Agent", "Employee"];
+
+    if (!allowedRoles.includes(role)) {
+        return result(new Error("Invalid Role"));
+    }
+
+    userRepo.updateRole(id, role, result);
+
+};
+
 
 
 // Delete

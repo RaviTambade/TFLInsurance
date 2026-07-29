@@ -34,6 +34,27 @@ exports.resetPassword = (id, newPassword, callback) => {
 };
 
 
+// Update Role
+exports.updateRole = (id, role, result) => {
+
+    const sql = `
+        UPDATE users
+        SET Role = ?
+        WHERE UserId = ?
+    `;
+
+    connection.query(sql, [role, id], (err, data) => {
+
+        if (err)
+            return result(err);
+
+        result(null, data);
+
+    });
+
+};
+
+
 // Delete User
 exports.deleteUser = (id, result) => {
 
