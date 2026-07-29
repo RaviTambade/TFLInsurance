@@ -56,106 +56,89 @@ function PurchasePolicy() {
     };
 
     return (
-        <div className="container mt-5 d-flex justify-content-center">
+        <div className="container mt-5 mb-5">
+            <div className="row justify-content-center">
+                <div className="col-lg-7">
+                    <div className="card shadow-lg border-0">
+                        <div className="card-header bg-primary text-white text-center py-3">
+                            <h3 className="mb-0">Purchase Policy</h3>
+                            <p className="mb-0 mt-1 small">Secure your coverage with a few simple details.</p>
+                        </div>
 
-            <div className="card shadow p-4" style={{ width: "600px" }}>
+                        <div className="card-body p-4">
+                            <form onSubmit={savePolicy}>
+                                <div className="row g-3">
+                                    <div className="col-12">
+                                        <label className="form-label">Policy Number</label>
+                                        <input
+                                            type="text"
+                                            name="PolicyNumber"
+                                            className="form-control"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
 
-                <h2 className="text-center mb-4">
-                    Policy Registration
-                </h2>
+                                    <div className="col-12">
+                                        <label className="form-label">Customer ID</label>
+                                        <input
+                                            type="number"
+                                            name="CustomerId"
+                                            className="form-control"
+                                            value={policy.CustomerId}
+                                            readOnly
+                                        />
+                                    </div>
 
-                <form onSubmit={savePolicy}>
+                                    <div className="col-12">
+                                        <label className="form-label">Policy Type</label>
+                                        <select
+                                            name="PolicyType"
+                                            className="form-select"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Policy</option>
+                                            <option value="Health">Health</option>
+                                            <option value="Life">Life</option>
+                                            <option value="Vehicle">Vehicle</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Travel">Travel</option>
+                                        </select>
+                                    </div>
 
-                    <table className="table table-bordered">
+                                    <div className="col-12">
+                                        <label className="form-label">Policy Amount</label>
+                                        <input
+                                            type="number"
+                                            name="PolicyAmount"
+                                            className="form-control"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
 
-                        <tbody>
+                                    <div className="col-12">
+                                        <label className="form-label">Is Renewed</label>
+                                        <select
+                                            name="IsRenewed"
+                                            className="form-select"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                            <tr>
-                                <td><b>Policy Number</b></td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="PolicyNumber"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                    />
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Customer ID</b></td>
-                                <td>
-                                    <input
-                                        type="number"
-                                        name="CustomerId"
-                                        className="form-control"
-                                        value={policy.CustomerId}
-                                        readOnly
-                                    />
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Policy Type</b></td>
-                                <td>
-                                    <select
-                                        name="PolicyType"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">Select Policy</option>
-                                        <option>Health</option>
-                                        <option>Life</option>
-                                        <option>Vehicle</option>
-                                        <option>Home</option>
-                                        <option>Travel</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Policy Amount</b></td>
-                                <td>
-                                    <input
-                                        type="number"
-                                        name="PolicyAmount"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                    />
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Is Renewed</b></td>
-                                <td>
-                                    <select
-                                        name="IsRenewed"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colSpan="2" className="text-center">
-                                    <button className="btn btn-primary">
+                                <div className="d-flex justify-content-end mt-4">
+                                    <button type="submit" className="btn btn-primary px-4">
                                         Purchase Policy
                                     </button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </form>
-
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     );
 }

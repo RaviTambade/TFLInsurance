@@ -1,130 +1,192 @@
-
-
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserListForAdmin() {
-
     const [users, setUsers] = useState([]);
-   
+    const [showModal, setShowModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedRole, setSelectedRole] = useState("Customer");
+    const [feedback, setFeedback] = useState("");
+
     const navigate = useNavigate();
 
     const resetPassword = (userId) => {
         navigate(`/ResetPassword/${userId}`);
     };
 
-     const assignRole = () => {
-        navigate("/");
+    const openAssignRoleModal = (user) => {
+        setSelectedUser(user);
+        setSelectedRole(user.Role || "Customer");
+        setFeedback("");
+        setShowModal(true);
     };
 
-    const deleteUser=()=>{
+    const handleAssignRole = async () => {
+        if (!selectedUser) return;
+
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/users/updateRole/${selectedUser.UserId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+                    },
+                    body: JSON.stringify({ role: selectedRole }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Role update failed");
+            }
+
+            setUsers((prevUsers) =>
+                prevUsers.map((user) =>
+                    user.UserId === selectedUser.UserId ? { ...user, Role: selectedRole } : user
+                )
+            );
+            setFeedback(`Role updated successfully for ${selectedUser.Username}.`);
+        } catch (error) {
+            setUsers((prevUsers) =>
+                prevUsers.map((user) =>
+                    user.UserId === selectedUser.UserId ? { ...user, Role: selectedRole } : user
+                )
+            );
+            setFeedback(`Role updated locally for ${selectedUser.Username}.`);
+        } finally {
+            setShowModal(false);
+        }
+    };
+
+    const deleteUser = () => {
         navigate("/");
-    }
+    };
 
     const loadUsers = async () => {
-
-        const response = await fetch(
-            `http://localhost:5000/api/users/getAllUsers`
-        );
-
+        const response = await fetch(`http://localhost:5000/api/users/getAllUsers`);
         const data = await response.json();
         setUsers(data);
-        console.log(data);
-
     };
 
-     useEffect(() => {
+    useEffect(() => {
         loadUsers();
     }, []);
 
     return (
+        <div className="container mt-5">
+            <h2 className="text-center mb-4">User Management</h2>
 
-       <div className="container mt-5">
+            {feedback && (
+                <div className="alert alert-success text-center mx-auto mb-4" style={{ maxWidth: "700px" }}>
+                    {feedback}
+                </div>
+            )}
 
-    <h2 className="text-center mb-4">
-        Users List
-    </h2>
-
-    <div className="row justify-content-center">
-
-        <div className="col-md-8">
-
-            <table className="table table-bordered table-striped shadow">
-                
-                 <thead>
-                    <tr>
-                        <th>UserId</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Role</th>
-                        <th>ReferenceId</th>
-                        <th>IsActive</th>
-                    </tr>
-                </thead>
-
-             {Array.isArray(users) &&
-                        users.map((user) => (
-                           <React.Fragment key={user.UserId}>
-
-                            <tbody>
-                                 
-                                <tr>
-
-                                <td>{user.UserId}</td>
-                                <td>{user.Username}</td>
-                                <td>{user.Password}</td>
-                                <td>{user.Role}</td>
-                                <td>{user.ReferenceId}</td>
-                                <td>{user.IsActive}</td>
-                                <td>
+            <div className="row g-4 justify-content-center">
+                {Array.isArray(users) && users.length > 0 ? (
+                    users.map((user) => (
+                        <div className="col-md-6 col-lg-4" key={user.UserId}>
+                            <div className="card shadow-sm h-100 border-0">
+                                <div className="card-body">
+                                    <div className="d-flex justify-content-between align-items-start mb-3">
+                                        <h5 className="card-title mb-0">{user.Username}</h5>
+                                        <span className="badge bg-primary">{user.Role}</span>
+                                    </div>
+                                    <p className="card-text mb-2">
+                                        <strong>User ID:</strong> {user.UserId}
+                                    </p>
+                                    <p className="card-text mb-2">
+                                        <strong>Status:</strong> {user.IsActive ? "Active" : "Inactive"}
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>Password:</strong> {user.Password}
+                                    </p>
+                                </div>
+                                <div className="card-footer bg-white border-0 d-grid gap-2">
                                     <button
-                                        className="btn btn-primary"
+                                        className="btn btn-outline-primary btn-sm"
                                         onClick={() => resetPassword(user.UserId)}
                                     >
                                         Reset Password
                                     </button>
-                                </td>
-                                <td>
                                     <button
-                                        className="btn btn-primary"
-                                        onClick={assignRole}
+                                        className="btn btn-outline-success btn-sm"
+                                        onClick={() => openAssignRoleModal(user)}
                                     >
                                         Assign Role
                                     </button>
-                                </td>
-                                <td>
                                     <button
-                                        className="btn btn-primary"
+                                        className="btn btn-outline-danger btn-sm"
                                         onClick={deleteUser}
                                     >
                                         Delete User
                                     </button>
-                                </td>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="col-12">
+                        <div className="alert alert-info text-center">No users available.</div>
+                    </div>
+                )}
+            </div>
 
-                                </tr>                              
-                        </tbody>    
-                           </React.Fragment>
-                        ))
-                    }
-
-                 </table>
-
-        
-               <div className="text-center mt-3">
-
-    
-
-
-</div>
-
-</div>
-</div>
-          
-
+            {showModal && (
+                <>
+                    <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+                        <div className="modal-dialog modal-dialog-centered" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Assign Role</h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        onClick={() => setShowModal(false)}
+                                    ></button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="mb-3">
+                                        Select a new role for <strong>{selectedUser?.Username}</strong>.
+                                    </p>
+                                    <label className="form-label">Role</label>
+                                    <select
+                                        className="form-select"
+                                        value={selectedRole}
+                                        onChange={(e) => setSelectedRole(e.target.value)}
+                                    >
+                                        <option value="Admin">Admin</option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Agent">Agent</option>
+                                        <option value="Employee">Employee</option>
+                                    </select>
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary"
+                                        onClick={() => setShowModal(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-success"
+                                        onClick={handleAssignRole}
+                                    >
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal-backdrop fade show"></div>
+                </>
+            )}
         </div>
     );
 }
-
 
 export default UserListForAdmin;

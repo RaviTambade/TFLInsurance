@@ -55,179 +55,138 @@ function UpdateProfile() {
 
 return (
     <div className="container mt-5 mb-5">
-
         <div className="row justify-content-center">
-
             <div className="col-lg-8">
-
-                <div className="card shadow-lg">
-
-                    <div className="card-header bg-primary text-white text-center">
-                        <h3>Customer Updation </h3>
+                <div className="card shadow-lg border-0">
+                    <div className="card-header bg-primary text-white text-center py-3">
+                        <h3 className="mb-0">Update Profile</h3>
+                        <p className="mb-0 mt-1 small">Keep your personal details accurate and up to date.</p>
                     </div>
 
-                    <div className="card-body">
-
+                    <div className="card-body p-4">
                         <form onSubmit={submitProfile}>
+                            <div className="row g-3">
+                                <div className="col-md-6">
+                                    <label className="form-label">First Name</label>
+                                    <input
+                                        type="text"
+                                        name="FirstName"
+                                        className="form-control"
+                                        value={profile.FirstName || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                            <table className="table table-bordered align-middle">
+                                <div className="col-md-6">
+                                    <label className="form-label">Last Name</label>
+                                    <input
+                                        type="text"
+                                        name="LastName"
+                                        className="form-control"
+                                        value={profile.LastName || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                <tbody>
+                                <div className="col-md-6">
+                                    <label className="form-label">Email</label>
+                                    <input
+                                        type="email"
+                                        name="Email"
+                                        className="form-control"
+                                        value={profile.Email || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
+                                <div className="col-md-6">
+                                    <label className="form-label">Mobile Number</label>
+                                    <input
+                                        type="text"
+                                        name="MobileNumber"
+                                        className="form-control"
+                                        value={profile.MobileNumber || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                    <tr>
-                                        <th>First Name</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="FirstName"
-                                                className="form-control"
-                                                value={profile.FirstName || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                                <div className="col-12">
+                                    <label className="form-label">Address Line 1</label>
+                                    <input
+                                        type="text"
+                                        name="AddressLine1"
+                                        className="form-control"
+                                        value={profile.AddressLine1 || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                    <tr>
-                                        <th>Last Name</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="LastName"
-                                                className="form-control"
-                                                value={profile.LastName || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                                <div className="col-12">
+                                    <label className="form-label">Address Line 2</label>
+                                    <input
+                                        type="text"
+                                        name="AddressLine2"
+                                        className="form-control"
+                                        value={profile.AddressLine2 || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
+                                <div className="col-md-4">
+                                    <label className="form-label">City</label>
+                                    <input
+                                        type="text"
+                                        name="City"
+                                        className="form-control"
+                                        value={profile.City || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                    <tr>
-                                        <th>Email</th>
-                                        <td>
-                                            <input
-                                                type="email"
-                                                name="Email"
-                                                className="form-control"
-                                                value={profile.Email || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                                <div className="col-md-4">
+                                    <label className="form-label">State</label>
+                                    <input
+                                        type="text"
+                                        name="State"
+                                        className="form-control"
+                                        value={profile.State || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                    <tr>
-                                        <th>Mobile Number</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="MobileNumber"
-                                                className="form-control"
-                                                value={profile.MobileNumber || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                                <div className="col-md-4">
+                                    <label className="form-label">Postal Code</label>
+                                    <input
+                                        type="text"
+                                        name="PostalCode"
+                                        className="form-control"
+                                        value={profile.PostalCode || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                                    <tr>
-                                        <th>Address Line 1</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="AddressLine1"
-                                                className="form-control"
-                                                value={profile.AddressLine1 || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
+                                <div className="col-12">
+                                    <label className="form-label">Country</label>
+                                    <input
+                                        type="text"
+                                        name="Country"
+                                        className="form-control"
+                                        value={profile.Country || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
 
-                                    <tr>
-                                        <th>Address Line 2</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="AddressLine2"
-                                                className="form-control"
-                                                value={profile.AddressLine2 || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>City</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="City"
-                                                className="form-control"
-                                                value={profile.City || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>State</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="State"
-                                                className="form-control"
-                                                value={profile.State || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Postal Code</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="PostalCode"
-                                                className="form-control"
-                                                value={profile.PostalCode || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Country</th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="Country"
-                                                className="form-control"
-                                                value={profile.Country || ""}
-                                                onChange={handleChange}
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <button
-                                                className="btn btn-primary"
-                                                onClick={submitProfile}
-                                            >
-                                                Submit Profile
-                                            </button>
-                                                                        
-
-                                </tbody>
-
-                            </table>
-
+                            <div className="d-flex justify-content-end mt-4">
+                                <button type="submit" className="btn btn-primary px-4">
+                                    Save Changes
+                                </button>
+                            </div>
                         </form>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 );
 }
