@@ -1,75 +1,31 @@
 Create database  SaturdayTFLInsuranceDB;
 USE SaturdayTFLInsuranceDB;
+--
+-- Table structure for table `users`
+--
 
-DROP TABLE IF EXISTS `agents`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `agents` (
-  `AgentId` int NOT NULL AUTO_INCREMENT,
-  `UserId` int DEFAULT NULL,
-  `AgentCode` varchar(20) NOT NULL,
-  `FullName` varchar(100) NOT NULL,
-  `Email` varchar(100) NOT NULL,
-  `MobileNumber` varchar(15) NOT NULL,
-  `LicenseNumber` varchar(50) NOT NULL,
-  `Branch` varchar(100) DEFAULT NULL,
-  `Designation` varchar(50) DEFAULT NULL,
-  `CommissionRate` decimal(5,4) DEFAULT '0.0000',
-  `TotalCommissionEarned` decimal(15,2) DEFAULT '0.00',
-  `DateOfJoining` date NOT NULL,
+CREATE TABLE `users` (
+  `UserId` int NOT NULL AUTO_INCREMENT,
+  `Username` varchar(50) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `Role` enum('Admin','Employee','Agent','Customer') NOT NULL,
   `IsActive` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`AgentId`),
-  UNIQUE KEY `AgentCode` (`AgentCode`),
-  UNIQUE KEY `Email` (`Email`),
-  UNIQUE KEY `LicenseNumber` (`LicenseNumber`),
-  KEY `FK_Agent_User` (`UserId`),
-  CONSTRAINT `FK_Agent_User` FOREIGN KEY (`UserId`) REFERENCES `users` (`UserId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`UserId`),
+  UNIQUE KEY `Username` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `agents`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `agents` WRITE;
-/*!40000 ALTER TABLE `agents` DISABLE KEYS */;
-INSERT INTO `agents` VALUES (1,4,'AGT1001','Ramesh Sharma','ramesh@gmail.com','9876543210','LIC1001','Pune','Senior Advisor',0.1000,250000.00,'2023-05-15',1),(2,NULL,'AGT1002','Priya Deshmukh','priya@gmail.com','9123456780','LIC1002','Mumbai','Advisor',0.0800,180000.00,'2022-08-10',1),(3,NULL,'AGT1003','Suresh Patil','suresh@gmail.com','9988776655','LIC1003','Nagpur','Manager',0.1200,500000.00,'2021-01-20',1);
-/*!40000 ALTER TABLE `agents` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `claims`
---
-
-DROP TABLE IF EXISTS `claims`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `claims` (
-  `ClaimId` int NOT NULL AUTO_INCREMENT,
-  `PolicyNumber` varchar(30) NOT NULL,
-  `CustomerId` int NOT NULL,
-  `ClaimDate` datetime NOT NULL,
-  `ClaimType` varchar(50) NOT NULL,
-  `Reason` varchar(500) DEFAULT NULL,
-  `ClaimAmount` decimal(15,2) NOT NULL,
-  `ApprovedAmount` decimal(15,2) DEFAULT '0.00',
-  `Status` varchar(30) DEFAULT 'Registered',
-  `Remarks` varchar(500) DEFAULT NULL,
-  `SettlementDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`ClaimId`),
-  KEY `CustomerId` (`CustomerId`),
-  CONSTRAINT `claims_ibfk_1` FOREIGN KEY (`CustomerId`) REFERENCES `customers` (`CustomerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `claims`
---
-
-LOCK TABLES `claims` WRITE;
-/*!40000 ALTER TABLE `claims` DISABLE KEYS */;
-INSERT INTO `claims` VALUES (1,'POL1001',1,'2026-06-18 09:52:34','Health','Hospitalization due to surgery',50000.00,45000.00,'Approved','Verified documents','2026-06-21 09:52:34'),(3,'POL1005',3,'2026-06-18 09:52:34','Health','Medical emergency',30000.00,30000.00,'Settled','Payment completed','2026-06-18 09:52:34'),(4,'POL1004',3,'2026-07-11 00:00:00','Travel','Hospitalization due to surgery',500000.00,400000.00,'Approved','Verified Documents','2026-07-20 00:00:00');
-/*!40000 ALTER TABLE `claims` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','admin@123','Admin',1),(2,'emp1','emp@123','Employee',1),(4,'cust1','cust12345','Agent',1),(5,'rahul.divate@gmail.com','rahul@123','Customer',1),(6,'shiv.shintre@gmail.com','shiv@123','Customer',1),(7,'divyafule@gmail.com','divya@123','Customer',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -125,6 +81,42 @@ INSERT INTO `customers` VALUES (1,NULL,'CUST1001','Ravi','Tambade','1990-05-15',
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `agents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `agents` (
+  `AgentId` int NOT NULL AUTO_INCREMENT,
+  `UserId` int DEFAULT NULL,
+  `AgentCode` varchar(20) NOT NULL,
+  `FullName` varchar(100) NOT NULL,
+  `Email` varchar(100) NOT NULL,
+  `MobileNumber` varchar(15) NOT NULL,
+  `LicenseNumber` varchar(50) NOT NULL,
+  `Branch` varchar(100) DEFAULT NULL,
+  `Designation` varchar(50) DEFAULT NULL,
+  `CommissionRate` decimal(5,4) DEFAULT '0.0000',
+  `TotalCommissionEarned` decimal(15,2) DEFAULT '0.00',
+  `DateOfJoining` date NOT NULL,
+  `IsActive` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`AgentId`),
+  UNIQUE KEY `AgentCode` (`AgentCode`),
+  UNIQUE KEY `Email` (`Email`),
+  UNIQUE KEY `LicenseNumber` (`LicenseNumber`),
+  KEY `FK_Agent_User` (`UserId`),
+  CONSTRAINT `FK_Agent_User` FOREIGN KEY (`UserId`) REFERENCES `users` (`UserId`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agents`
+--
+
+LOCK TABLES `agents` WRITE;
+/*!40000 ALTER TABLE `agents` DISABLE KEYS */;
+INSERT INTO `agents` VALUES (1,4,'AGT1001','Ramesh Sharma','ramesh@gmail.com','9876543210','LIC1001','Pune','Senior Advisor',0.1000,250000.00,'2023-05-15',1),(2,NULL,'AGT1002','Priya Deshmukh','priya@gmail.com','9123456780','LIC1002','Mumbai','Advisor',0.0800,180000.00,'2022-08-10',1),(3,NULL,'AGT1003','Suresh Patil','suresh@gmail.com','9988776655','LIC1003','Nagpur','Manager',0.1200,500000.00,'2021-01-20',1);
+/*!40000 ALTER TABLE `agents` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `employees`
 --
@@ -163,6 +155,7 @@ LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
 --
 -- Table structure for table `policies`
 --
@@ -200,6 +193,45 @@ INSERT INTO `policies` VALUES (2,'POL1002',1,NULL,NULL,'Life',1000000.00,1),(3,'
 /*!40000 ALTER TABLE `policies` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+
+--
+-- Table structure for table `claims`
+--
+
+DROP TABLE IF EXISTS `claims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `claims` (
+  `ClaimId` int NOT NULL AUTO_INCREMENT,
+  `PolicyNumber` varchar(30) NOT NULL,
+  `CustomerId` int NOT NULL,
+  `ClaimDate` datetime NOT NULL,
+  `ClaimType` varchar(50) NOT NULL,
+  `Reason` varchar(500) DEFAULT NULL,
+  `ClaimAmount` decimal(15,2) NOT NULL,
+  `ApprovedAmount` decimal(15,2) DEFAULT '0.00',
+  `Status` varchar(30) DEFAULT 'Registered',
+  `Remarks` varchar(500) DEFAULT NULL,
+  `SettlementDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ClaimId`),
+  KEY `CustomerId` (`CustomerId`),
+  CONSTRAINT `claims_ibfk_1` FOREIGN KEY (`CustomerId`) REFERENCES `customers` (`CustomerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `claims`
+--
+
+LOCK TABLES `claims` WRITE;
+/*!40000 ALTER TABLE `claims` DISABLE KEYS */;
+INSERT INTO `claims` VALUES (1,'POL1001',1,'2026-06-18 09:52:34','Health','Hospitalization due to surgery',50000.00,45000.00,'Approved','Verified documents','2026-06-21 09:52:34'),(3,'POL1005',3,'2026-06-18 09:52:34','Health','Medical emergency',30000.00,30000.00,'Settled','Payment completed','2026-06-18 09:52:34'),(4,'POL1004',3,'2026-07-11 00:00:00','Travel','Hospitalization due to surgery',500000.00,400000.00,'Approved','Verified Documents','2026-07-20 00:00:00');
+/*!40000 ALTER TABLE `claims` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
 --
 -- Table structure for table `premiums`
 --
@@ -235,33 +267,5 @@ LOCK TABLES `premiums` WRITE;
 /*!40000 ALTER TABLE `premiums` DISABLE KEYS */;
 INSERT INTO `premiums` VALUES (2,2,1,25000.00,'2026-06-18 09:52:34','Credit Card','TXN10002','Annual','Success','Renewed policy'),(3,3,2,8000.00,'2026-06-18 09:52:34','Net Banking','TXN10003','Quarterly','Success','Installment paid'),(4,4,3,5000.00,'2026-06-18 09:52:34','UPI','TXN10004','Monthly','Pending','Awaiting confirmation'),(5,5,3,15000.00,'2026-06-18 09:52:34','Cash','TXN10005','Annual','Success','Cash payment received'),(7,3,2,12000.00,'2026-06-18 00:00:00','UPI','TXN10010','Annual','Success','Renew Policy'),(8,3,2,12000.00,'2026-06-18 00:00:00','UPI','TXN10013','Annual','Success','Renew Policy'),(9,3,2,12000.00,'2026-06-18 00:00:00','UPI','TXN10014','Annual','Success','Renew Policy'),(10,4,3,13000.00,'2026-06-14 00:00:00','UPI','TXN10015','Annual','Success','Renew Policy'),(12,4,24,13000.00,'2026-06-14 00:00:00','UPI','TXN10016','Annual','Success','Renew Policy'),(13,4,3,8000.00,'2026-07-18 00:00:00','UPI','TXN10011','Annual','Success','Paid full premium'),(15,4,3,8000.00,'2026-07-18 00:00:00','UPI','TXN10012','Annual','Success','Paid full premium'),(18,48,43,12000.00,'2026-06-18 00:00:00','UPI','TXN10020','Annual','Success','Paid full premium'),(19,51,48,83333.33,'2026-07-17 23:17:00','UPI','TXN10021','Monthly','Success',''),(20,56,49,166666.67,'2026-07-18 14:56:00','UPI','TXN10030','Monthly','Success','success');
 /*!40000 ALTER TABLE `premiums` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `UserId` int NOT NULL AUTO_INCREMENT,
-  `Username` varchar(50) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Role` enum('Admin','Employee','Agent','Customer') NOT NULL,
-  `IsActive` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`UserId`),
-  UNIQUE KEY `Username` (`Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin@123','Admin',1),(2,'emp1','emp@123','Employee',1),(4,'cust1','cust12345','Agent',1),(5,'rahul.divate@gmail.com','rahul@123','Customer',1),(6,'shiv.shintre@gmail.com','shiv@123','Customer',1),(7,'divyafule@gmail.com','divya@123','Customer',1);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
