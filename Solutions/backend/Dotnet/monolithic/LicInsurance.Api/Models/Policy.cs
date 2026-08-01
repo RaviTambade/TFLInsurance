@@ -1,19 +1,53 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace LicInsurance.Api.Models;
 
+[Table("policies")]
 public class Policy
 {
-    public int policy_id { get; set; }
-    public string policy_name { get; set; }
-    public string policy_type { get; set; }
-    public string description { get; set; }
-    public Decimal minimum_sum_assured { get; set; }
-     public Decimal maximum_sum_assured { get; set; }
-    public int minimum_duration { get; set; }
-    public int maximum_duration { get; set; }
-    public bool is_active { get; set; }
-    public DateTime created_on { get; set; }
-    public string CreatedBy { get; set; }
-   public DateTime Updated_on { get; set; }
-    public string UpdatedBy { get; set; }
+    [Key]
+    [Column("policy_id")]
+    public int PolicyId { get; set; }
 
+    [Required]
+    [Column("policy_name")]
+    [MaxLength(200)]
+    public string PolicyName { get; set; } = string.Empty;
+
+    [Column("policy_type")]
+    [MaxLength(100)]
+    public string PolicyType { get; set; } = string.Empty;
+
+    [Column("description")]
+    public string? Description { get; set; }
+
+    [Column("minimum_sum_assured")]
+    public decimal MinimumSumAssured { get; set; }
+
+    [Column("maximum_sum_assured")]
+    public decimal MaximumSumAssured { get; set; }
+
+    [Column("minimum_duration")]
+    public int MinimumDuration { get; set; }
+
+    [Column("maximum_duration")]
+    public int MaximumDuration { get; set; }
+
+    [Column("is_active")]
+    public bool IsActive { get; set; }
+
+    [Column("created_on")]
+    public DateTime CreatedOn { get; set; }
+
+    [Column("created_by")]
+    [MaxLength(100)]
+    public string? CreatedBy { get; set; }
+
+    [Column("updated_on")]
+    public DateTime? UpdatedOn { get; set; }
+
+    [Column("updated_by")]
+    [MaxLength(100)]
+    public string? UpdatedBy { get; set; }
 }

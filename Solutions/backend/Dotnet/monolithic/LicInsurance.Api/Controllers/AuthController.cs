@@ -4,12 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using LicInsurance.Api.Entities; 
+ 
 using LicInsurance.Api.Models; 
 using LicInsurance.Api.Data; 
 
 
-namespace 
+namespace   LicInsurance.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
