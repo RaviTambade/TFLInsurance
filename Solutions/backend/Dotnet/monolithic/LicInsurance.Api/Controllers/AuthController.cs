@@ -8,6 +8,8 @@ using LicInsurance.Api.Entities;
 using LicInsurance.Api.Models; 
 using LicInsurance.Api.Data; 
 
+
+namespace 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
