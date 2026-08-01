@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using LicInsurance.Api.Services;
 using LicInsurance.Api.Models;
-using LicInsurance.Api.Entities;
-
+ 
 namespace LicInsurance.Api.Controllers
 {
+public   enum Role
+{
+    Admin,
+    User
+}
 
 
 [ApiController]
@@ -31,7 +35,7 @@ public class UsersController : ControllerBase
 
 
 
-    [Authorize(Role = Role.Admin)]
+    [Authorize(Role ="Role.Admin")]
     [HttpGet]
     public IActionResult GetAll()
     {

@@ -1,6 +1,7 @@
-using LicInsurance.Api.Entities;
+ 
 
 namespace LicInsurance.Api.Data;
+using LicInsurance.Api.Models;
 
 public static class StaticData
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-using TFLInsurance.Licinsruance.Entities;
+using LicInsurance.Api.Models;
 using TFLInsurance.Licinsruance.Services;
 
 

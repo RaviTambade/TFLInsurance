@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using Claim = System.Security.Claims.Claim;
 using System.Text;
 using LicInsurance.Api.Models;
 using LicInsurance.Api.Helpers;
- 
+
 
 namespace LicInsurance.Api.Services
 { 
@@ -17,16 +18,17 @@ namespace LicInsurance.Api.Services
     {
         // users hardcoded for simplicity,
         // store in a db with hashed passwords in production applications
-        // private List<User> _users = new List<User>
-        // {
+       private List<User> _users = new List<User>
+          {
 
-        //     new User { Id = 1, FirstName = "Swarali", LastName = "L", Username = "swarali", Password = "swarali", Role = Role.Admin },
-        //     new User { Id = 2, FirstName = "Ganesh", LastName = "S", Username = "ganesh", Password = "ganesh", Role = Role.User } ,
-        //     new User { Id = 3, FirstName = "Rutuja", LastName = "T", Username = "rutuja", Password = "rutuja", Role = Role.User },
-        //     new User { Id = 4, FirstName = "Vishwambhar", LastName = "K", Username = "vishwambhar", Password = "vishwambhar", Role = Role.User },
-        //     new User { Id = 5, FirstName = "Rohit", LastName = "W", Username = "rohit", Password = "rohit", Role = Role.Admin },
+          /*  new User { Id = 1, FirstName = "Swarali", LastName = "L", Username = "swarali", Password = "swarali", Role = Role.Admin },
+            new User { Id = 2, FirstName = "Ganesh", LastName = "S", Username = "ganesh", Password = "ganesh", Role = Role.User } ,
+            new User { Id = 3, FirstName = "Rutuja", LastName = "T", Username = "rutuja", Password = "rutuja", Role = Role.User },
+            new User { Id = 4, FirstName = "Vishwambhar", LastName = "K", Username = "vishwambhar", Password = "vishwambhar", Role = Role.User },
+            new User { Id = 5, FirstName = "Rohit", LastName = "W", Username = "rohit", Password = "rohit", Role = Role.Admin },
+            */
 
-        // };
+       };
 
         private readonly AppSettings _appSettings;
 
@@ -37,14 +39,11 @@ namespace LicInsurance.Api.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-           /* var user = static.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
-
-            // return null if user not found
-            if (user == null) return null;
-*/
-
+           
+          
+            User user=new User();
             // authentication successful so generate jwt token
-            var token = generateJwtToken("user");
+            var token = generateJwtToken(user);
 
             return new AuthenticateResponse(null, token);
         }
@@ -83,22 +82,14 @@ namespace LicInsurance.Api.Services
 
         public string GenerateAccessToken(string username)
         {
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, username)
-            };
+            var claims = new[] { new Claim(ClaimTypes.Name, username) };
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(
-                    Convert.ToDouble(_config["Jwt:ExpiryMinutes"])),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: creds
             );
 

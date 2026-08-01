@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using LicInsurance.Api.Entities;
 using LicInsurance.Api.Models;
-
+ 
 
 namespace LicInsurance.Api.Services
 {
