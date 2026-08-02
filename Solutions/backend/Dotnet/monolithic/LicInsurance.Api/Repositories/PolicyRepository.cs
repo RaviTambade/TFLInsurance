@@ -1,0 +1,57 @@
+using TFLInsurance.LicInsurance.Repositories.Interfaces;
+using LicInsurance.Api.Models;
+using LicInsurance.Api.Data.Dapper;
+using LicInsurance.Api.Data.Constant;
+
+namespace TFLInsurance.LicInsurance.Repositories;
+
+
+
+    public class PolicyRepository : IPolicyRepository
+    {
+        private readonly IDapperHelper _dapper;
+
+        public PolicyRepository(IDapperHelper dapper)
+        {
+            _dapper = dapper;
+        }
+
+        public List<Policy> GetAll()
+        {
+            return _dapper.Query<Policy>(
+                PolicyStoredProcedure.POLICY_GET_ALL)
+                .ToList();
+        }
+
+        public Policy? GetById(int id)
+        {
+            return _dapper.QueryFirstOrDefault<Policy>(
+                PolicyStoredProcedure.POLICY_GET_BY_ID,
+                new
+                {
+                    PolicyId = id
+                });
+        }
+
+        public int Save(Policy policy)
+        {
+            return _dapper.Execute(
+                PolicyStoredProcedure.POLICY_SAVE,
+                new
+                {
+                    policy.PolicyId,
+                    policy.PolicyName,
+                    policy.PolicyType,
+                });
+        }
+
+        public int Delete(int id)
+        {
+            return _dapper.Execute(
+                PolicyStoredProcedure.POLICY_DELETE,
+                new
+                {
+                    PolicyId = id
+                });
+        }
+    }

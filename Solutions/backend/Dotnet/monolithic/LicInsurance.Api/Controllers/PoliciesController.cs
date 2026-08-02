@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using LicInsurance.Api.DTOs;
+using TFLInsurance.LicInsurance.Services.Interfaces;
 
 namespace LicInsurance.Api.Controllers;
 
@@ -7,6 +8,14 @@ namespace LicInsurance.Api.Controllers;
 [Route("api/[controller]")]
 public class PoliciesController : ControllerBase
 {
+
+
+    private readonly IPolicyService _policyService;
+    public PoliciesController(IPolicyService policyService)
+    {
+            _policyService = policyService;
+    }
+    
     [HttpGet]
     [Route("get")]
     public IActionResult Get()
@@ -32,7 +41,8 @@ public class PoliciesController : ControllerBase
     [Route("getall")]
     public IActionResult GetAll()
     {
-        return Ok();
+        var policies = _policyService.GetAll();
+        return Ok(policies);
     }
 
     [HttpGet("{id:int}")]
