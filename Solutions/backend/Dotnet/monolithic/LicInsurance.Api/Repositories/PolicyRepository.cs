@@ -40,7 +40,7 @@ namespace TFLInsurance.LicInsurance.Repositories;
                 new
                 {
                     policy.PolicyId,
-                    policy.PolicyName,
+                    policy.PolicyNumber,
                     policy.PolicyType,
                 });
         }

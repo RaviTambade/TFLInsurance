@@ -8,9 +8,8 @@ namespace LicInsurance.Api.Controllers;
 [Route("api/[controller]")]
 public class PoliciesController : ControllerBase
 {
-
-
     private readonly IPolicyService _policyService;
+
     public PoliciesController(IPolicyService policyService)
     {
             _policyService = policyService;
@@ -25,13 +24,13 @@ public class PoliciesController : ControllerBase
             new
             {
                 PolicyId = 1,
-                PolicyName = "Jeevan Anand",
+                PolicyNumber = "PN001",
                 PolicyType = "Life"
             },
             new
             {
                 PolicyId = 2,
-                PolicyName = "Health Suraksha",
+                PolicyNumber = "PN002",
                 PolicyType = "Health"
             }
         });
