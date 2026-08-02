@@ -1,7 +1,7 @@
 using TFLInsurance.LicInsurance.Repositories.Interfaces;
 using LicInsurance.Api.Models;
-using LicInsurance.Api.Data.Dapper;
 using LicInsurance.Api.Data.Constant;
+using LicInsurance.Api.Repositories.Dapper;
 
 namespace TFLInsurance.LicInsurance.Repositories;
 
@@ -9,9 +9,9 @@ namespace TFLInsurance.LicInsurance.Repositories;
 
     public class PolicyRepository : IPolicyRepository
     {
-        private readonly IDapperHelper _dapper;
+        private readonly IDapperfactory _dapper;
 
-        public PolicyRepository(IDapperHelper dapper)
+        public PolicyRepository(IDapperfactory dapper)
         {
             _dapper = dapper;
         }

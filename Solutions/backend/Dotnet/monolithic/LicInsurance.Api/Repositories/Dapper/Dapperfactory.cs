@@ -1,15 +1,14 @@
-
-using LicInsurance.Api.Data.Connection;
 using System.Data;
 using Dapper;
+using LicInsurance.Api.Repositories.Connections;
 
-namespace LicInsurance.Api.Data.Dapper;
+namespace LicInsurance.Api.Repositories.Dapper;
 
- public class DapperHelper : IDapperHelper
+ public class Dapperfactory : IDapperfactory
  {
-     private readonly IDbConnectionHelper _factory;
+     private readonly IDbConnectionFactory _factory;
 
-     public DapperHelper(IDbConnectionHelper factory)
+     public Dapperfactory(IDbConnectionFactory factory)
      {
          _factory = factory;
      }

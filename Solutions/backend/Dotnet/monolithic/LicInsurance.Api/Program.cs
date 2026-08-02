@@ -3,9 +3,10 @@ using LicInsurance.Api.Services;
 using TFLInsurance.LicInsurance.Services.Interfaces;
 using TFLInsurance.LicInsurance.Repositories.Interfaces;
 using TFLInsurance.LicInsurance.Repositories;  
-using LicInsurance.Api.Data.Dapper;
 using TFLInsurance.LicInsurance.Services;
-using LicInsurance.Api.Data.Connection;
+using LicInsurance.Api.Repositories.Connections;
+using LicInsurance.Api.Repositories.Dapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,8 @@ builder.Services.AddControllers();
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-builder.Services.AddScoped<IDbConnectionHelper, DbConnectionHelper>();
-builder.Services.AddScoped<IDapperHelper, DapperHelper>();
+builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+builder.Services.AddScoped<IDapperfactory, Dapperfactory>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();

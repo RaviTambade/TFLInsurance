@@ -6,7 +6,7 @@ namespace LicInsurance.Api.Models;
 [Table("claims")]
 public class Claim
 {
-    [Key]
+
     [Column("claim_id")]
     public int ClaimId { get; set; }
 

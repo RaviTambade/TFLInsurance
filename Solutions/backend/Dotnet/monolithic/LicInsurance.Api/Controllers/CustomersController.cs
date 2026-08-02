@@ -1,27 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
-
-using LicInsurance.Api.Models;
-using LicInsurance.Api.Services;
-
-namespace LicInsurance.Api.Controllers;
-public class CustomersController : ControllerBase
-{
-    private readonly ICustomerService _customerService;
-
-    public CustomersController(ICustomerService customerService)
-    {
-        _customerService = customerService;
-    }
-
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-        var customers = _customerService.GetAll();
-        return Ok(customers);
-    }
-}
-=======
 using LicInsurance.Api.Models;
 using LicInsurance.Api.Services;
 
@@ -98,4 +75,3 @@ namespace LicInsurance.Api.Controllers
         }
     }
 }
->>>>>>> 23b1f00c30771f1f974153970e5b5cbc951592ac
