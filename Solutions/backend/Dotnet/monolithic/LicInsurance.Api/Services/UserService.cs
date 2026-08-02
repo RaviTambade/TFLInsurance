@@ -55,7 +55,7 @@ namespace LicInsurance.Api.Services
 
         public User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return _users.FirstOrDefault(x => x.UserId == id);
         }
 
         // helper methods
@@ -69,7 +69,7 @@ namespace LicInsurance.Api.Services
             
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()),
                                                      new Claim("role",user.Role)}),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
