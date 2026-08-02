@@ -1,0 +1,18 @@
+1. git clone https://github.com/RaviTambade/TFLInsurance.git 
+2. cd TFLInsurance
+3. code . --to open solution in vscode
+4. do some changes in files in solution
+5. git status --to check modified files in command prompt
+6. git add .
+7. git status --to check modified files in command prompt
+8. git commit -m "Add Commit comments"
+9. git push
+
+for JWT authentication
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package System.IdentityModel.Tokens.Jwt
+
+for Entity Framework
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+
