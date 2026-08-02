@@ -12,9 +12,9 @@ public class PoliciesController : ControllerBase
 
     public PoliciesController(IPolicyService policyService)
     {
-            _policyService = policyService;
+        _policyService = policyService;
     }
-    
+
     [HttpGet]
     [Route("get")]
     public IActionResult Get()

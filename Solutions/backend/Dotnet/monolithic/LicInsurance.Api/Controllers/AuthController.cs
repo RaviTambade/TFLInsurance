@@ -47,11 +47,9 @@ public class AuthController : ControllerBase
             token = "sample-jwt-token",
             user = new
             {
-                user.Id,
-                Name = $"{user.FirstName} {user.LastName}",
+                user.UserId,
                 user.Username,
                 user.Role,
-                user.Email
             }
         });
     }
@@ -78,13 +76,13 @@ public class AuthController : ControllerBase
 
         var user = new User
         {
-            Id = StaticData.Users.Max(x => x.Id) + 1,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
+            //Id = StaticData.Users.Max(x => x.Id) + 1,
+            //FirstName = request.FirstName,
+            //LastName = request.LastName,
             Username = request.Username,
             Password = request.Password,
-            Email = request.Email,
-            MobileNumber = request.MobileNumber,
+            //Email = request.Email,
+            //MobileNumber = request.MobileNumber,
             Role = "Customer"
         };
 
@@ -94,7 +92,7 @@ public class AuthController : ControllerBase
         {
             success = true,
             message = "Registration successful.",
-            userId = user.Id
+            userId = user.UserId
         });
     }
 

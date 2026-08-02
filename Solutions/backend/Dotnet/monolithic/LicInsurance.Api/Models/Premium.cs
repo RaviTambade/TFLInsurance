@@ -4,6 +4,8 @@
     {
         public int PremiumId { get; set; }
 
+        public long PolicyNumber { get; set; }
+
         public int PolicyId { get; set; }
 
         public int CustomerId { get; set; }
