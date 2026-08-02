@@ -14,43 +14,22 @@ namespace LicInsurance.Api.Data.Dapper;
          _factory = factory;
      }
 
-     public T QueryFirstOrDefault<T>(
-         string sql,
-         object? param = null,
-         CommandType commandType = CommandType.StoredProcedure)
+     public T QueryFirstOrDefault<T>( string sql, object? param = null, CommandType commandType = CommandType.StoredProcedure)
      {
          using var connection = _factory.CreateConnection();
-
-         return connection.QueryFirstOrDefault<T>(
-             sql,
-             param,
-             commandType: commandType);
+         return connection.QueryFirstOrDefault<T>( sql, param,commandType: commandType);
      }
 
-     public IEnumerable<T> Query<T>(
-         string sql,
-         object? param = null,
-         CommandType commandType = CommandType.StoredProcedure)
+     public IEnumerable<T> Query<T>(string sql, object? param = null, CommandType commandType = CommandType.StoredProcedure)
      {
          using var connection = _factory.CreateConnection();
-
-         return connection.Query<T>(
-             sql,
-             param,
-             commandType: commandType);
+         return connection.Query<T>( sql, param,commandType: commandType);
      }
 
-     public int Execute(
-         string sql,
-         object? param = null,
-         CommandType commandType = CommandType.StoredProcedure)
+     public int Execute(string sql, object? param = null,CommandType commandType = CommandType.StoredProcedure)
      {
          using var connection = _factory.CreateConnection();
-
-         return connection.Execute(
-             sql,
-             param,
-             commandType: commandType);
+         return connection.Execute(sql,param, commandType: commandType);
      }
 
      public T QuerySingle<T>(
@@ -59,10 +38,6 @@ namespace LicInsurance.Api.Data.Dapper;
          CommandType commandType = CommandType.StoredProcedure)
      {
          using var connection = _factory.CreateConnection();
-
-         return connection.QuerySingle<T>(
-             sql,
-             param,
-             commandType: commandType);
+         return connection.QuerySingle<T>( sql, param,commandType: commandType);
      }
  }
