@@ -26,8 +26,8 @@ public class PolicyService : IPolicyService
 
        public int Save(Policy policy)
        {
-           if (string.IsNullOrWhiteSpace(policy.PolicyName))
-               throw new Exception("Policy Name is required.");
+           if (string.IsNullOrWhiteSpace(policy.PolicyNumber))
+               throw new Exception("Policy Number is required.");
 
 
            return _repository.Save(policy);

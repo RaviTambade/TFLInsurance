@@ -6,38 +6,25 @@ namespace LicInsurance.Api.Models;
 [Table("claims")]
 public class Claim
 {
-
-    [Column("claim_id")]
     public int ClaimId { get; set; }
 
-    [Column("policy_id")]
-    public int PolicyId { get; set; }
+    public string PolicyNumber { get; set; } = string.Empty;
 
-    [Column("claim_number")]
-    [MaxLength(100)]
-    public string? ClaimNumber { get; set; }
+    public int CustomerId { get; set; }
 
-    [Column("claim_type")]
-    [MaxLength(100)]
-    public string? ClaimType { get; set; }
+    public DateTime ClaimDate { get; set; }
 
-    [Column("claim_status")]
-    [MaxLength(50)]
-    public string? ClaimStatus { get; set; }
+    public string ClaimType { get; set; } = string.Empty;
 
-    [Column("claim_date")]
-    public DateTime? ClaimDate { get; set; }
+    public string? Reason { get; set; }
 
-    [Column("amount")]
-    public decimal Amount { get; set; }
+    public decimal ClaimAmount { get; set; }
 
-    [Column("description")]
-    public string? Description { get; set; }
+    public decimal? ApprovedAmount { get; set; }
 
-    [Column("created_on")]
-    public DateTime? CreatedOn { get; set; }
+    public string? Status { get; set; }
 
-    [Column("created_by")]
-    [MaxLength(100)]
-    public string? CreatedBy { get; set; }
+    public string? Remarks { get; set; }
+
+    public DateTime? SettlementDate { get; set; }
 }

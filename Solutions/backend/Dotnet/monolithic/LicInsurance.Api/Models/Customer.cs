@@ -6,31 +6,53 @@ namespace LicInsurance.Api.Models;
 [Table("customers")]
 public class Customer
 {
-    [Key]
-    [Column("customer_id")]
     public int CustomerId { get; set; }
 
-    [Required]
-    [Column("first_name")]
-    [MaxLength(100)]
+    public int? UserId { get; set; }
+
+    public string CustomerCode { get; set; } = string.Empty;
+
     public string FirstName { get; set; } = string.Empty;
 
-    [Required]
-    [Column("last_name")]
-    [MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
 
-    [Column("email")]
-    [MaxLength(200)]
-    public string? Email { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
-    [Column("mobile_number")]
-    [MaxLength(20)]
-    public string? MobileNumber { get; set; }
+    public string? Gender { get; set; }
 
-    [Column("address")]
-    public string? Address { get; set; }
+    public string Email { get; set; } = string.Empty;
 
-    [Column("created_on")]
-    public DateTime? CreatedOn { get; set; }
+    public string MobileNumber { get; set; } = string.Empty;
+
+    public string? AddressLine1 { get; set; }
+
+    public string? AddressLine2 { get; set; }
+
+    public string? City { get; set; }
+
+    public string? State { get; set; }
+
+    public string? PostalCode { get; set; }
+
+    public string? Country { get; set; }
+
+    public string? PanNumber { get; set; }
+
+    public string? AadhaarNumber { get; set; }
+
+    public string? Occupation { get; set; }
+
+    public decimal? AnnualIncome { get; set; }
+
+    public string? NomineeName { get; set; }
+
+    public string? NomineeRelationship { get; set; }
+
+    public string? NomineeContactNumber { get; set; }
+
+    public DateTime? RegistrationDate { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public int? TotalPoliciesPurchased { get; set; }
 }
