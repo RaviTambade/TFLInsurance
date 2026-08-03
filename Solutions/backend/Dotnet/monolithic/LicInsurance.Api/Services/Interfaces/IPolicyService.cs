@@ -10,5 +10,7 @@ namespace TFLInsurance.LicInsurance.Services.Interfaces;
 
      int Save(Policy policy);
 
+    bool Update(int id, Policy policy);
+
      int Delete(int id);
  }

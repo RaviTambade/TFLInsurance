@@ -1,17 +1,37 @@
 using LicInsurance.Api.Helpers;
-using LicInsurance.Api.Services;
-using TFLInsurance.LicInsurance.Services.Interfaces;
-using TFLInsurance.LicInsurance.Repositories.Interfaces;
-using TFLInsurance.LicInsurance.Repositories;  
-using TFLInsurance.LicInsurance.Services;
+using LicInsurance.Api.Middlewares;
 using LicInsurance.Api.Repositories.Connections;
 using LicInsurance.Api.Repositories.Dapper;
+using LicInsurance.Api.Services;
+using Serilog;
+using TFLInsurance.LicInsurance.Repositories;  
+using TFLInsurance.LicInsurance.Repositories.Interfaces;
+using TFLInsurance.LicInsurance.Services;
+using TFLInsurance.LicInsurance.Services.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: "Logs/log-.txt",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 30,
+        outputTemplate:
+        "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}")
+    .CreateLogger();
+
+
+
+builder.Host.UseSerilog();
+
 // Register Controllers
+
 builder.Services.AddControllers();
+
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
@@ -42,6 +62,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
