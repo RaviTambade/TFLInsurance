@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 function CustomerDashboard() {
 
-    const CustomerId = localStorage.getItem("CustomerId");
     const navigate = useNavigate();
 
     const logout = () => {

@@ -52,7 +52,7 @@ function AdminDashboard() {
         setPolicyCount(data.count);
       };
 
-      const loadUserCount = async () => {
+    const loadUserCount = async () => {
 
         const response = await fetch(
             "http://localhost:5000/api/users/count"

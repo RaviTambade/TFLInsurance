@@ -5,7 +5,27 @@ function RegisterCustomer() {
 
     const navigate = useNavigate();
 
-    const [customer, setCustomer] = useState({});
+    const [customer, setCustomer] = useState({FirstName: "",
+                                        LastName: "",
+                                        DateOfBirth: "",
+                                        Gender: "",
+                                        Occupation: "",
+                                        Email: "",
+                                        Password: "",
+                                        MobileNumber: "",
+                                        AddressLine1: "",
+                                        AddressLine2: "",
+                                        City: "",
+                                        State: "",
+                                        PostalCode: "",
+                                        Country: "",
+                                        PanNumber: "",
+                                        AadhaarNumber: "",
+                                        AnnualIncome: "",
+                                        NomineeName: "",
+                                        NomineeRelationship: "",
+                                        NomineeContactNumber: ""
+                                    });
 
     const handleChange = (e) => {
         setCustomer({
@@ -16,44 +36,65 @@ function RegisterCustomer() {
 
    
     
-     const saveCustomer = async (e) => {      //Event handling Logic
+    const saveCustomer = async (e) => { // Event handling Logic
         e.preventDefault();
-         console.log(customer);
 
-      
-     try {
+        // Map form state (PascalCase keys) to API payload (camelCase keys)
+        const customerDetails = {
+            firstName: customer.FirstName || "",
+            lastName: customer.LastName || "",
+            dateOfBirth: customer.DateOfBirth || "",
+            gender: customer.Gender || "",
+            occupation: customer.Occupation || "",
+            email: customer.Email || "",
+            password: customer.Password || "",
+            mobileNumber: customer.MobileNumber || "",
+            addressLine1: customer.AddressLine1 || "",
+            addressLine2: customer.AddressLine2 || "",
+            city: customer.City || "",
+            state: customer.State || "",
+            postalCode: customer.PostalCode || "",
+            country: customer.Country || "",
+            panNumber: customer.PanNumber || "",
+            aadhaarNumber: customer.AadhaarNumber || "",
+            annualIncome: customer.AnnualIncome ? Number(customer.AnnualIncome) : 0,
+            nomineeName: customer.NomineeName || "",
+            nomineeRelationship: customer.NomineeRelationship || "",
+            nomineeContactNumber: customer.NomineeContactNumber || ""
+        };
+
+        console.log('Register payload:', customerDetails);
+
+        try {
             const response = await fetch(
-                "http://localhost:5000/api/customers/addCustomer",
+                "http://localhost:5000/api/customers/register",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(customer)
+                    body: JSON.stringify(customerDetails)
                 }
             );
 
-           if (response.ok) {
+            const text = await response.text();
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch {
+                result = { message: text };
+            }
 
-                const result = await response.json();
-
-                console.log(result);
-                
-                localStorage.setItem("customerId", result.CustomerId);
-
+            if (response.ok) {
                 alert("Customer Registered Successfully");
-                
-                navigate("/CustomerDashboard");
+                navigate("/Login");
+            } else {
+                alert(result?.message || "Failed to Register Customer");
             }
-            else 
-                {
-                alert("Failed to Register Customer");
-                }
-            }
-            catch (error) {
-                console.error(error);
-                alert("Error occurred");
-            }
+        } catch (error) {
+            console.error('Register error', error);
+            alert("Error occurred: " + (error.message || error));
+        }
     };
 
 
@@ -78,29 +119,8 @@ function RegisterCustomer() {
                             <div className="mb-4">
                                 <h5 className="mb-3">Personal information</h5>
                                 <div className="row g-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label">Customer Code</label>
-                                        <input
-                                            type="text"
-                                            name="CustomerCode"
-                                            className="form-control"
-                                            value={customer.CustomerCode}
-                                            onChange={handleChange}
-                                            placeholder="CUST-001"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label">Date of Birth</label>
-                                        <input
-                                            type="date"
-                                            name="DateOfBirth"
-                                            className="form-control"
-                                            value={customer.DateOfBirth}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
+                                   
+                                    
                                     <div className="col-md-6">
                                         <label className="form-label">First Name</label>
                                         <input
@@ -122,6 +142,17 @@ function RegisterCustomer() {
                                             value={customer.LastName}
                                             onChange={handleChange}
                                             placeholder="Last name"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label">Date of Birth</label>
+                                        <input
+                                            type="date"
+                                            name="DateOfBirth"
+                                            className="form-control"
+                                            value={customer.DateOfBirth}
+                                            onChange={handleChange}
                                             required
                                         />
                                     </div>
@@ -166,6 +197,19 @@ function RegisterCustomer() {
                                             value={customer.Email}
                                             onChange={handleChange}
                                             placeholder="email@example.com"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Password</label>
+                                        <input
+                                            type="password"
+                                            name="Password"
+                                            className="form-control"
+                                            value={customer.Password}
+                                            onChange={handleChange}
+                                            placeholder="Enter Password"
                                             required
                                         />
                                     </div>
