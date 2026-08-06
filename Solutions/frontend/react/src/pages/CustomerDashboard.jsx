@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 function CustomerDashboard() {
 
     const navigate = useNavigate();
+    const userId = localStorage.getItem("userId");
 
     const logout = () => {
-        localStorage.removeItem("CustomerId");
+        
         navigate("/");
     };
-
+    console.log("CustomerDashboard userId:", userId);
+    
     return (
 
         <div className="container mt-5">

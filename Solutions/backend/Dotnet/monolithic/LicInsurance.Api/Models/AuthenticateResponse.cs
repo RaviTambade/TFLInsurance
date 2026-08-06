@@ -14,9 +14,9 @@ namespace LicInsurance.Api.Models
 
         public AuthenticateResponse(User user, string token)
         {
-            Id = user.Id;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
+            Id = user.UserId;
+            //FirstName = user.FirstName;
+            //LastName = user.LastName;
             Username = user.Username;
             Token = token;
         }

@@ -200,9 +200,6 @@ function UserListForAdmin() {
         }
     };
 
-    const deleteUser = () => {
-        navigate("/");
-    };
 
     const loadUsers = async () => {
         try {
@@ -276,7 +273,7 @@ function UserListForAdmin() {
                                     </button>
                                     <button
                                         className="btn btn-outline-danger btn-sm"
-                                        onClick={deleteUser}
+                                        
                                     >
                                         Delete User
                                     </button>
@@ -496,6 +493,8 @@ function UserListForAdmin() {
                 </>
             )}
 
+        
+
             {userShowModal && (
     <>
         <div className="modal fade show d-block" tabIndex="-1">
@@ -571,6 +570,7 @@ function UserListForAdmin() {
         <div className="modal-backdrop fade show"></div>
     </>
 )}
+
 
         </div>
     );

@@ -13,8 +13,8 @@ namespace LicInsurance.Api.Services
                 LastName = "Doe",
                 Email = "john.doe@example.com",
                 MobileNumber = "1234567890",
-                Address = "123 Main Street",
-                CreatedOn = DateTime.UtcNow
+                //Address = "123 Main Street",
+                //CreatedOn = DateTime.UtcNow
             },
             new Customer
             {
@@ -23,8 +23,8 @@ namespace LicInsurance.Api.Services
                 LastName = "Smith",
                 Email = "jane.smith@example.com",
                 MobileNumber = "0987654321",
-                Address = "456 Elm Street",
-                CreatedOn = DateTime.UtcNow
+                //Address = "456 Elm Street",
+                //CreatedOn = DateTime.UtcNow
             }
         };
 
@@ -41,7 +41,7 @@ namespace LicInsurance.Api.Services
         public Customer Create(Customer customer)
         {
             customer.CustomerId = _customers.Any() ? _customers.Max(x => x.CustomerId) + 1 : 1;
-            customer.CreatedOn ??= DateTime.UtcNow;
+            //customer.CreatedOn ??= DateTime.UtcNow;
             _customers.Add(customer);
             return customer;
         }
@@ -58,8 +58,8 @@ namespace LicInsurance.Api.Services
             existingCustomer.LastName = customer.LastName;
             existingCustomer.Email = customer.Email;
             existingCustomer.MobileNumber = customer.MobileNumber;
-            existingCustomer.Address = customer.Address;
-            existingCustomer.CreatedOn = existingCustomer.CreatedOn ?? DateTime.UtcNow;
+            //existingCustomer.Address = customer.Address;
+            //existingCustomer.CreatedOn = existingCustomer.CreatedOn ?? DateTime.UtcNow;
 
             return existingCustomer;
         }
