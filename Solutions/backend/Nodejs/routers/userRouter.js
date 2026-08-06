@@ -6,8 +6,14 @@ const { verifyToken, authorize } = require("../middlewares/authMiddleware");
 
 
 router.get('/getAllUsers',controller.getAllUsers);
+ 
+router.get("/getUser/:id", controller.getUserById);
 
 router.get("/count", controller.getUserCount);
+
+router.get("/customerProfileByUserId/:id", controller.getCustomerProfileByUserId);
+
+router.post("/createUser",verifyToken,authorize("Admin"), controller.createUser);
 
 router.put("/resetPassword/:id",verifyToken,authorize("Admin"),controller.resetPassword);
 

@@ -8,7 +8,7 @@ router.get("/getAllCustomers", controller.getAllCustomers);
 
 router.get("/count", controller.getCustomerCount);
 
-router.post('/addCustomer',controller.addCustomer);
+router.post('/register',controller.registerCustomer);
 
 router.get("/:id", controller.getCustomerById);
 
