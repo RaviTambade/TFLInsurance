@@ -9,69 +9,302 @@ namespace LicInsurance.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
+        private readonly ILogger<CustomersController> _logger;
 
-        public CustomersController(ICustomerService customerService)
+        public CustomersController(ICustomerService customerService, ILogger<CustomersController> logger)
         {
             _customerService = customerService;
+            _logger = logger;
         }
+
+        // ==========================================
+        // Customer Registration
+        // ==========================================
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetCustomers()
         {
-            return Ok(_customerService.GetAll());
+            _logger.LogInformation("Fetching all customers.");
+            try
+            {
+                return Ok(_customerService.GetCustomers());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred while creating customer." + ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("{customerId}")]
+        public IActionResult GetCustomer(int customerId)
         {
-            var customer = _customerService.GetById(id);
-            if (customer == null)
+            _logger.LogInformation($"Fetching customer with ID: {customerId}");
+            try
             {
-                return NotFound(new { message = "Customer not found" });
-            }
+                var customer = _customerService.GetCustomerById(customerId);
+                if (customer == null)
+                {
+                    _logger.LogWarning($"Customer with ID: {customerId} not found.");
+                    return NotFound(new { message = "Customer not found" });
+                }
 
-            return Ok(customer);
+                _logger.LogInformation($"Customer with ID: {customerId} found.");
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred while fetching customer." + ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Customer customer)
+        public IActionResult RegisterCustomer([FromBody] Customer customer)
         {
-            if (!ModelState.IsValid)
+            _logger.LogInformation("Creating a new customer.");
+            try
             {
-                return BadRequest(ModelState);
+                var createdCustomer = _customerService.RegisterCustomer(customer);
+                return Ok(createdCustomer);
             }
-
-            var createdCustomer = _customerService.Create(customer);
-            return CreatedAtAction(nameof(GetById), new { id = createdCustomer.CustomerId }, createdCustomer);
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred while creating customer." + ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Customer customer)
+        [HttpPut("{customerId}")]
+        public IActionResult UpdateCustomer(int customerId, [FromBody] Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            _logger.LogInformation($"Updating customer with ID: {customerId}");
 
-            var updatedCustomer = _customerService.Update(id, customer);
-            if (updatedCustomer == null)
+            try
             {
-                return NotFound(new { message = "Customer not found" });
-            }
+                var updatedCustomer = _customerService.UpdateCustomer(customerId, customer);
+                if (updatedCustomer == false)
+                {
+                    _logger.LogWarning($"Customer with ID: {customerId} not found.");
+                    return NotFound(new { message = "Customer not found" });
+                }
 
-            return Ok(updatedCustomer);
+                _logger.LogInformation($"Customer with ID: {customerId} updated successfully.");
+                return Ok(updatedCustomer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred while updating customer." + ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{customerId}")]
+        public IActionResult DeleteCustomer(int customerId)
         {
-            var deleted = _customerService.Delete(id);
-            if (!deleted)
+            _logger.LogInformation($"Deleting customer with ID: {customerId}");
+            try
             {
-                return NotFound(new { message = "Customer not found" });
-            }
+                var deleted = _customerService.DeleteCustomer(customerId);
+                if (!deleted)
+                {
+                    _logger.LogWarning($"Customer with ID: {customerId} not found.");
+                    return NotFound(new { message = "Customer not found" });
+                }
 
-            return NoContent();
+                _logger.LogInformation($"Customer with ID: {customerId} deleted successfully.");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred while deleting customer." + ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+   
+            
+        
+
+        // ==========================================
+        // Customer Profile
+        // ==========================================
+
+        [HttpGet("{customerId}/profile")]
+        public IActionResult GetCustomerProfile(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpPut("{customerId}/profile")]
+        public IActionResult UpdateCustomerProfile(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpPut("{customerId}/address")]
+        public IActionResult UpdateAddress(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpPut("{customerId}/contact")]
+        public IActionResult UpdateContactInformation(int customerId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Nominee Management
+        // ==========================================
+
+        [HttpPost("{customerId}/nominees")]
+        public IActionResult AddNominee(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/nominees")]
+        public IActionResult GetNominees(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpPut("{customerId}/nominees/{nomineeId}")]
+        public IActionResult UpdateNominee(int customerId, int nomineeId)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{customerId}/nominees/{nomineeId}")]
+        public IActionResult DeleteNominee(int customerId, int nomineeId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Customer Policies
+        // ==========================================
+
+        [HttpPost("{customerId}/policies/{policyId}/purchase")]
+        public IActionResult PurchasePolicy(int customerId, int policyId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/policies")]
+        public IActionResult GetCustomerPolicies(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/policies/active")]
+        public IActionResult GetActivePolicies(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/policies/expired")]
+        public IActionResult GetExpiredPolicies(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/policies/{policyId}")]
+        public IActionResult GetPolicyDetails(int customerId, int policyId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Premiums
+        // ==========================================
+
+        [HttpGet("{customerId}/premiums")]
+        public IActionResult GetPremiums(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/premiums/due")]
+        public IActionResult GetDuePremiums(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/premiums/history")]
+        public IActionResult GetPremiumHistory(int customerId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Claims
+        // ==========================================
+
+        [HttpPost("{customerId}/claims")]
+        public IActionResult SubmitClaim(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/claims")]
+        public IActionResult GetClaims(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/claims/{claimId}")]
+        public IActionResult GetClaim(int customerId, int claimId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/claims/{claimId}/status")]
+        public IActionResult GetClaimStatus(int customerId, int claimId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Payments
+        // ==========================================
+
+        [HttpGet("{customerId}/payments")]
+        public IActionResult GetPaymentHistory(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/receipts")]
+        public IActionResult GetReceipts(int customerId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Dashboard
+        // ==========================================
+
+        [HttpGet("{customerId}/dashboard")]
+        public IActionResult GetDashboard(int customerId)
+        {
+            return Ok();
+        }
+
+        // ==========================================
+        // Reports
+        // ==========================================
+
+        [HttpGet("{customerId}/statement")]
+        public IActionResult GetAccountStatement(int customerId)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{customerId}/summary")]
+        public IActionResult GetInsuranceSummary(int customerId)
+        {
+            return Ok();
         }
     }
 }

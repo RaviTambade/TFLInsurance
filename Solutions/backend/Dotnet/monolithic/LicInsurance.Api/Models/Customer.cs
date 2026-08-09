@@ -55,4 +55,11 @@ public class Customer
     public bool IsActive { get; set; }
 
     public int? TotalPoliciesPurchased { get; set; }
+
+    /// <summary>
+    /// Navigation property for customer policies
+    /// Represents one-to-many relationship: One Customer can have Many Policies
+    /// </summary>
+    [NotMapped]
+    public virtual ICollection<CustomerPolicy>? CustomerPolicies { get; set; }
 }

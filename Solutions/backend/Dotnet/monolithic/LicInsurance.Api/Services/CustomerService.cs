@@ -1,9 +1,11 @@
 using LicInsurance.Api.Models;
+using LicInsurance.Api.Repositories.Interfaces;
 
 namespace LicInsurance.Api.Services
 {
     public class CustomerService : ICustomerService
     {
+<<<<<<< HEAD
         private readonly List<Customer> _customers = new()
         {
             new Customer
@@ -27,27 +29,40 @@ namespace LicInsurance.Api.Services
                 //CreatedOn = DateTime.UtcNow
             }
         };
+=======
+        private readonly ICustomerRepository _customerRepository;
+>>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
 
-        public IEnumerable<Customer> GetAll()
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            return _customers;
+            _customerRepository = customerRepository;
+        }
+        
+        public IEnumerable<Customer> GetCustomers()
+        {
+            return _customerRepository.GetCustomers();
         }
 
-        public Customer? GetById(int id)
+        public Customer? GetCustomerById(int customerId)
         {
-            return _customers.FirstOrDefault(x => x.CustomerId == id);
+            return _customerRepository.GetCustomerById(customerId);
         }
 
-        public Customer Create(Customer customer)
+        public int RegisterCustomer(Customer customer)
         {
+<<<<<<< HEAD
             customer.CustomerId = _customers.Any() ? _customers.Max(x => x.CustomerId) + 1 : 1;
             //customer.CreatedOn ??= DateTime.UtcNow;
             _customers.Add(customer);
             return customer;
+=======
+            return _customerRepository.AddCustomer(customer);
+>>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
         }
 
-        public Customer? Update(int id, Customer customer)
+        public bool UpdateCustomer(int customerId, Customer customer)
         {
+<<<<<<< HEAD
             var existingCustomer = _customers.FirstOrDefault(x => x.CustomerId == id);
             if (existingCustomer == null)
             {
@@ -62,18 +77,16 @@ namespace LicInsurance.Api.Services
             //existingCustomer.CreatedOn = existingCustomer.CreatedOn ?? DateTime.UtcNow;
 
             return existingCustomer;
+=======
+            return _customerRepository.UpdateCustomer(customerId, customer);
+>>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
         }
 
-        public bool Delete(int id)
+        public bool DeleteCustomer(int customerId)
         {
-            var customer = _customers.FirstOrDefault(x => x.CustomerId == id);
-            if (customer == null)
-            {
-                return false;
-            }
-
-            _customers.Remove(customer);
-            return true;
+            return _customerRepository.DeleteCustomer(customerId) > 0;
         }
     }
 }
+
+       

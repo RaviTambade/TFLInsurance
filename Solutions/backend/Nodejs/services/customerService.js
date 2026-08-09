@@ -13,53 +13,9 @@ exports.getCustomerById = (id, result) => {
 };
 
 // Add
-exports.addCustomer = (
-    CustomerCode,
-    FirstName,
-    LastName,
-    DateOfBirth,
-    Gender,
-    Email,
-    MobileNumber,
-    AddressLine1,
-    AddressLine2,
-    City,
-    State,
-    PostalCode,
-    Country,
-    PanNumber,
-    AadhaarNumber,
-    Occupation,
-    AnnualIncome,
-    NomineeName,
-    NomineeRelationship,
-    NomineeContactNumber,
-    result
-) => {
+exports.registerCustomer = (customer, result) => {
 
-    customerRepo.addCustomer(
-        CustomerCode,
-        FirstName,
-        LastName,
-        DateOfBirth,
-        Gender,
-        Email,
-        MobileNumber,
-        AddressLine1,
-        AddressLine2,
-        City,
-        State,
-        PostalCode,
-        Country,
-        PanNumber,
-        AadhaarNumber,
-        Occupation,
-        AnnualIncome,
-        NomineeName,
-        NomineeRelationship,
-        NomineeContactNumber,
-        result
-    );
+    customerRepo.registerCustomer(customer, result);
 
 };
 

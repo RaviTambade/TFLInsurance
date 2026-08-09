@@ -1,14 +1,11 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
-using System.Text;
+﻿using LicInsurance.Api.Helpers;
 using LicInsurance.Api.Services;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
-namespace LicInsurance.Api.Helpers
+namespace LicInsurance.Api.Middlewares
 {
     public class JwtMiddleware
     {
