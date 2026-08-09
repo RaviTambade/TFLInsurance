@@ -95,7 +95,20 @@ exports.deleteUser = (id, result) => {
 exports.getCustomerProfileByUserId = (id, result) => {
 
     connection.query(
-        `SELECT customers.FirstName, customers.LastName, customers.Email,customers.NomineeName,customers.NomineeRelationship,customers.NomineeContactNumber,users.IsActive
+        `SELECT customers.CustomerId,
+                customers.FirstName, 
+                customers.LastName, 
+                customers.Email,
+                customers.NomineeName,
+                customers.NomineeRelationship,
+                customers.NomineeContactNumber,
+                customers.AddressLine1,
+                customers.AddressLine2,
+                customers.City,
+                customers.State,
+                customers.PostalCode,
+                customers.Country,
+                users.IsActive
             FROM users JOIN customers 
             ON users.UserId = customers.UserId 
             WHERE users.UserId = ?;`,

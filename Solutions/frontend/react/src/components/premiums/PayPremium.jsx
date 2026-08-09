@@ -8,20 +8,59 @@ function PayPremium() {
 
     const policy = location.state?.policy;
 
+    const getCurrentLocalDateTime = () => {
+        const now = new Date();
+        const offsetMinutes = now.getTimezoneOffset();
+        const local = new Date(now.getTime() - offsetMinutes * 60000);
+        return local.toISOString().slice(0, 16);
+    };
+
+    const generateTransactionId = () => {
+        return `TXN-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    };
+
     const [premium, setPremium] = useState({
         PolicyId: policy?.PolicyId || "",
         CustomerId: policy?.CustomerId || "",
         PolicyAmount: policy?.PolicyAmount || "",
         AmountPaid: "",
         PaymentFrequency: "",
-        PaymentDate: "",
+        PaymentDate: getCurrentLocalDateTime(),
         PaymentMode: "",
-        TransactionId: "",
+        TransactionId: generateTransactionId(),
         Remarks: "",
         PaymentStatus: "Success"
     });
 
+    const [paymentCompleted, setPaymentCompleted] = useState(false);
+    const [nextDueDate, setNextDueDate] = useState("");
 
+    const getNextDueDate = (paymentDate, frequency) => {
+        if (!paymentDate || !frequency) return "";
+
+        const date = new Date(paymentDate);
+        switch (frequency) {
+            case "Monthly":
+                date.setMonth(date.getMonth() + 1);
+                break;
+            case "Quarterly":
+                date.setMonth(date.getMonth() + 3);
+                break;
+            case "Half-Yearly":
+                date.setMonth(date.getMonth() + 6);
+                break;
+            case "Yearly":
+                date.setFullYear(date.getFullYear() + 1);
+                break;
+            default:
+                return "";
+        }
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
 
     const handleChange = (e) => {
 
@@ -78,7 +117,13 @@ function PayPremium() {
 
             const result = await response.json();
 
-            alert(result.message);
+            if (response.ok) {
+                setPaymentCompleted(true);
+                setNextDueDate(getNextDueDate(premium.PaymentDate, premium.PaymentFrequency));
+                alert(result.message);
+            } else {
+                alert(result.message || "Payment Failed");
+            }
 
            // navigate("/premiums");
 
@@ -110,248 +155,106 @@ function PayPremium() {
                         </div>
 
                         <div className="card-body">
-
                             <form onSubmit={payPremium}>
-
-                                <table className="table table-bordered">
-
-                                    <tbody>
-
-                                        <tr>
-
-                                            <th width="35%">Policy Id</th>
-
-                                            <td>
-
-                                                <input
-                                                    className="form-control"
-                                                    value={premium.PolicyId}
-                                                    readOnly
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Customer Id</th>
-
-                                            <td>
-
-                                                <input
-                                                    className="form-control"
-                                                    value={premium.CustomerId}
-                                                    readOnly
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Policy Amount</th>
-
-                                            <td>
-
-                                                <input
-                                                    className="form-control"
-                                                    value={premium.PolicyAmount}
-                                                    readOnly
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Payment Frequency</th>
-
-                                            <td>
-
-                                                <select
-                                                    className="form-control"
-                                                    value={premium.PaymentFrequency}
-                                                    onChange={(e) =>
-                                                        calculatePremium(e.target.value)
-                                                    }
-                                                >
-
-                                                    <option value="">
-                                                        Select Frequency
-                                                    </option>
-
-                                                    <option value="Monthly">
-                                                        Monthly
-                                                    </option>
-
-                                                    <option value="Quarterly">
-                                                        Quarterly
-                                                    </option>
-
-                                                    <option value="Half-Yearly">
-                                                        Half-Yearly
-                                                    </option>
-
-                                                    <option value="Yearly">
-                                                        Yearly
-                                                    </option>
-
-                                                </select>
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Amount Paid</th>
-
-                                            <td>
-
-                                                <input
-                                                    className="form-control"
-                                                    value={premium.AmountPaid}
-                                                    readOnly
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Payment Date</th>
-
-                                            <td>
-
-                                                <input
-                                                    type="datetime-local"
-                                                    name="PaymentDate"
-                                                    className="form-control"
-                                                    value={premium.PaymentDate}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Payment Mode</th>
-
-                                            <td>
-
-                                                <select
-                                                    name="PaymentMode"
-                                                    className="form-control"
-                                                    value={premium.PaymentMode}
-                                                    onChange={handleChange}
-                                                    required
-                                                >
-
-                                                    <option value="">
-                                                        Select Payment Mode
-                                                    </option>
-
-                                                    <option value="UPI">
-                                                        UPI
-                                                    </option>
-
-                                                    <option value="Debit Card">
-                                                        Debit Card
-                                                    </option>
-
-                                                    <option value="Credit Card">
-                                                        Credit Card
-                                                    </option>
-
-                                                    <option value="Net Banking">
-                                                        Net Banking
-                                                    </option>
-
-                                                    <option value="Cash">
-                                                        Cash
-                                                    </option>
-
-                                                </select>
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Transaction Id</th>
-
-                                            <td>
-
-                                                <input
-                                                    type="text"
-                                                    name="TransactionId"
-                                                    className="form-control"
-                                                    value={premium.TransactionId}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <th>Remarks</th>
-
-                                            <td>
-
-                                                <textarea
-                                                    name="Remarks"
-                                                    className="form-control"
-                                                    value={premium.Remarks}
-                                                    onChange={handleChange}
-                                                />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <td
-                                                colSpan="2"
-                                                className="text-center"
-                                            >
-
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary me-3"
-                                                >
-                                                    Pay Premium
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary"
-                                                    onClick={() => navigate("/policylistinpremium")}
-                                                >
-                                                    Back
-                                                </button>
-
-                                            </td>
-
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
-
+                                <div className="row gy-4">
+                                    <div className="col-12">
+                                        <div className="alert alert-light border rounded p-3">
+                                            <div className="d-flex justify-content-between flex-column flex-md-row gap-3">
+                                                <div>
+                                                    <h6 className="mb-1">Policy Amount</h6>
+                                                    <p className="mb-0 fs-5">Rs.{premium.PolicyAmount || "0.00"}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Payment Frequency</label>
+                                        <select
+                                            className="form-select"
+                                            value={premium.PaymentFrequency}
+                                            onChange={(e) => calculatePremium(e.target.value)}
+                                            required
+                                        >
+                                            <option value="">Select Frequency</option>
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="Quarterly">Quarterly</option>
+                                            <option value="Half-Yearly">Half-Yearly</option>
+                                            <option value="Yearly">Yearly</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Amount Due</label>
+                                        <input
+                                            className="form-control"
+                                            value={premium.AmountPaid}
+                                            readOnly
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Payment Date</label>
+                                        <input
+                                            type="datetime-local"
+                                            name="PaymentDate"
+                                            className="form-control"
+                                            value={premium.PaymentDate}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Payment Mode</label>
+                                        <select
+                                            name="PaymentMode"
+                                            className="form-select"
+                                            value={premium.PaymentMode}
+                                            onChange={handleChange}
+                                            required
+                                        >
+                                            <option value="">Select Payment Mode</option>
+                                            <option value="UPI">UPI</option>
+                                            <option value="Debit Card">Debit Card</option>
+                                            <option value="Credit Card">Credit Card</option>
+                                            <option value="Net Banking">Net Banking</option>
+                                            <option value="Cash">Cash</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label className="form-label">Remarks</label>
+                                        <textarea
+                                            name="Remarks"
+                                            className="form-control"
+                                            value={premium.Remarks}
+                                            onChange={handleChange}
+                                            rows="3"
+                                        />
+                                    </div>
+
+                                    <div className="col-12">
+                                        {paymentCompleted && nextDueDate && (
+                                            <div className="alert alert-success">
+                                                Premium paid successfully. Next premium due on <strong>{nextDueDate}</strong>.
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="col-12 d-flex flex-column flex-sm-row justify-content-start gap-3 mt-2">
+                                        <button type="submit" className="btn btn-primary px-4" disabled={paymentCompleted}>
+                                            {paymentCompleted ? "Payment Completed" : "Pay Premium"}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-secondary px-4"
+                                            onClick={() => navigate("/policylistinpremium")}
+                                        >
+                                            Back
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
-
                         </div>
 
                     </div>

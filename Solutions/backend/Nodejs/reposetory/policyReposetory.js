@@ -43,78 +43,43 @@ exports.getPolicyByNumber = (PolicyNumber, result) => {
 
 exports.renewPolicy = (PolicyNumber, result) => {
 
-    const sql = `
-        UPDATE policies
-        SET IsRenewed = 1
-        WHERE PolicyNumber = ?
-    `;
+    const sql = `UPDATE policies
+                SET IsRenewed = 1
+                WHERE PolicyNumber = ?`;
 
-    connection.query(
-        sql,
-        [PolicyNumber],
-        result
-    );
-
+            connection.query(sql,[PolicyNumber],result);
 };
 
 //above function getPolicyByNumber is used to get policy by policy number
 
 // Add Policy
-exports.addPolicy = (
-                        PolicyNumber,
-                        CustomerId,
-                        PolicyType,
-                        PolicyAmount,
-                        IsRenewed,
-                        result
-                    ) => {
+exports.addPolicy = (id, PolicyType, PolicyAmount, IsRenewed, result) => {
 
-                        const sql = `
-                            INSERT INTO policies
-                            (PolicyNumber,CustomerId,PolicyType,PolicyAmount,IsRenewed)
-                            VALUES (?,?,?,?,?)
-                        `;
+    const sql = `INSERT INTO policies
+                (CustomerId, PolicyNumber, PolicyType, PolicyAmount, IsRenewed)
+                VALUES (?, ?, ?, ?, ?)`;
 
-                        connection.query(sql,
-                            [
-                                PolicyNumber,
-                                CustomerId,
-                                PolicyType,
-                                PolicyAmount,
-                                IsRenewed
-                            ],
-                            result
-                        );
-                    };
+    const policyNumber = `POL${Date.now()}`;
+
+    connection.query(
+        sql,
+        [id, policyNumber, PolicyType, PolicyAmount, IsRenewed],
+        result
+    );
+};
 
 
                     // Update Policy
 
-exports.updatePolicy = (
-                        id,
-                        PolicyType,
-                        PolicyAmount,
-                        IsRenewed,
-                        result
-                    ) => {
+exports.updatePolicy = (id,PolicyType,PolicyAmount,IsRenewed,result) => {
 
-                        const sql = `
-                        UPDATE policies
-                        SET PolicyType=?,
-                            PolicyAmount=?,
-                            IsRenewed=?
-                        WHERE PolicyId=?
-                        `;
+                        const sql = `UPDATE policies
+                                    SET PolicyType=?,
+                                    PolicyAmount=?,
+                                    IsRenewed=?
+                                    WHERE PolicyId=?`;
 
-                        connection.query(sql,
-                            [
-                                PolicyType,
-                                PolicyAmount,
-                                IsRenewed,
-                                id
-                            ],
-                            result
-                        );
+                        connection.query(sql,[PolicyType,PolicyAmount,IsRenewed,id],result);
 
                     };
 

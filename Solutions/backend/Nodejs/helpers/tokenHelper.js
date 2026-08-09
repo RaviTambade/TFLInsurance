@@ -7,26 +7,26 @@ const REFRESH_TOKEN_EXPIRY = jwtConfig.refreshTokenExpiry;
 
 function generateAccessToken(user) {
     return jwt.sign(
-        {
-            UserId: user.UserId,
-            Username: user.Username,
-            Role: user.Role
-        },
-        SECRET_KEY,
-        { expiresIn: ACCESS_TOKEN_EXPIRY }
+                    {
+                        UserId: user.UserId,
+                        Username: user.Username,
+                        Role: user.Role
+                    },
+                    SECRET_KEY,
+                    { expiresIn: ACCESS_TOKEN_EXPIRY }
     );
 }
 
 function generateRefreshToken(user) {
     return jwt.sign(
-        {
-            UserId: user.UserId,
-            Username: user.Username,
-            Role: user.Role,
-            type: 'refresh'
-        },
-        SECRET_KEY,
-        { expiresIn: REFRESH_TOKEN_EXPIRY }
+                    {
+                        UserId: user.UserId,
+                        Username: user.Username,
+                        Role: user.Role,
+                        type: 'refresh'
+                    },
+                    SECRET_KEY,
+                    { expiresIn: REFRESH_TOKEN_EXPIRY }
     );
 }
 

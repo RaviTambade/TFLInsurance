@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/customerController");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
 
 
@@ -12,7 +13,7 @@ router.post('/register',controller.registerCustomer);
 
 router.get("/:id", controller.getCustomerById);
 
-router.put("/:id", controller.updateCustomer);
+router.put("/editProfilebyUserId/:id", verifyToken, controller.updateCustomer);
 
 router.delete("/:id", controller.deleteCustomer);
 

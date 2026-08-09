@@ -81,33 +81,18 @@ emitter.on("customerAdded", handlers.SMSsend);
 // Update Customer
 exports.updateCustomer = (req, res) => {
 
-    
+    const customer = req.body;
+    customer.UserId = req.params.id;
     console.log(req.headers);
     console.log(req.body);
 
-    customerService.updateCustomer(
-        
-
-       req.params.id,
-         req.body.FirstName,
-        req.body.LastName,
-        req.body.Email,
-        req.body.MobileNumber,
-        req.body.AddressLine1,
-        req.body.AddressLine2,
-        req.body.City,
-        req.body.State,
-        req.body.PostalCode,
-        req.body.Country,
-        
-
-        (err, data) => {
+    customerService.updateCustomer(customer, (err, data) => {
 
             if (err)
                 return res.status(500).send(err);
 
             res.json({
-                message: "Customer Updated Successfully"
+                message: "Changes Saved Successfully"
             });
 
             if (data) {

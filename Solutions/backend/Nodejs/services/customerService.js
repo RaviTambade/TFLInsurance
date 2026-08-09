@@ -20,35 +20,10 @@ exports.registerCustomer = (customer, result) => {
 };
 
 // Update
-exports.updateCustomer = (
-    id,
-    FirstName,
-    LastName,
-    Email,
-    MobileNumber,
-    AddressLine1,
-    AddressLine2,
-    City,
-    State,
-    PostalCode,
-    Country,
-    result
-) => {
+exports.updateCustomer = (customer, result) => {
 
-    customerRepo.updateCustomer(
-        id,
-        FirstName,
-        LastName,
-        Email,
-        MobileNumber,
-        AddressLine1,
-        AddressLine2,
-        City,
-        State,
-        PostalCode,
-        Country,
-        result
-    );
+    const userId = customer.UserId || customer.userId || customer.id;
+    customerRepo.updateCustomer(userId,customer,result);
 
 };
 

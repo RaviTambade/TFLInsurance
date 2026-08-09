@@ -12,7 +12,7 @@ router.get("/:id", controller.getPolicyById);
 
 router.get("/getPolicyByCustomerId/:id",controller.getPolicyByCustomerId);
 
-router.post("/", controller.addPolicy);
+router.post("/addPolicy/:id", controller.addPolicy);
 
 router.put("/:id", controller.updatePolicy);
 

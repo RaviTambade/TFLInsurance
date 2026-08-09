@@ -111,51 +111,35 @@ exports.registerCustomer = (customer, callback) => {
 };
 
 // Update Customer
-exports.updateCustomer = (
-                        id,
-                        FirstName,
-                        LastName,
-                        Email,
-                        MobileNumber,
-                        AddressLine1,
-                        AddressLine2,
-                        City,
-                        State,
-                        PostalCode,
-                        Country,
-                        result
-) => {
+exports.updateCustomer = (userId, customer, result) => {
 
     const sql = `
         UPDATE customers
-        SET
-            FirstName=?,
-            LastName=?,
-            Email=?,
-            MobileNumber=?,
+        SET NomineeName=?,
+            NomineeRelationship=?,
+            NomineeContactNumber=?,
             AddressLine1=?,
             AddressLine2=?,
             City=?,
             State=?,
             PostalCode=?,
             Country=?
-        WHERE CustomerId=?
+        WHERE UserId=?
     `;
 
     connection.query(
         sql,
-        [
-            FirstName,
-            LastName,
-            Email,
-            MobileNumber,
-            AddressLine1,
-            AddressLine2,
-            City,
-            State,
-            PostalCode,
-            Country,
-            id
+        [   
+            customer.NomineeName,
+            customer.NomineeRelationship,
+            customer.NomineeContactNumber,
+            customer.AddressLine1,
+            customer.AddressLine2,
+            customer.City,
+            customer.State,
+            customer.PostalCode,
+            customer.Country,
+            userId
         ],
         result
     );
