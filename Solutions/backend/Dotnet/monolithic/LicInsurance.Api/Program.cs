@@ -6,6 +6,10 @@ using TFLInsurance.LicInsurance.Repositories;
 using TFLInsurance.LicInsurance.Services;
 using LicInsurance.Api.Repositories.Connections;
 using LicInsurance.Api.Repositories.Dapper;
+using TFLInsurance.Licinsruance.Repositories.Interfaces;
+using TFLInsurance.Licinsruance.Repositories;
+using TFLInsurance.Licinsruance.Services.Interfaces;
+using TFLInsurance.Licinsruance.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +26,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
+
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
+builder.Services.AddScoped<IClaimService, ClaimService>();
+
 builder.Services.AddSwaggerGen();
 
 
