@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.abstractions\8.20.0\buildTransitive\Microsoft.IdentityModel.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.abstractions\8.20.0\buildTransitive\Microsoft.IdentityModel.Abstractions.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.logging\8.20.0\buildTransitive\Microsoft.IdentityModel.Logging.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.logging\8.20.0\buildTransitive\Microsoft.IdentityModel.Logging.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.tokens\8.20.0\buildTransitive\Microsoft.IdentityModel.Tokens.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.tokens\8.20.0\buildTransitive\Microsoft.IdentityModel.Tokens.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.jsonwebtokens\8.20.0\buildTransitive\Microsoft.IdentityModel.JsonWebTokens.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.jsonwebtokens\8.20.0\buildTransitive\Microsoft.IdentityModel.JsonWebTokens.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.identitymodel.tokens.jwt\8.20.0\buildTransitive\System.IdentityModel.Tokens.Jwt.targets" Condition="Exists('$(NuGetPackageRoot)system.identitymodel.tokens.jwt\8.20.0\buildTransitive\System.IdentityModel.Tokens.Jwt.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.extensions.apidescription.server\10.0.0\build\Microsoft.Extensions.ApiDescription.Server.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.apidescription.server\10.0.0\build\Microsoft.Extensions.ApiDescription.Server.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.protocols\8.20.0\buildTransitive\Microsoft.IdentityModel.Protocols.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.protocols\8.20.0\buildTransitive\Microsoft.IdentityModel.Protocols.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.protocols.openidconnect\8.20.0\buildTransitive\Microsoft.IdentityModel.Protocols.OpenIdConnect.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.protocols.openidconnect\8.20.0\buildTransitive\Microsoft.IdentityModel.Protocols.OpenIdConnect.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.openapi\10.0.7\build\Microsoft.AspNetCore.OpenApi.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.openapi\10.0.7\build\Microsoft.AspNetCore.OpenApi.targets')" />
+  </ImportGroup>
+</Project>

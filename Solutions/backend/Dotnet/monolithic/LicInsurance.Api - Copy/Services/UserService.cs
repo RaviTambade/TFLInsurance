@@ -1,0 +1,104 @@
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using Claim = System.Security.Claims.Claim;
+using System.Text;
+using LicInsurance.Api.Models;
+using LicInsurance.Api.Helpers;
+
+
+namespace LicInsurance.Api.Services
+{ 
+
+    public class UserService : IUserService
+    {
+        // users hardcoded for simplicity,
+        // store in a db with hashed passwords in production applications
+       private List<User> _users = new List<User>
+          {
+
+          /*  new User { Id = 1, FirstName = "Swarali", LastName = "L", Username = "swarali", Password = "swarali", Role = Role.Admin },
+            new User { Id = 2, FirstName = "Ganesh", LastName = "S", Username = "ganesh", Password = "ganesh", Role = Role.User } ,
+            new User { Id = 3, FirstName = "Rutuja", LastName = "T", Username = "rutuja", Password = "rutuja", Role = Role.User },
+            new User { Id = 4, FirstName = "Vishwambhar", LastName = "K", Username = "vishwambhar", Password = "vishwambhar", Role = Role.User },
+            new User { Id = 5, FirstName = "Rohit", LastName = "W", Username = "rohit", Password = "rohit", Role = Role.Admin },
+            */
+
+       };
+
+        private readonly AppSettings _appSettings;
+
+        public UserService(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
+
+        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        {
+           
+          
+            User user=new User();
+            // authentication successful so generate jwt token
+            var token = generateJwtToken(user);
+
+            return new AuthenticateResponse(null, token);
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return _users;
+        }
+
+        public User GetById(int id)
+        {
+            return _users.FirstOrDefault(x => x.UserId == id);
+        }
+
+        // helper methods
+
+        private string generateJwtToken(User user)
+        {
+            // generate token that is valid for 7 days
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()),
+                                                     new Claim("role",user.Role)}),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
+                                                            SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public string GenerateAccessToken(string username)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[] { new Claim(ClaimTypes.Name, username) };
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(7),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string GenerateRefreshToken()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+    }
+}
