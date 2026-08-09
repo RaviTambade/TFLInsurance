@@ -19,6 +19,6 @@
 | 9 | GET | `/api/policies/getAllPolicies` | Get all policies | policies API |
 | 10 | GET | `/api/users/getAllUsers` | Get all user list | User API |
 | 11 | PUT | `/api/users/resetPassword/${selectedUser.UserId}` | reset password | users API |
-| 12 | PATCH | `/api/users/createUser` | create user by admin | users API |
+| 12 | POST | `/api/users/createUser` | create user by admin | users API |
 | 13 | PUT | `/api/users/updateRole/${selectedUser.UserId}` | assign role by admin | users API |
 | 14 | GET | `/api/users/getUser/${user.UserId}` | view perticuler user details | user API |
