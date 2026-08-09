@@ -39,4 +39,40 @@ namespace LicInsurance.Api.Repositories.Dapper;
          using var connection = _factory.CreateConnection();
          return connection.QuerySingle<T>( sql, param,commandType: commandType);
      }
- }
+    public async Task<IEnumerable<T>> QueryAsync<T>(
+    string sql,
+    object? param = null,
+    CommandType commandType = CommandType.StoredProcedure)
+    {
+        using var connection = _factory.CreateConnection();
+
+        return await connection.QueryAsync<T>(
+            sql,
+            param,
+            commandType: commandType);
+    }
+    public async Task<T?> QueryFirstOrDefaultAsync<T>(
+    string sql,
+    object? param = null,
+    CommandType commandType = CommandType.StoredProcedure)
+    {
+        using var connection = _factory.CreateConnection();
+
+        return await connection.QueryFirstOrDefaultAsync<T>(
+            sql,
+            param,
+            commandType: commandType);
+    }
+    public async Task<int> ExecuteAsync(
+    string sql,
+    object? param = null,
+    CommandType commandType = CommandType.StoredProcedure)
+    {
+        using var connection = _factory.CreateConnection();
+
+        return await connection.ExecuteAsync(
+            sql,
+            param,
+            commandType: commandType);
+    }
+}

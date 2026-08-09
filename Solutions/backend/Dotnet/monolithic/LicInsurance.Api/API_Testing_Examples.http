@@ -1,0 +1,451 @@
+### CustomerPolicy API Testing Examples
+### Save as: LicInsurance.Api.CustomerPolicy.http
+
+### ========================================
+### GET ENDPOINTS
+### ========================================
+
+### Get All Customer Policies
+GET https://localhost:5001/api/customerpolicies
+Accept: application/json
+
+###
+
+### Get Customer Policy by ID
+GET https://localhost:5001/api/customerpolicies/1
+Accept: application/json
+
+###
+
+### Get All Policies for a Specific Customer
+GET https://localhost:5001/api/customerpolicies/customer/1
+Accept: application/json
+
+###
+
+### Get Policies by Status for a Customer (Active)
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Active
+Accept: application/json
+
+###
+
+### Get Policies by Status for a Customer (Expired)
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Expired
+Accept: application/json
+
+###
+
+### Get Policies by Status for a Customer (Cancelled)
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Cancelled
+Accept: application/json
+
+###
+
+### ========================================
+### POST ENDPOINTS
+### ========================================
+
+### Create New Customer Policy
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2024-12-15",
+  "nextPaymentDueDate": "2025-01-15",
+  "remarks": "Policy enrolled for customer",
+  "isActive": true
+}
+
+###
+
+### Create Customer Policy - Quarterly Payment
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 2,
+  "purchaseDate": "2024-03-01",
+  "expiryDate": "2025-03-01",
+  "status": "Active",
+  "premiumAmount": 12500.00,
+  "paymentFrequency": "Quarterly",
+  "nextPaymentDueDate": "2025-04-01",
+  "remarks": "Quarterly premium policy",
+  "isActive": true
+}
+
+###
+
+### Create Customer Policy - Annual Payment
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 3,
+  "purchaseDate": "2024-01-01",
+  "expiryDate": "2025-01-01",
+  "status": "Active",
+  "premiumAmount": 60000.00,
+  "paymentFrequency": "Annually",
+  "lastPaymentDate": "2024-01-01",
+  "nextPaymentDueDate": "2025-01-01",
+  "remarks": "Annual premium policy",
+  "isActive": true
+}
+
+###
+
+### Create Customer Policy - Pending Status
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 2,
+  "policyId": 1,
+  "purchaseDate": "2025-01-10",
+  "expiryDate": "2026-01-10",
+  "status": "Pending",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "remarks": "Policy awaiting approval",
+  "isActive": true
+}
+
+###
+
+### Renew a Customer Policy
+POST https://localhost:5001/api/customerpolicies/1/renew
+Accept: application/json
+
+###
+
+### ========================================
+### PUT ENDPOINTS
+### ========================================
+
+### Update Customer Policy - Change Status to Inactive
+PUT https://localhost:5001/api/customerpolicies/1
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Inactive",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2024-12-15",
+  "nextPaymentDueDate": "2025-01-15",
+  "remarks": "Policy put on hold",
+  "isActive": false
+}
+
+###
+
+### Update Customer Policy - Increase Premium Amount
+PUT https://localhost:5001/api/customerpolicies/1
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Active",
+  "premiumAmount": 5500.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2024-12-15",
+  "nextPaymentDueDate": "2025-01-15",
+  "remarks": "Premium increased due to policy terms",
+  "isActive": true
+}
+
+###
+
+### Update Customer Policy - Record Payment
+PUT https://localhost:5001/api/customerpolicies/1
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2025-01-15",
+  "nextPaymentDueDate": "2025-02-15",
+  "remarks": "Payment received on 2025-01-15",
+  "isActive": true
+}
+
+###
+
+### Update Customer Policy - Expire
+PUT https://localhost:5001/api/customerpolicies/1
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Expired",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2024-12-15",
+  "nextPaymentDueDate": null,
+  "remarks": "Policy expired on maturity date",
+  "isActive": false
+}
+
+###
+
+### Update Customer Policy - Bulk Remark Update
+PUT https://localhost:5001/api/customerpolicies/2
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 2,
+  "purchaseDate": "2024-03-01",
+  "expiryDate": "2025-03-01",
+  "status": "Active",
+  "premiumAmount": 12500.00,
+  "paymentFrequency": "Quarterly",
+  "lastPaymentDate": "2024-12-01",
+  "nextPaymentDueDate": "2025-04-01",
+  "remarks": "Quarterly premium - Next payment due on 2025-04-01",
+  "isActive": true
+}
+
+###
+
+### ========================================
+### DELETE ENDPOINTS
+### ========================================
+
+### Delete Customer Policy
+DELETE https://localhost:5001/api/customerpolicies/5
+Accept: application/json
+
+###
+
+### ========================================
+### ERROR TEST CASES
+### ========================================
+
+### Test Invalid Customer ID (Create)
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": -1,
+  "policyId": 1,
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "isActive": true
+}
+
+### Expected Response: 400 Bad Request - "Invalid customer ID"
+
+###
+
+### Test Invalid Policy ID (Create)
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 0,
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "isActive": true
+}
+
+### Expected Response: 400 Bad Request - "Invalid policy ID"
+
+###
+
+### Test Negative Premium Amount (Create)
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "status": "Active",
+  "premiumAmount": -1000.00,
+  "isActive": true
+}
+
+### Expected Response: 400 Bad Request - "Premium amount cannot be negative"
+
+###
+
+### Test Non-existent Policy ID (Get)
+GET https://localhost:5001/api/customerpolicies/9999
+Accept: application/json
+
+### Expected Response: 404 Not Found - "Customer policy not found"
+
+###
+
+### Test Non-existent Customer ID (Get by Customer)
+GET https://localhost:5001/api/customerpolicies/customer/9999
+Accept: application/json
+
+### Expected Response: 404 Not Found - "No policies found for this customer"
+
+###
+
+### Test Invalid Customer ID in Get (negative)
+GET https://localhost:5001/api/customerpolicies/customer/-1
+Accept: application/json
+
+### Expected Response: 400 Bad Request - "Invalid customer ID"
+
+###
+
+### Test Delete Non-existent Policy
+DELETE https://localhost:5001/api/customerpolicies/9999
+Accept: application/json
+
+### Expected Response: 404 Not Found - "Customer policy not found"
+
+###
+
+### ========================================
+### SAMPLE DATA SCENARIOS
+### ========================================
+
+### Scenario 1: New Customer Onboarding
+### Step 1: Create Policy 1 (Life Insurance - Monthly)
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 3,
+  "policyId": 1,
+  "purchaseDate": "2025-01-20",
+  "expiryDate": "2026-01-20",
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "nextPaymentDueDate": "2025-02-20",
+  "remarks": "New customer - Life Insurance enrollment",
+  "isActive": true
+}
+
+###
+
+### Scenario 1: Step 2 - Create Policy 2 (Health Insurance - Quarterly)
+POST https://localhost:5001/api/customerpolicies
+Content-Type: application/json
+
+{
+  "customerId": 3,
+  "policyId": 2,
+  "purchaseDate": "2025-01-20",
+  "expiryDate": "2026-01-20",
+  "status": "Pending",
+  "premiumAmount": 8000.00,
+  "paymentFrequency": "Quarterly",
+  "nextPaymentDueDate": "2025-04-20",
+  "remarks": "New customer - Health Insurance pending activation",
+  "isActive": true
+}
+
+###
+
+### Scenario 1: Step 3 - Get All Policies for Customer 3
+GET https://localhost:5001/api/customerpolicies/customer/3
+Accept: application/json
+
+###
+
+### Scenario 2: Payment Processing
+### Step 1 - Record Monthly Payment
+PUT https://localhost:5001/api/customerpolicies/1
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "policyId": 1,
+  "purchaseDate": "2024-01-15",
+  "expiryDate": "2025-01-15",
+  "status": "Active",
+  "premiumAmount": 5000.00,
+  "paymentFrequency": "Monthly",
+  "lastPaymentDate": "2025-01-20",
+  "nextPaymentDueDate": "2025-02-20",
+  "remarks": "Monthly premium payment received - INR 5000",
+  "isActive": true
+}
+
+###
+
+### Scenario 2: Step 2 - View Updated Policy
+GET https://localhost:5001/api/customerpolicies/1
+Accept: application/json
+
+###
+
+### Scenario 3: Policy Renewal
+### Step 1 - Get Current Policy Info
+GET https://localhost:5001/api/customerpolicies/1
+Accept: application/json
+
+###
+
+### Scenario 3: Step 2 - Renew Policy
+POST https://localhost:5001/api/customerpolicies/1/renew
+Accept: application/json
+
+###
+
+### Scenario 3: Step 3 - Verify Renewal
+GET https://localhost:5001/api/customerpolicies/1
+Accept: application/json
+
+###
+
+### Scenario 4: Policy Status Tracking
+### Step 1 - Get Active Policies
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Active
+Accept: application/json
+
+###
+
+### Scenario 4: Step 2 - Get Inactive Policies
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Inactive
+Accept: application/json
+
+###
+
+### Scenario 4: Step 3 - Get Expired Policies
+GET https://localhost:5001/api/customerpolicies/customer/1/status/Expired
+Accept: application/json
+
+###
+
+### Notes:
+### 1. Replace localhost:5001 with your actual API URL and port
+### 2. Add Authorization header if API requires authentication:
+###    Authorization: Bearer {your-jwt-token}
+### 3. Modify CustomerId, PolicyId based on your database
+### 4. All dates should be in ISO 8601 format (YYYY-MM-DD)
+### 5. PremiumAmount should be positive decimal values
+### 6. Valid Status values: Active, Inactive, Expired, Cancelled, Pending
+### 7. Valid PaymentFrequency: Monthly, Quarterly, Semi-Annually, Annually

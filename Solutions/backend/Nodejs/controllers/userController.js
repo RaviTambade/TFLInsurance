@@ -16,7 +16,25 @@ exports.getAllUsers=(request,response)=>{
     })
 }
 
+exports.getUserById = (req, res) => {
 
+    const id = req.params.id;
+
+    userService.getUserById(id, (err, result) => {
+
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        if (!result || result.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json(result);
+
+    });
+
+};
 
 exports.getUserCount = (req, res) => {
 
@@ -31,6 +49,17 @@ exports.getUserCount = (req, res) => {
 
     });
 
+};
+
+exports.createUser = (req, res) => {
+
+    const { Username, Password, Role ,IsActive} = req.body;
+    userService.createUser( Username, Password, Role ,IsActive, (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+        res.status(201).json(result);
+    });
 };
 
 exports.resetPassword = (req, res) => {
@@ -71,7 +100,7 @@ exports.deleteUser = (req, res) => {
 
     userService.deleteUser(
 
-        req.params.id,
+    req.params.id,
 
         (err, data) => {
 
@@ -93,6 +122,25 @@ exports.deleteUser = (req, res) => {
                     
     )}
 
+    exports.getCustomerProfileByUserId = (req, res) => {
+
+    const id = req.params.id;
+
+    userService.getCustomerProfileByUserId(id, (err, result) => {
+
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        if (!result || result.length === 0) {
+            return res.status(404).json({ message: "Customer profile not found" });
+        }
+
+        res.json(result);
+
+    });
+
+};
 
     // Update Role
 exports.updateRole = (req, res) => {

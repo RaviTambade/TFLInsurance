@@ -38,42 +38,21 @@ exports.getCustomerById = (req, res) => {
 
 
 // Add Customer
-exports.addCustomer = (req, res) => {
+exports.registerCustomer = (req, res) => {
 
-    customerService.addCustomer(
+    customerService.registerCustomer(req.body, (err, result) => {
 
-        req.body.CustomerCode,
-        req.body.FirstName,
-        req.body.LastName,
-        req.body.DateOfBirth,
-        req.body.Gender,
-        req.body.Email,
-        req.body.MobileNumber,
-        req.body.AddressLine1,
-        req.body.AddressLine2,
-        req.body.City,
-        req.body.State,
-        req.body.PostalCode,
-        req.body.Country,
-        req.body.PanNumber,
-        req.body.AadhaarNumber,
-        req.body.Occupation,
-        req.body.AnnualIncome,
-        req.body.NomineeName,
-        req.body.NomineeRelationship,
-        req.body.NomineeContactNumber
-    ,
-    (err, data) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
 
-        if (err)
-            return res.status(500).send(err);
-
-        res.json({
-            message: "Customer Added Successfully",
-            CustomerId: data.insertId
+        res.status(201).json({
+            success: true,
+            message: "Customer Registered Successfully"
         });
- });
-            
+
+    });
+
 };
 
            /* if (data) {

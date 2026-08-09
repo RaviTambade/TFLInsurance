@@ -4,17 +4,17 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
- 
-using LicInsurance.Api.Models; 
-using LicInsurance.Api.Data; 
+
+using LicInsurance.Api.Models;
+using LicInsurance.Api.Data;
 
 
-namespace   LicInsurance.Api.Controllers;
+namespace LicInsurance.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-  
+
     // Fake user store (replace with DB)
     private static readonly Dictionary<string, string> Users = new();
 
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         });
     }
 
-    
+
     //====================================================
     // POST : api/auth/register
     //====================================================
@@ -177,4 +177,4 @@ public class AuthController : ControllerBase
     }
 
 
-   }
+}

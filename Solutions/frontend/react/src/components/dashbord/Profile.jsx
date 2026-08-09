@@ -1,133 +1,166 @@
-
-
-import React from "react";
-
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Profile() {
 
-    const [Profile, setProfile] = useState({});
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [feedback, setFeedback] = useState("");
 
-    const customerId = localStorage.getItem("customerId");
-
-    const navigate = useNavigate();
-
-   const updateProfile = (e) => {
-
-        navigate("/UpdateProfile");
-
-    };
-   
-    const purchasePolicy = (e) => {
-
-        navigate("/PurchasePolicy");
-
-    };
-
-
-    const loadCustomer = async () => {
-
-        const response = await fetch(
-            `http://localhost:5000/api/customers/${customerId}`
-        );
-
-        const data = await response.json();
-
-        setProfile(data);
-        console.log(data);
-
-    };
-
-     useEffect(() => {
-        loadCustomer();
+    useEffect(() => {
+        fetchProfile();
     }, []);
 
-    
+    const fetchProfile = async () => {
 
-    
+        const userId = localStorage.getItem("userId");
 
-    return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-lg-10">
-                    <div className="card shadow-sm border-0">
-                        <div className="card-body p-4">
-                            <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
-                                <div>
-                                    <h2 className="mb-1">My Profile</h2>
-                                    <p className="text-muted mb-0">Manage your personal and nominee details securely.</p>
-                                </div>
-                                <span className="badge bg-primary fs-6 mt-2 mt-md-0">Customer Profile</span>
-                            </div>
+        if (!userId) {
+            setFeedback("Please login first.");
+            setLoading(false);
+            return;
+        }
 
-                            {Array.isArray(Profile) && Profile.length > 0 ? (
-                                Profile.map((profile) => (
-                                    <div key={profile.CustomerId}>
-                                        <div className="row g-3">
-                                            <div className="col-md-6">
-                                                <div className="p-3 rounded bg-light">
-                                                    <h5 className="mb-3">Personal Information</h5>
-                                                    <p className="mb-2"><strong>First Name:</strong> {profile.FirstName}</p>
-                                                    <p className="mb-2"><strong>Last Name:</strong> {profile.LastName}</p>
-                                                    <p className="mb-2"><strong>Date of Birth:</strong> {profile.DateOfBirth}</p>
-                                                    <p className="mb-2"><strong>Gender:</strong> {profile.Gender}</p>
-                                                    <p className="mb-2"><strong>Email:</strong> {profile.Email}</p>
-                                                    <p className="mb-0"><strong>Mobile Number:</strong> {profile.MobileNumber}</p>
-                                                </div>
-                                            </div>
+        try {
 
-                                            <div className="col-md-6">
-                                                <div className="p-3 rounded bg-light">
-                                                    <h5 className="mb-3">Address Details</h5>
-                                                    <p className="mb-2"><strong>Address Line 1:</strong> {profile.AddressLine1}</p>
-                                                    <p className="mb-2"><strong>Address Line 2:</strong> {profile.AddressLine2}</p>
-                                                    <p className="mb-2"><strong>City:</strong> {profile.City}</p>
-                                                    <p className="mb-2"><strong>State:</strong> {profile.State}</p>
-                                                    <p className="mb-0"><strong>Country:</strong> {profile.Country}</p>
-                                                </div>
-                                            </div>
+            const response = await fetch(
+                `http://localhost:5000/api/users/customerProfileByUserId/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
 
-                                            <div className="col-md-6">
-                                                <div className="p-3 rounded bg-light">
-                                                    <h5 className="mb-3">Identity & Income</h5>
-                                                    <p className="mb-2"><strong>PAN Number:</strong> {profile.PanNumber}</p>
-                                                    <p className="mb-2"><strong>Aadhaar Number:</strong> {profile.AadhaarNumber}</p>
-                                                    <p className="mb-2"><strong>Occupation:</strong> {profile.Occupation}</p>
-                                                    <p className="mb-0"><strong>Annual Income:</strong> {profile.AnnualIncome}</p>
-                                                </div>
-                                            </div>
+            if (!response.ok) {
+                throw new Error("Failed to load profile");
+            }
 
-                                            <div className="col-md-6">
-                                                <div className="p-3 rounded bg-light">
-                                                    <h5 className="mb-3">Nominee Information</h5>
-                                                    <p className="mb-2"><strong>Nominee Name:</strong> {profile.NomineeName}</p>
-                                                    <p className="mb-2"><strong>Relationship:</strong> {profile.NomineeRelationship}</p>
-                                                    <p className="mb-0"><strong>Contact Number:</strong> {profile.NomineeContactNumber}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="alert alert-info text-center">No profile information available.</div>
-                            )}
+            const data = await response.json();
 
-                            <div className="text-center mt-4">
-                                <button className="btn btn-primary me-2" onClick={updateProfile}>
-                                    Update Profile
-                                </button>
-                                <button className="btn btn-outline-primary" onClick={purchasePolicy}>
-                                    Purchase Policy
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            console.log("Profile API Response:", data);
+
+            setUser(Array.isArray(data) ? data[0] : data);
+
+        } catch (error) {
+            console.error(error);
+            setFeedback("Unable to load profile.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="container mt-5 text-center">
+                <h4>Loading...</h4>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <div className="container mt-5">
+                <div className="alert alert-danger">
+                    {feedback}
                 </div>
             </div>
+        );
+    }
+
+    return (
+
+        <div className="container mt-5">
+
+            <div className="row justify-content-center">
+
+                <div className="col-md-8">
+
+                    <div className="card shadow">
+
+                        <div className="card-header bg-primary text-white">
+
+                            <h3>My Profile</h3>
+
+                        </div>
+
+                        <div className="card-body">
+
+                            <div className="row mb-3">
+
+                                <div className="col-md-4">
+                                    <strong>First Name</strong>
+                                    <p>{user.FirstName}</p>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <strong>Last Name</strong>
+                                    <p>{user.LastName}</p>
+                                </div>
+
+                                 <div className="col-md-4">
+                                    <strong>Email</strong>
+                                    <p>{user.Email}</p>
+                                </div>
+
+
+                            </div>
+
+                            <div className="row mb-3">
+
+                                <div className="col-md-4">
+                                    <strong>Nominee Name</strong>
+                                    <p>{user.NomineeName}</p>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <strong>Nominee Relationship</strong>
+                                    <p>{user.NomineeRelationship}</p>
+                                </div>
+
+                                 <div className="col-md-4">
+                                    <strong>Nominee Contact</strong>
+                                    <p>{user.NomineeContactNumber}</p>
+                                </div>
+
+                            </div>
+
+                            <div className="row mb-3">
+
+                              
+                                <div className="col-md-12">
+                                    <strong>Status</strong>
+                                    <p>{user.IsActive ? "Active" : "Inactive"}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div className="card-footer d-flex justify-content-between">
+
+                            <button
+                                className="btn btn-success"
+                            >
+                                Purchase Policy
+                            </button>
+
+                            <button
+                                className="btn btn-primary"
+                            >
+                                Edit Profile
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
     );
 }
-
 
 export default Profile;
