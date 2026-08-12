@@ -1,10 +1,15 @@
 var express = require("express");
+const logger = require("./config/logger");
+const requestLogger =require("./middlewares/requestLogger");
 var path = require("path");
 var cors = require("cors");
 var bodyParser = require("body-parser");
 
 var app = express();   
 app.use(express.json());
+app.use(requestLogger);
+logger.info("Insurance application started");
+
 // Middleware
 app.use(cors());
 
@@ -29,5 +34,7 @@ app.use("/api/users",userRouter);
 
 
 app.listen(5000, () => {
-    console.log("Server listening on port 5000");
+    logger.info(
+        "Server running on port 5000"
+    );
 });

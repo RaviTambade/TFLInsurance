@@ -1,5 +1,5 @@
+
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function PolicyList() {
 
@@ -7,29 +7,14 @@ function PolicyList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    const navigate = useNavigate();
-
-    // ==========================================
-    // LOAD CUSTOMER POLICIES
-    // ==========================================
-
     const loadPolicies = async () => {
 
         setLoading(true);
         setError("");
 
-        // Get CustomerId from localStorage
-        const customerId =
-            localStorage.getItem("customerId");
+        const customerId = localStorage.getItem("customerId");
 
-        console.log(
-            "PolicyList CustomerId:",
-            customerId
-        );
-
-        // ==========================================
-        // CUSTOMER ID CHECK
-        // ==========================================
+        console.log("PolicyList CustomerId:", customerId);
 
         if (!customerId) {
 
@@ -38,35 +23,22 @@ function PolicyList() {
             );
 
             setLoading(false);
-
             return;
         }
 
         try {
 
-            // ==========================================
-            // GET POLICIES
-            // ==========================================
-
             const url =
                 `http://localhost:5000/api/policies/getPolicyByCustomerId/${customerId}`;
 
-            console.log(
-                "Policy API URL:",
-                url
-            );
+            console.log("Policy API URL:", url);
 
-            const response =
-                await fetch(url);
+            const response = await fetch(url);
 
             console.log(
                 "Policy API Status:",
                 response.status
             );
-
-            // ==========================================
-            // RESPONSE CHECK
-            // ==========================================
 
             if (!response.ok) {
 
@@ -83,21 +55,12 @@ function PolicyList() {
                 );
             }
 
-            // ==========================================
-            // RESPONSE DATA
-            // ==========================================
-
-            const data =
-                await response.json();
+            const data = await response.json();
 
             console.log(
                 "Policy API Response:",
                 data
             );
-
-            // ==========================================
-            // SET POLICIES
-            // ==========================================
 
             if (Array.isArray(data)) {
 
@@ -127,9 +90,74 @@ function PolicyList() {
         }
     };
 
-    // ==========================================
-    // COMPONENT LOAD
-    // ==========================================
+    const deletePolicy = async (policyId) => {
+
+        if (!policyId) {
+
+            alert("Policy ID not found.");
+
+            return;
+        }
+
+        const confirmCancel = window.confirm(
+            "Are you sure you want to cancel this policy?"
+        );
+
+        if (!confirmCancel) {
+            return;
+        }
+
+        try {
+
+            console.log(
+                "Cancelling PolicyId:",
+                policyId
+            );
+
+            const response = await fetch(
+                `http://localhost:5000/api/policies/${policyId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const result = await response.json();
+
+            console.log(
+                "Cancel Policy Response:",
+                result
+            );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Failed to cancel policy."
+                );
+            }
+
+            alert(
+                result.message ||
+                "Policy cancelled successfully."
+            );
+
+            // Reload policies after cancellation
+            loadPolicies();
+
+        } catch (err) {
+
+            console.error(
+                "Policy cancel error:",
+                err
+            );
+
+            alert(
+                err.message ||
+                "Unable to cancel policy."
+            );
+        }
+    };
+
 
     useEffect(() => {
 
@@ -137,25 +165,9 @@ function PolicyList() {
 
     }, []);
 
-    // ==========================================
-    // CANCEL POLICY
-    // ==========================================
-
-    const goToCancelPolicy = () => {
-
-        navigate("/CancelPolicy");
-
-    };
-
-    // ==========================================
-    // UI
-    // ==========================================
-
     return (
 
         <div className="container mt-5">
-
-            {/* HEADER */}
 
             <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -180,7 +192,6 @@ function PolicyList() {
 
             </div>
 
-            {/* LOADING */}
 
             {loading && (
 
@@ -192,8 +203,6 @@ function PolicyList() {
 
             )}
 
-            {/* ERROR */}
-
             {!loading && error && (
 
                 <div className="alert alert-danger text-center">
@@ -203,9 +212,6 @@ function PolicyList() {
                 </div>
 
             )}
-
-            {/* NO POLICIES */}
-
             {!loading &&
                 !error &&
                 policies.length === 0 && (
@@ -217,8 +223,6 @@ function PolicyList() {
                     </div>
 
                 )}
-
-            {/* POLICIES */}
 
             {!loading &&
                 !error &&
@@ -239,8 +243,6 @@ function PolicyList() {
                                 <div className="card shadow-sm h-100 border-0">
 
                                     <div className="card-body">
-
-                                        {/* POLICY HEADER */}
 
                                         <div className="d-flex justify-content-between align-items-start mb-3">
 
@@ -268,51 +270,54 @@ function PolicyList() {
                                             </span>
 
                                         </div>
-
-                                        {/* POLICY TYPE */}
-
                                         <p className="card-text mb-2">
 
-                                            <strong>Policy Type:</strong>{" "}
+                                            <strong>
+                                                Policy Type:
+                                            </strong>{" "}
 
                                             {policy.PolicyType ||
                                                 "N/A"}
 
                                         </p>
 
-                                        {/* POLICY AMOUNT */}
-
                                         <p className="card-text mb-2">
 
-                                            <strong>Amount:</strong>{" "}
+                                            <strong>
+                                                Amount:
+                                            </strong>{" "}
 
-                                            {policy.PolicyAmount
-                                                ? `Rs.${policy.PolicyAmount}`
+                                            {policy.PolicyAmount !==
+                                            undefined &&
+                                            policy.PolicyAmount !==
+                                            null
+                                                ? `Rs. ${policy.PolicyAmount}`
                                                 : "N/A"}
 
                                         </p>
-
-                                        {/* STATUS */}
-
                                         <p className="card-text mb-3">
 
-                                            <strong>Status:</strong>{" "}
+                                            <strong>
+                                                Status:
+                                            </strong>{" "}
 
                                             {policy.IsRenewed
                                                 ? "Active Renewal"
                                                 : "Awaiting Renewal"}
 
                                         </p>
-
-                                        {/* CANCEL */}
-
                                         <button
+                                            type="button"
                                             className="btn btn-outline-danger btn-sm"
-                                            onClick={
-                                                goToCancelPolicy
+                                            onClick={() =>
+                                                deletePolicy(
+                                                    policy.PolicyId
+                                                )
                                             }
                                         >
+
                                             Cancel Policy
+
                                         </button>
 
                                     </div>
@@ -332,3 +337,4 @@ function PolicyList() {
 }
 
 export default PolicyList;
+

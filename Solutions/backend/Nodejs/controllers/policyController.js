@@ -1,4 +1,6 @@
 const { request, response } = require("express");
+const logger = require("../config/logger");
+const saveLog = require("../config/dbLogger");
 var policyService = require("../services/policyService");
 
 var handlers = require("./handler");
@@ -45,6 +47,7 @@ exports.getPolicyById = (req, res) => {
 
 };
 
+//Get by customerId
 exports.getPolicyByCustomerId = (req, res) => {
 
     policyService.getPolicyByCustomerId(
@@ -71,34 +74,59 @@ emitter.on("policyFetchedById", handlers.Emailsend);
 emitter.on("policyFetchedById", handlers.SMSsend);
 
 
-// Add
+// Add policy
 
 exports.addPolicy = (req, res) => {
 
-
-policyService.addPolicy(
-        req.params.id,
-        req.body.PolicyType,
-        req.body.PolicyAmount,
-        req.body.IsRenewed,
+    policyService.addPolicy(
+                            req.params.id,
+                            req.body.PolicyType,
+                            req.body.PolicyAmount,
+                            req.body.IsRenewed,
 
         (err, data) => {
 
             if (err)
-                return res.send(err);
+                    {
+                        logger.error("Policy purchase failed", {
+                        customerId: req.params.id,
+                        message: err.message
+                    });
 
-            res.send({
-                message: "Policy Added Successfully"
-            });
+                    return res.status(500).send(err);
+                    }
 
-            if (data) {
-                emitter.emit("policyAddedd", {
-                    policyId: data.insertId,
-                    data
-                });
-            }
+              // Policy successfully inserted into database
+              const policyId = data.insertId;
+              //Winston File Logger
+              logger.info("Policy purchased successfully",
+                            {
+                                customerId: req.params.id,
+                                policyId: policyId
+                            }
+                        );
+              //Database Audit Logger
+                saveLog({
+                        level: "INFO",
+                        action: "POLICY_PURCHASE",
+                        message: "Policy purchased successfully",
+                        customerId: req.params.id,
+                        policyId: policyId,
+                        method: req.method,
+                        endpoint: req.originalUrl,
+                        statusCode: 201,
+                        ipAddress: req.ip
+                        });
 
-        });
+                //Emit Policy Event
+                emitter.emit("policyAddedd", {policyId: policyId,data: data});
+            
+               return res.status(201).send({
+                                            message:"Policy Added Successfully",
+                                            policyId: policyId
+                                            });
+                                        }
+                                    );
 
 };
 emitter.on("policyAddedd", handlers.Emailsend);

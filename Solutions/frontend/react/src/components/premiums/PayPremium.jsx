@@ -125,8 +125,6 @@ function PayPremium() {
                 alert(result.message || "Payment Failed");
             }
 
-           // navigate("/premiums");
-
         }
         catch (err) {
 

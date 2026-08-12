@@ -110,9 +110,6 @@ function Profile() {
         }
     };
 
-    // ==========================================
-    // PROFILE FIELD CHANGE
-    // ==========================================
 
     const handleChange = (e) => {
 
@@ -122,10 +119,6 @@ function Profile() {
         });
     };
 
-    // ==========================================
-    // PURCHASE POLICY FIELD CHANGE
-    // ==========================================
-
     const handlePurchaseChange = (e) => {
 
         setPurchasePolicy({
@@ -133,10 +126,6 @@ function Profile() {
             [e.target.name]: e.target.value
         });
     };
-
-    // ==========================================
-    // PURCHASE POLICY
-    // ==========================================
 
     const savePolicy = async (e) => {
 
@@ -163,10 +152,7 @@ function Profile() {
                 return;
             }
 
-            // ==========================================
-            // CREATE POLICY PAYLOAD
-            // ==========================================
-
+        
             const payload = {
 
                 CustomerId: Number(customerId),
@@ -186,9 +172,7 @@ function Profile() {
                 payload
             );
 
-            // ==========================================
-            // POST POLICY
-            // ==========================================
+        
 
             const response = await fetch(
                 `http://localhost:5000/api/policies/addPolicy/${customerId}`,
@@ -211,9 +195,6 @@ function Profile() {
                 result
             );
 
-            // ==========================================
-            // SUCCESS
-            // ==========================================
 
             if (response.ok) {
 
@@ -257,9 +238,7 @@ function Profile() {
         }
     };
 
-    // ==========================================
-    // UPDATE PROFILE
-    // ==========================================
+    
 
     const updateProfile = async () => {
 
@@ -311,9 +290,6 @@ function Profile() {
         }
     };
 
-    // ==========================================
-    // LOADING
-    // ==========================================
 
     if (loading) {
 
@@ -328,28 +304,16 @@ function Profile() {
         );
     }
 
-    // ==========================================
-    // USER NOT FOUND
-    // ==========================================
-
     if (!user) {
 
         return (
             <div className="container mt-5">
 
-                <div className="alert alert-danger">
-
-                    {feedback}
-
-                </div>
+                <div className="alert alert-danger"> {feedback}</div>
 
             </div>
         );
     }
-
-    // ==========================================
-    // UI
-    // ==========================================
 
     return (
 
@@ -361,21 +325,13 @@ function Profile() {
 
                     <div className="card shadow">
 
-                        {/* HEADER */}
-
                         <div className="card-header bg-primary text-white">
 
-                            <h3>
-                                My Profile
-                            </h3>
+                            <h3>My Profile</h3>
 
                         </div>
 
-                        {/* BODY */}
-
                         <div className="card-body">
-
-                            {/* FIRST NAME / LAST NAME / EMAIL */}
 
                             <div className="row mb-3">
 
@@ -405,7 +361,6 @@ function Profile() {
 
                             </div>
 
-                            {/* NOMINEE */}
 
                             <div className="row mb-3">
 
@@ -447,11 +402,7 @@ function Profile() {
                                             onChange={handleChange}
                                         />
 
-                                    ) : (
-
-                                        <p>{user.NomineeRelationship}</p>
-
-                                    )}
+                                    ) : (<p>({user.NomineeRelationship})</p>)}
 
                                 </div>
 
@@ -470,17 +421,11 @@ function Profile() {
                                             onChange={handleChange}
                                         />
 
-                                    ) : (
-
-                                        <p>{user.NomineeContactNumber}</p>
-
-                                    )}
+                                    ) : (<p>{user.NomineeContactNumber}</p>)}
 
                                 </div>
 
                             </div>
-
-                            {/* ADDRESS */}
 
                             <div className="row mb-3">
 
@@ -499,11 +444,7 @@ function Profile() {
                                             onChange={handleChange}
                                         />
 
-                                    ) : (
-
-                                        <p>{user.AddressLine1}</p>
-
-                                    )}
+                                    ) : (<p>{user.AddressLine1}</p>)}
 
                                 </div>
 
@@ -522,11 +463,7 @@ function Profile() {
                                             onChange={handleChange}
                                         />
 
-                                    ) : (
-
-                                        <p>{user.AddressLine2}</p>
-
-                                    )}
+                                    ) : (<p>{user.AddressLine2}</p>)}
 
                                 </div>
 
@@ -554,8 +491,6 @@ function Profile() {
                                 </div>
 
                             </div>
-
-                            {/* STATE / POSTAL / COUNTRY */}
 
                             <div className="row mb-3">
 
@@ -630,8 +565,6 @@ function Profile() {
 
                             </div>
 
-                            {/* STATUS */}
-
                             <div className="row mb-3">
 
                                 <div className="col-md-12">
@@ -648,11 +581,9 @@ function Profile() {
 
                         </div>
 
-                        {/* FOOTER */}
+                    
 
                         <div className="card-footer d-flex justify-content-between">
-
-                            {/* PURCHASE */}
 
                             <button
                                 className="btn btn-success"
@@ -662,8 +593,6 @@ function Profile() {
                             >
                                 Purchase Policy
                             </button>
-
-                            {/* EDIT */}
 
                             {!editMode ? (
 
@@ -712,10 +641,6 @@ function Profile() {
 
             </div>
 
-            {/* ==========================================
-                PURCHASE POLICY MODAL
-            ========================================== */}
-
             {showPurchaseModal && (
 
                 <>
@@ -738,9 +663,7 @@ function Profile() {
                                     <button
                                         type="button"
                                         className="btn-close"
-                                        onClick={() =>
-                                            setShowPurchaseModal(false)
-                                        }
+                                        onClick={() =>setShowPurchaseModal(false)}
                                     ></button>
 
                                 </div>
@@ -748,8 +671,6 @@ function Profile() {
                                 <form onSubmit={savePolicy}>
 
                                     <div className="modal-body">
-
-                                        {/* POLICY TYPE */}
 
                                         <div className="mb-3">
 
@@ -760,44 +681,21 @@ function Profile() {
                                             <select
                                                 name="PolicyType"
                                                 className="form-select"
-                                                value={
-                                                    purchasePolicy.PolicyType
-                                                }
-                                                onChange={
-                                                    handlePurchaseChange
-                                                }
+                                                value={purchasePolicy.PolicyType}
+                                                onChange={handlePurchaseChange}
                                                 required
                                             >
 
-                                                <option value="">
-                                                    Select Policy Type
-                                                </option>
-
-                                                <option value="Health">
-                                                    Health
-                                                </option>
-
-                                                <option value="Life">
-                                                    Life
-                                                </option>
-
-                                                <option value="Vehicle">
-                                                    Vehicle
-                                                </option>
-
-                                                <option value="Home">
-                                                    Home
-                                                </option>
-
-                                                <option value="Travel">
-                                                    Travel
-                                                </option>
+                                                <option value="">Select Policy Type</option>
+                                                <option value="Health">Health</option>
+                                                <option value="Life">Life</option>
+                                                <option value="Vehicle">Vehicle</option>
+                                                <option value="Home">Home</option>
+                                                <option value="Travel">Travel</option>
 
                                             </select>
 
                                         </div>
-
-                                        {/* AMOUNT */}
 
                                         <div className="mb-3">
 
@@ -809,18 +707,12 @@ function Profile() {
                                                 type="number"
                                                 name="PolicyAmount"
                                                 className="form-control"
-                                                value={
-                                                    purchasePolicy.PolicyAmount
-                                                }
-                                                onChange={
-                                                    handlePurchaseChange
-                                                }
+                                                value={purchasePolicy.PolicyAmount}
+                                                onChange={handlePurchaseChange}
                                                 required
                                             />
 
                                         </div>
-
-                                        {/* RENEWED */}
 
                                         <div className="mb-3">
 
@@ -831,27 +723,14 @@ function Profile() {
                                             <select
                                                 name="IsRenewed"
                                                 className="form-select"
-                                                value={
-                                                    purchasePolicy.IsRenewed
-                                                }
-                                                onChange={
-                                                    handlePurchaseChange
-                                                }
+                                                value={purchasePolicy.IsRenewed}
+                                                onChange={handlePurchaseChange}
                                                 required
                                             >
 
-                                                <option value="">
-                                                    Select
-                                                </option>
-
-                                                <option value="1">
-                                                    Yes
-                                                </option>
-
-                                                <option value="0">
-                                                    No
-                                                </option>
-
+                                                <option value="">Select</option>
+                                                <option value="1"> Yes</option>
+                                                <option value="0"> No</option>
                                             </select>
 
                                         </div>
