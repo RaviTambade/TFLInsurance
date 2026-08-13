@@ -1,5 +1,4 @@
 const { request, response } = require("express");
-const logger = require("../config/logger");
 const saveLog = require("../config/dbLogger");
 var policyService = require("../services/policyService");
 
@@ -88,23 +87,11 @@ exports.addPolicy = (req, res) => {
 
             if (err)
                     {
-                        logger.error("Policy purchase failed", {
-                        customerId: req.params.id,
-                        message: err.message
-                    });
 
                     return res.status(500).send(err);
                     }
 
-              // Policy successfully inserted into database
-              const policyId = data.insertId;
-              //Winston File Logger
-              logger.info("Policy purchased successfully",
-                            {
-                                customerId: req.params.id,
-                                policyId: policyId
-                            }
-                        );
+            const policyId = data.insertId;
               //Database Audit Logger
                 saveLog({
                         level: "INFO",
