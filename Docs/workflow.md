@@ -429,11 +429,9 @@ This is a **state machine**. The application moves from one state to another bas
 
 Three words become very important.
 
-### State -> Where are we?
-
-### Event -> What happened?
-
-### Transition -> What state should we move to?
+- State -> Where are we?
+- Event -> What happened?
+- Transition -> What state should we move to?
 
 For example:
 
@@ -887,7 +885,7 @@ An architect asks: **“How should the workflow behave under failure, retry, con
 That is the progression I want students to experience.
  
 
-##🌻 Transflower Challenge
+## 🌻 Transflower Challenge
 
 Take our **Insurance Management System**.
 
