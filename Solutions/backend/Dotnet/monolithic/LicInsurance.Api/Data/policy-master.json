@@ -1,0 +1,47 @@
+{
+  "policyTypes": [
+    {
+      "policyType": "Life",
+      "description": "Life Insurance Policy",
+      "minimumAmount": 100000,
+      "maximumAmount": 10000000,
+      "premiumFrequency": [
+        "Monthly",
+        "Quarterly",
+        "Yearly"
+      ],
+      "active": true
+    },
+    {
+      "policyType": "Health",
+      "description": "Health Insurance Policy",
+      "minimumAmount": 50000,
+      "maximumAmount": 5000000,
+      "premiumFrequency": [
+        "Monthly",
+        "Yearly"
+      ],
+      "active": true
+    },
+    {
+      "policyType": "Vehicle",
+      "description": "Vehicle Insurance Policy",
+      "minimumAmount": 10000,
+      "maximumAmount": 5000000,
+      "premiumFrequency": [
+        "Yearly"
+      ],
+      "active": true
+    },
+    {
+      "policyType": "Home",
+      "description": "Home Insurance Policy",
+      "minimumAmount": 100000,
+      "maximumAmount": 50000000,
+      "premiumFrequency": [
+        "Yearly"
+      ],
+      "active": true
+    }
+  ]
+}

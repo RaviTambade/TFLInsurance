@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using LicInsurance.Api.DTOs;
 using TFLInsurance.LicInsurance.Services.Interfaces;
 using LicInsurance.Api.Models;
 
@@ -43,7 +42,7 @@ public class PoliciesController : ControllerBase
 
     [HttpGet]
     [Route("getall")]
-    public IActionResult GetAll()
+    public IActionResult GetAllCustomerPolicies()
     {
         _logger.LogInformation("Fetching all policies from service.");
 
@@ -60,8 +59,9 @@ public class PoliciesController : ControllerBase
         }
     }
 
+    
     [HttpGet("{id:int}")]
-    public IActionResult GetById(int id)
+    public IActionResult GetCustomerPolicyById(int id)
     {
         _logger.LogInformation("Getting policy by ID.");
         try
@@ -77,8 +77,39 @@ public class PoliciesController : ControllerBase
         }
     }
 
+    // /// <summary>
+    // /// Get all policies for a specific customer
+    // /// </summary>
+    // /// <param name="customerId">Customer ID</param>
+    // /// <returns>List of policies for the customer</returns>
+    // [HttpGet("customer/{customerId}")]
+    // public async Task<IActionResult> GetPoliciesByCustomerId(int customerId)
+    // {
+    //     try
+    //     {
+    //         _logger.LogInformation($"Controller: Fetching policies for customer ID: {customerId}");
+
+    //         if (customerId <= 0)
+    //             return BadRequest(new { message = "Invalid customer ID" });
+
+    //         var policies = _customerPolicyService.GetPoliciesByCustomerId(customerId);
+
+    //         if (policies.Count == 0)
+    //             return NotFound(new { message = "No policies found for this customer" });
+
+    //         return Ok(policies);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _logger.LogError($"Controller: Error fetching customer policies: {ex.Message}");
+    //         return StatusCode(StatusCodes.Status500InternalServerError, 
+    //             new { message = "Error fetching customer policies", error = ex.Message });
+    //     }
+    // }
+
+
     [HttpPost]
-    public IActionResult Create([FromBody] Policy policyDto)
+    public IActionResult CreateCustomerPolicy([FromBody] Policy policyDto)
     {
         _logger.LogInformation("Creating new policy.");
         try
@@ -94,7 +125,7 @@ public class PoliciesController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public IActionResult Update(int id, [FromBody] Policy policyDto)
+    public IActionResult UpdateCustomerPolicy(int id, [FromBody] Policy policyDto)
     {
         _logger.LogInformation("Updating policy.");
         try
@@ -111,7 +142,7 @@ public class PoliciesController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public IActionResult Delete(int id)
+    public IActionResult DeleteCustomerPolicy(int id)
     {
         _logger.LogInformation("Deleting policy.");
 

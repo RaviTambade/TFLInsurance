@@ -5,7 +5,6 @@ namespace LicInsurance.Api.Services
 {
     public class CustomerService : ICustomerService
     {
-<<<<<<< HEAD
         private readonly List<Customer> _customers = new()
         {
             new Customer
@@ -29,9 +28,7 @@ namespace LicInsurance.Api.Services
                 //CreatedOn = DateTime.UtcNow
             }
         };
-=======
         private readonly ICustomerRepository _customerRepository;
->>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
 
         public CustomerService(ICustomerRepository customerRepository)
         {
@@ -50,23 +47,19 @@ namespace LicInsurance.Api.Services
 
         public int RegisterCustomer(Customer customer)
         {
-<<<<<<< HEAD
             customer.CustomerId = _customers.Any() ? _customers.Max(x => x.CustomerId) + 1 : 1;
             //customer.CreatedOn ??= DateTime.UtcNow;
             _customers.Add(customer);
-            return customer;
-=======
             return _customerRepository.AddCustomer(customer);
->>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
         }
 
         public bool UpdateCustomer(int customerId, Customer customer)
         {
-<<<<<<< HEAD
-            var existingCustomer = _customers.FirstOrDefault(x => x.CustomerId == id);
+  
+            var existingCustomer = _customers.FirstOrDefault(x => x.CustomerId == customerId);
             if (existingCustomer == null)
             {
-                return null;
+                return false;
             }
 
             existingCustomer.FirstName = customer.FirstName;
@@ -76,10 +69,8 @@ namespace LicInsurance.Api.Services
             //existingCustomer.Address = customer.Address;
             //existingCustomer.CreatedOn = existingCustomer.CreatedOn ?? DateTime.UtcNow;
 
-            return existingCustomer;
-=======
             return _customerRepository.UpdateCustomer(customerId, customer);
->>>>>>> ab69a6d2ec2481f9aaa53357773ece14596eef8b
+
         }
 
         public bool DeleteCustomer(int customerId)
