@@ -350,9 +350,8 @@ That is very different from merely knowing which method is currently executing.
 
 This distinction is extremely important.
 
-### Workflow asks:  **What should happen next?**
-
-### State asks: **Where are we now?**
+- Workflow asks:  **What should happen next?**
+- State asks: **Where are we now?**
 
 For example:
 
@@ -595,9 +594,7 @@ is a strong candidate for state-machine thinking.
 
 ## 15. Developer Exercise — Design the Workflow
 
-Now I stop teaching. I give students a business requirement:  **“A customer wants to purchase a health insurance policy.”**
-
-They must identify:
+Now I stop teaching. I give students a business requirement:  **“A customer wants to purchase a health insurance policy.”**  They must identify:
 
 ### Step 1 — Activities
 
@@ -877,10 +874,10 @@ Now we are thinking like enterprise architects.
 
 ## 20. The Bigger Picture
 
-A beginner asks:  “Which class should I write?” 
-A developer asks:  “Which API should I expose?”
-An experienced developer asks:  **“What is the business workflow?”**
-An architect asks: **“How should the workflow behave under failure, retry, concurrency, timeout, human approval and recovery?”**
+- A beginner asks:  “Which class should I write?” 
+- A developer asks:  “Which API should I expose?”
+- An experienced developer asks:  **“What is the business workflow?”**
+- An architect asks: **“How should the workflow behave under failure, retry, concurrency, timeout, human approval and recovery?”**
 
 That is the progression I want students to experience.
  
