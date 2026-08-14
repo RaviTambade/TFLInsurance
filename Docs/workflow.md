@@ -226,7 +226,7 @@ Our architecture becomes:
 
 ```text
                  Workflow
-                    │git aggksjflka
+                    │ 
         ┌───────────┼────────────┐
         ↓           ↓            ↓
    Customer      Policy       Payment
