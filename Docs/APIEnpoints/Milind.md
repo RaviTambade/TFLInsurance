@@ -19,8 +19,6 @@ Example:
 https://localhost:7042
 ```
 
----
-
 ## Claims API Summary
 
 |   # | Module | Method  | API URL                             | Description                            |
@@ -37,7 +35,6 @@ https://localhost:7042
 > **Note:** Claim document upload/retrieval APIs are not included here
 > because they have not been implemented yet.
 
----
 
 # 1. Get All Claims
 
@@ -45,7 +42,7 @@ https://localhost:7042
 
 Property Value
 
----
+
 
 Module Claim
 Method `GET`
@@ -97,15 +94,11 @@ If no claims are available:
 []
 ```
 
----
-
 # 2. Get Claim By ID
 
 ### API Details
 
 Property Value
-
----
 
 Module Claim
 Method `GET`
@@ -121,7 +114,6 @@ Returns the details of a specific claim using its Claim ID.
 
 Parameter Type Required Description
 
----
 
 `claimId` Integer Yes Unique Claim ID
 
@@ -163,8 +155,6 @@ If the Claim ID does not exist:
 Claim not found.
 ```
 
----
-
 # 3. Get Customer Claims
 
 ### API Details
@@ -186,8 +176,6 @@ Returns all claims submitted by a particular customer.
 ### Path Parameter
 
 Parameter Type Required Description
-
----
 
 `customerId` Integer Yes Customer ID
 
@@ -240,15 +228,12 @@ If the customer has no claims:
 []
 ```
 
----
-
 # 4. Create / Submit Claim
 
 ### API Details
 
 Property Value
 
----
 
 Module Claim
 Method `POST`
@@ -281,11 +266,7 @@ Submitted
 
 ### Request Fields
 
----
-
 Field Type Required Description
-
----
 
 `policyNumber` String Yes Policy number
 associated with
@@ -306,7 +287,7 @@ for the claim
 `claimAmount` Decimal Yes Amount being
 claimed
 
----
+
 
 ### Postman
 
@@ -333,7 +314,7 @@ Then provide the request body above.
 > implementation. The stored procedure returns the newly generated ID
 > using `LAST_INSERT_ID()`.
 
----
+
 
 # 5. Update Claim
 
@@ -341,7 +322,7 @@ Then provide the request body above.
 
 Property Value
 
----
+
 
 Module Claim
 Method `PUT`
@@ -360,8 +341,6 @@ changes are handled by the status, approve, and reject APIs.
 
 Parameter Type Required Description
 
----
-
 `claimId` Integer Yes Claim ID to update
 
 ### Request Body
@@ -378,8 +357,6 @@ Parameter Type Required Description
 ### Request Fields
 
 Field Type Required Description
-
----
 
 `claimType` String Yes Updated claim type
 `reason` String No Updated claim reason/details
@@ -408,15 +385,11 @@ Body → raw → JSON
 }
 ```
 
----
-
 # 6. Change Claim Status
 
 ### API Details
 
 Property Value
-
----
 
 Module Claim
 Method `PATCH`
@@ -442,8 +415,6 @@ Settled
 
 Parameter Type Required Description
 
----
-
 `claimId` Integer Yes Claim ID
 
 ### Request Body
@@ -458,8 +429,6 @@ Parameter Type Required Description
 ### Request Fields
 
 Field Type Required Description
-
----
 
 `status` String Yes New claim status
 `remarks` String No Reason/details for status change
@@ -480,15 +449,12 @@ PATCH https://localhost:<port>/api/Claims/1/status
 }
 ```
 
----
-
 # 7. Approve Claim
 
 ### API Details
 
 Property Value
 
----
 
 Module Claim
 Method `PATCH`
@@ -510,8 +476,6 @@ Approved
 
 Parameter Type Required Description
 
----
-
 `claimId` Integer Yes Claim ID
 
 ### Request Body
@@ -526,8 +490,6 @@ Parameter Type Required Description
 ### Request Fields
 
 Field Type Required Description
-
----
 
 `approvedAmount` Decimal Yes Amount approved for settlement
 `remarks` String No Approval remarks
@@ -568,15 +530,11 @@ Expected claim values:
 }
 ```
 
----
-
 # 8. Reject Claim
 
 ### API Details
 
 Property Value
-
----
 
 Module Claim
 Method `PATCH`
@@ -600,8 +558,6 @@ The approved amount is cleared.
 
 Parameter Type Required Description
 
----
-
 `claimId` Integer Yes Claim ID
 
 ### Request Body
@@ -615,8 +571,6 @@ Parameter Type Required Description
 ### Request Fields
 
 Field Type Required Description
-
----
 
 `remarks` String Yes Reason for rejecting the claim
 
@@ -654,8 +608,6 @@ Expected:
   "remarks": "Required supporting documents were not provided."
 }
 ```
-
----
 
 # Recommended Claims API Testing Flow
 
@@ -697,8 +649,6 @@ Create another claim so that it can be tested independently:
 5. Verify Status = Rejected
 ```
 
----
-
 # Claims API Status Flow
 
 A typical claim flow is:
@@ -715,15 +665,13 @@ Approved         Rejected
 Settled
 ```
 
----
-
 # Stored Procedures Used
 
 The Claims APIs use the following MySQL stored procedures:
 
 API Operation Stored Procedure
 
----
+
 
 Get All Claims `sp_claim_get_all`
 Get Claim By ID `sp_claim_get_by_id`
@@ -734,7 +682,6 @@ Change Claim Status `sp_claim_change_status`
 Approve Claim `sp_claim_approve`
 Reject Claim `sp_claim_reject`
 
----
 
 # Postman Collection
 
@@ -769,15 +716,12 @@ The following Claims functionality can be added later:
 
 Module Method Description
 
----
 
 Claim Documents POST Upload claim documents
 Claim Documents GET Get claim documents
 
 These are not included in the current API list because they have not
 been implemented yet.
-
----
 
 ## Notes
 

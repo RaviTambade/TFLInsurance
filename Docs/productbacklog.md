@@ -12,7 +12,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 * Agents
 * Insurance Manager
 
----
 
 # Epic 1: Customer Management
 
@@ -26,8 +25,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-106 | As a customer, I want to view my insurance dashboard.                               | High     |
 | US-107 | As a customer, I want to download my account statement.                             | Medium   |
 
----
-
 # Epic 2: Policy Management
 
 | ID     | User Story                                                    | Priority |
@@ -39,7 +36,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-205 | As a customer, I want to renew my policy.                     | High     |
 | US-206 | As a customer, I want to cancel my policy.                    | Medium   |
 
----
 
 # Epic 3: Premium Management
 
@@ -53,7 +49,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-306 | As an insurance manager, I want to monitor overdue premiums.        | High     |
 | US-307 | As an accounts officer, I want to calculate late payment penalties. | Medium   |
 
----
 
 # Epic 4: Claims Management
 
@@ -69,7 +64,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-408 | As an accounts officer, I want to release approved claim settlements. | High     |
 | US-409 | As a customer, I want to view claim settlement details.               | Medium   |
 
----
 
 # Epic 5: Accounts & Finance
 
@@ -83,7 +77,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-506 | As an accounts officer, I want to reconcile daily collections.      | High     |
 | US-507 | As an accounts officer, I want to generate financial reports.       | High     |
 
----
 
 # Epic 6: Agent Management
 
@@ -98,7 +91,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-607 | As an agent, I want to track my commissions.                     | High     |
 | US-608 | As an agent, I want to view my sales dashboard.                  | Medium   |
 
----
 
 # Epic 7: Insurance Manager
 
@@ -113,7 +105,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-707 | As an insurance manager, I want to generate operational reports. | High     |
 | US-708 | As an insurance manager, I want to view business KPIs.           | High     |
 
----
 
 # Epic 8: Reports & Analytics
 
@@ -126,8 +117,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-805 | As a manager, I want revenue reports.                    | High     |
 | US-806 | As a manager, I want agent performance reports.          | Medium   |
 
----
-
 # Epic 9: Notifications
 
 | ID     | User Story                                             | Priority |
@@ -138,7 +127,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-904 | As an agent, I want customer assignment notifications. | Medium   |
 | US-905 | As a manager, I want alerts for overdue premiums.      | Medium   |
 
----
 
 # Epic 10: Administration & Security
 
@@ -149,8 +137,6 @@ The following product backlog is organized by **Epic**, **User Story**, and **Pr
 | US-1003 | As an administrator, I want audit logs for business transactions. | High     |
 | US-1004 | As an administrator, I want JWT-based authentication.             | High     |
 | US-1005 | As an administrator, I want to lock inactive accounts.            | Medium   |
-
----
 
 # Suggested MVP (Sprint 1–3)
 

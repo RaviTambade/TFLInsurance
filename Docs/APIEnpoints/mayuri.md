@@ -2,8 +2,6 @@
 
 > Combined reference from all three API documentation files.
 
----
-
 ## Quick Reference Table — All Endpoints
 
 | # | Method | Endpoint | Description | Source |

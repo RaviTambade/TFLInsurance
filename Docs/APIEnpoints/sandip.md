@@ -2,8 +2,6 @@
 
 > Complete reference for Policies Controller and Policy Master Controller APIs.
 
----
-
 ## Quick Reference Table — All Endpoints
 
 | # | Method | Endpoint | Description | Controller |
@@ -19,13 +17,12 @@
 | 9 | GET | `/api/policymaster/get-all` | Get all policy types | Policy Master |
 | 10 | GET | `/api/policymaster/get-by-type/{policyType}` | Get specific policy type | Policy Master |
 
----
+
 
 ## Policies Controller Endpoints
 
 ### Base URL: `/api/policies`
 
----
 
 ### 1. Get All Policies
 
@@ -81,7 +78,6 @@ Accept: application/json
 - `200 OK` - Successfully retrieved all policies
 - `500 Internal Server Error` - Server error occurred
 
----
 
 ### 2. Get Policy by ID
 
@@ -145,7 +141,6 @@ Accept: application/json
 **Validation Rules:**
 - `policyId` must be greater than 0
 
----
 
 ### 3. Get Policies by Customer ID
 
@@ -297,7 +292,6 @@ Accept: application/json
 **Validation Rules:**
 - `agentId` must be greater than 0
 
----
 
 ### 5. Create New Policy
 
@@ -378,8 +372,6 @@ Or
 
 **Policy Master Validation:**
 The API validates the `policyType` against the Policy Master configuration to ensure only valid policy types can be created.
-
----
 
 ### 6. Update Existing Policy
 
@@ -522,7 +514,6 @@ Host: localhost:5000
 **Validation Rules:**
 - `policyId` must be > 0
 
----
 
 ### 8. Delete a Policy
 
@@ -582,7 +573,6 @@ Host: localhost:5000
 
 ### Base URL: `/api/policymaster`
 
----
 
 ### 9. Get All Policy Types
 
@@ -650,7 +640,6 @@ Accept: application/json
 - `404 Not Found` - Configuration file not found
 - `500 Internal Server Error` - Server error occurred
 
----
 
 ### 10. Get Specific Policy Type
 
@@ -721,8 +710,6 @@ Or
 - `policyType` cannot be empty or null
 - `policyType` is case-insensitive (searches using OrdinalIgnoreCase)
 
----
-
 ## Data Models
 
 ### Policy Object
@@ -752,8 +739,6 @@ Or
   "active": "boolean (whether policy type is active)"
 }
 ```
-
----
 
 ## Key Features
 
@@ -790,8 +775,6 @@ Or
 - Input validation at service layer
 - Structured logging throughout
 
----
-
 ## Database Stored Procedures Required
 
 The following stored procedures should be created in the database to support these endpoints:
@@ -805,7 +788,6 @@ The following stored procedures should be created in the database to support the
 - `USP_POLICY_UPDATE_RENEWAL` - Update policy renewal status
 - `USP_POLICY_DELETE` - Delete policy
 
----
 
 ## Configuration Files Required
 
@@ -813,7 +795,7 @@ The following stored procedures should be created in the database to support the
   - File Path: `{ProjectRoot}/Configuration/policy-master.json`
   - Format: JSON array of PolicyTypeDto objects
 
----
+
 
 ## Dependencies & Registrations
 
@@ -828,8 +810,6 @@ builder.Services.AddScoped<IPolicyService, PolicyService>();
 builder.Services.AddScoped<IPolicyMasterRepository, PolicyMasterRepository>();
 builder.Services.AddScoped<IPolicyMasterService, PolicyMasterService>();
 ```
-
----
 
 ## Example Usage
 
@@ -859,7 +839,7 @@ curl -X GET http://localhost:5000/api/policies/customer/101
 curl -X GET http://localhost:5000/api/policymaster/get-by-type/Life%20Insurance
 ```
 
----
+
 
 ## Version History
 
@@ -867,7 +847,7 @@ curl -X GET http://localhost:5000/api/policymaster/get-by-type/Life%20Insurance
 |---------|------|---------|
 | 1.0 | 2025-01-XX | Initial release with all Policies and Policy Master endpoints |
 
----
+
 
 ## Support
 

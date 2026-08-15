@@ -1,7 +1,5 @@
 # Master API Endpoints Documentation
 
----
-
 ## Quick Reference Table — All Endpoints
 
 | # | Method | Endpoint | Description | Source |
