@@ -1,20 +1,43 @@
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using Claim = System.Security.Claims.Claim;
-using System.Text;
 using LicInsurance.Api.Models;
-using LicInsurance.Api.Helpers;
+using TFLInsurance.LicInsurance.Services.Interfaces;
+using TFLInsurance.LicInsurance.Repositories.Interfaces;
 
 
-namespace LicInsurance.Api.Services
+namespace TFLInsurance.LicInsurance.Services
 {
-public class AgentsService : IAgentsService
+    public class AgentsService : IAgentsService
     {
+        private readonly IAgentsRepository _repository;
+
+       public AgentsService(IAgentsRepository repository)
+       {
+           _repository = repository;
+       }
+
+       public List<Agents> GetAll()
+       {
+           return _repository.GetAll();
+       }
+
+       public Agents? GetById(int id)
+       {
+           return _repository.GetById(id);
+       }
+
+       public int Save(Agents agents)
+       {
+           if (string.IsNullOrWhiteSpace(agents.AgentCode))
+               throw new Exception("AgentCode is required.");
+
+
+           return _repository.Save(agents);
+       }
+
+       public int Delete(int id)
+       {
+           return _repository.Delete(id);
+       }
+   
         
     }
     

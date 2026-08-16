@@ -1,6 +1,6 @@
 namespace LicInsurance.Api.Models;
 
-public class Agent
+public class Agents
 {
     public int AgentId { get; set; }
 

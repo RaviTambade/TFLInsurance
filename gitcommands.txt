@@ -16,3 +16,7 @@ for Entity Framework
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Pomelo.EntityFrameworkCore.MySql
 
+for dapper
+dotnet add package Dapper
+dotnet add package MySqlConnector
+

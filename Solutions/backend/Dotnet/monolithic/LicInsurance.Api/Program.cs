@@ -42,6 +42,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
+builder.Services.AddScoped<IAgentsService, AgentsService>();
+builder.Services.AddScoped<IAgentsRepository, AgentsRepository>();
+
 builder.Services.AddSwaggerGen();
 
 

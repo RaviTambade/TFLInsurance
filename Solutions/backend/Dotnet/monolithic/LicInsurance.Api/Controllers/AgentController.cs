@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using LicInsurance.Api.DTOs;
+using TFLInsurance.LicInsurance.Services.Interfaces;
 
 namespace LicInsurance.Api.Controllers;
 
@@ -7,54 +8,45 @@ namespace LicInsurance.Api.Controllers;
 [Route("api/[controller]")]
 public class AgentsController : ControllerBase
 {
-    [HttpGet]
-    [Route("GetAgent")]
-    public IActionResult GetAgent()
-    {
-        return Ok(new[]
-        {
-            new
-            {
-                AgentId = 1,
-                AgentName = "Agent1",
-                
-            },
-            new
-            {
-              AgentId = 2,
-                AgentName = "Agent2",
-            }
-        });
-    }
+    private readonly IAgentsService _agentsService;
 
-    [HttpGet]
-    [Route("GetAllAgents")]
-    public IActionResult GetAllAgents()
+    public AgentsController(IAgentsService agentsService)
     {
-        return Ok();
+            _agentsService = agentsService;
+    }
+    
+    [HttpGet]
+    [Route("getall")]
+    public IActionResult GetAll()
+    {
+       var agents = _agentsService.GetAll(); 
+            return Ok(agents);
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetAgentById(int id)
+    public IActionResult GetById(int id)
     {
-        return Ok();
+         var agents = _agentsService.GetById(id);
+            return Ok(agents);
     }
 
     [HttpPost]
-    public IActionResult CreateAgent([FromBody] PolicyDto dto)
+    public IActionResult Create([FromBody] AgentsDto dto)
     {
-        return CreatedAtAction(nameof(GetAgentById), new { id = 1 }, dto);
+        var policies = _agentsService.Save(dto);
+            return Ok(policies);
     }
 
     [HttpPut("{id:int}")]
-    public IActionResult UpdateAgent(int id, [FromBody] PolicyDto dto)
+    public IActionResult Update(int id, [FromBody] AgentsDto dto)
     {
         return Ok(dto);
     }
 
     [HttpDelete("{id:int}")]
-    public IActionResult DeleteAgent(int id)
+    public IActionResult Delete(int id)
     {
         return NoContent();
     }
+
 }
