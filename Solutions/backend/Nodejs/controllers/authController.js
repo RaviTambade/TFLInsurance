@@ -27,7 +27,9 @@ exports.login = (req, res) => {
                 res.json({
                     token: accessToken,
                     refreshToken: refreshToken,
-                    role: user.Role
+                    role: user.Role,
+                    userId: user.UserId,          // <-- ADD THIS
+                
                 });
             } else {
 

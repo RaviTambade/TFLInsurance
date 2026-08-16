@@ -17,131 +17,129 @@ exports.getCustomerById = (id, result) => {
 };
 
 // Add Customer
-exports.addCustomer = (
-    CustomerCode,
-    FirstName,
-    LastName,
-    DateOfBirth,
-    Gender,
-    Email,
-    MobileNumber,
-    AddressLine1,
-    AddressLine2,
-    City,
-    State,
-    PostalCode,
-    Country,
-    PanNumber,
-    AadhaarNumber,
-    Occupation,
-    AnnualIncome,
-    NomineeName,
-    NomineeRelationship,
-    NomineeContactNumber,
-    result
-) => {
+exports.registerCustomer = (customer, callback) => {
 
-    const sql = `
-                        INSERT INTO customers
-                        (
-                            CustomerCode,
-                            FirstName,
-                            LastName,
-                            DateOfBirth,
-                            Gender,
-                            Email,
-                            MobileNumber,
-                            AddressLine1,
-                            AddressLine2,
-                            City,
-                            State,
-                            PostalCode,
-                            Country,
-                            PanNumber,
-                            AadhaarNumber,
-                            Occupation,
-                            AnnualIncome,
-                            NomineeName,
-                            NomineeRelationship,
-                            NomineeContactNumber
-                        )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-                        `;
+    // Step 1 : Insert into Users table
 
-    connection.query(
-        sql,
-        [
-            CustomerCode,
-            FirstName,
-            LastName,
-            DateOfBirth,
-            Gender,
-            Email,
-            MobileNumber,
-            AddressLine1,
-            AddressLine2,
-            City,
-            State,
-            PostalCode,
-            Country,
-            PanNumber,
-            AadhaarNumber,
-            Occupation,
-            AnnualIncome,
-            NomineeName,
-            NomineeRelationship,
-            NomineeContactNumber
-        ],
-        result
+    const userSql = `INSERT INTO users(Username,Password,Role,IsActive)VALUES(?,?,'Customer',1)`;
+
+    connection.query( userSql,
+            [
+                customer.email,
+                customer.password
+            ],
+            (err, userResult) => {
+
+            if (err) {
+                return callback(err);
+            }
+
+            const userId = userResult.insertId;
+
+            // Generate Customer Code
+            const customerCode = "CUST" + (1000 + userId);
+
+            // Step 2 : Insert into Customer table
+
+            const customerSql = `INSERT INTO customers(
+                UserId,
+                CustomerCode,
+                FirstName,
+                LastName,
+                DateOfBirth,
+                Gender,
+                Email,
+                MobileNumber,
+                AddressLine1,
+                AddressLine2,
+                City,
+                State,
+                PostalCode,
+                Country,
+                PanNumber,
+                AadhaarNumber,
+                Occupation,
+                AnnualIncome,
+                NomineeName,
+                NomineeRelationship,
+                NomineeContactNumber,
+                RegistrationDate,
+                IsActive,
+                TotalPoliciesPurchased
+            )
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),1,0)`;
+
+            connection.query(
+                customerSql,
+                [
+                    userId,
+                    customerCode,
+                    customer.firstName,
+                    customer.lastName,
+                    customer.dateOfBirth,
+                    customer.gender,
+                    customer.email,
+                    customer.mobileNumber,
+                    customer.addressLine1,
+                    customer.addressLine2,
+                    customer.city,
+                    customer.state,
+                    customer.postalCode,
+                    customer.country,
+                    customer.panNumber,
+                    customer.aadhaarNumber,
+                    customer.occupation,
+                    customer.annualIncome,
+                    customer.nomineeName,
+                    customer.nomineeRelationship,
+                    customer.nomineeContactNumber
+                ],
+                (err, result) => {
+
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    callback(null, result);
+
+                }
+            );
+
+        }
     );
+
 };
 
 // Update Customer
-exports.updateCustomer = (
-                        id,
-                        FirstName,
-                        LastName,
-                        Email,
-                        MobileNumber,
-                        AddressLine1,
-                        AddressLine2,
-                        City,
-                        State,
-                        PostalCode,
-                        Country,
-                        result
-) => {
+exports.updateCustomer = (userId, customer, result) => {
 
     const sql = `
         UPDATE customers
-        SET
-            FirstName=?,
-            LastName=?,
-            Email=?,
-            MobileNumber=?,
+        SET NomineeName=?,
+            NomineeRelationship=?,
+            NomineeContactNumber=?,
             AddressLine1=?,
             AddressLine2=?,
             City=?,
             State=?,
             PostalCode=?,
             Country=?
-        WHERE CustomerId=?
+        WHERE UserId=?
     `;
 
     connection.query(
         sql,
-        [
-            FirstName,
-            LastName,
-            Email,
-            MobileNumber,
-            AddressLine1,
-            AddressLine2,
-            City,
-            State,
-            PostalCode,
-            Country,
-            id
+        [   
+            customer.NomineeName,
+            customer.NomineeRelationship,
+            customer.NomineeContactNumber,
+            customer.AddressLine1,
+            customer.AddressLine2,
+            customer.City,
+            customer.State,
+            customer.PostalCode,
+            customer.Country,
+            userId
         ],
         result
     );

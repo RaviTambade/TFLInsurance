@@ -77,9 +77,7 @@ exports.addPolicy = (req, res) => {
 
 
 policyService.addPolicy(
-
-        req.body.PolicyNumber,
-        req.body.CustomerId,
+        req.params.id,
         req.body.PolicyType,
         req.body.PolicyAmount,
         req.body.IsRenewed,

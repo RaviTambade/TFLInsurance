@@ -1,7 +1,13 @@
 using LicInsurance.Api.Helpers;
 using LicInsurance.Api.Middlewares;
+using LicInsurance.Api.Repositories;
 using LicInsurance.Api.Repositories.Connections;
 using LicInsurance.Api.Repositories.Dapper;
+using TFLInsurance.Licinsruance.Repositories.Interfaces;
+using TFLInsurance.Licinsruance.Repositories;
+using TFLInsurance.Licinsruance.Services.Interfaces;
+using TFLInsurance.Licinsruance.Services;
+using LicInsurance.Api.Repositories.Interfaces;
 using LicInsurance.Api.Services;
 using Serilog;
 using TFLInsurance.LicInsurance.Repositories;  
@@ -39,11 +45,17 @@ builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<IDapperfactory, Dapperfactory>();
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
 builder.Services.AddScoped<IAgentsService, AgentsService>();
 builder.Services.AddScoped<IAgentsRepository, AgentsRepository>();
+
+
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
+builder.Services.AddScoped<IClaimService, ClaimService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddSwaggerGen();
 

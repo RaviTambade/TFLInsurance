@@ -2,15 +2,21 @@ using LicInsurance.Api.Models;
 
 namespace TFLInsurance.LicInsurance.Services.Interfaces;
 
- public interface IPolicyService
- {
-     List<Policy> GetAll();
+public interface IPolicyService
+{
+    List<Policy> GetAll();
 
-     Policy? GetById(int id);
+    Policy? GetById(int id);
 
-     int Save(Policy policy);
+    List<Policy> GetPoliciesByCustomerId(int customerId);
 
-    bool Update(int id, Policy policy);
+    List<Policy> GetPoliciesByAgentId(int agentId);
 
-     int Delete(int id);
- }
+    int CreatePolicy(Policy policy);
+
+    bool UpdatePolicy(int id, Policy policy);
+
+    bool RenewPolicy(int id);
+
+    int DeletePolicy(int id);
+}
