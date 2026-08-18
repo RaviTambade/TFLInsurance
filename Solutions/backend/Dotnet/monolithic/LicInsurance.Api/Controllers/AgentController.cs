@@ -1,5 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using LicInsurance.Api.DTOs;
+using LicInsurance.Api.Models;
+using Microsoft.AspNetCore.Mvc;
+
+
 using TFLInsurance.LicInsurance.Services.Interfaces;
 
 namespace LicInsurance.Api.Controllers;
@@ -31,7 +34,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] AgentsDto dto)
+    public IActionResult Create([FromBody] Agents dto)
     {
         var policies = _agentsService.Save(dto);
             return Ok(policies);

@@ -1,9 +1,11 @@
 
-using TFLInsurance.Licinsruance.Services.Interfaces;
+using Hangfire;
 using LicInsurance.Api.DTOs;
 using LicInsurance.Api.Models;
+using LicInsurance.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using TFLInsurance.Licinsruance.Services;
+using TFLInsurance.Licinsruance.Services.Interfaces;
 using TFLInsurance.Licinsruance.Services.Interfaces;
 
 
@@ -15,10 +17,12 @@ namespace  TFLInsurance.Licinsruance.Controllers;
 public class ClaimsController : ControllerBase
 {
     private readonly IClaimService _claimService;
+    private readonly IBackgroundJobClient _backgroundJobClient;
 
-    public ClaimsController(IClaimService claimService)
+    public ClaimsController(IClaimService claimService, IBackgroundJobClient backgroundJobClient)
     {
         _claimService = claimService;
+        _backgroundJobClient = backgroundJobClient;
     }
 
     [HttpGet]
@@ -124,6 +128,20 @@ public class ClaimsController : ControllerBase
         return Ok(new
         {
             Message = "Claim rejected successfully."
+        });
+    }
+
+    [HttpPost("{claimId}/process")]
+    public IActionResult ProcessClaim(int claimId)
+    {
+        var jobId = _backgroundJobClient.Enqueue<IClaimProcessingJob>(
+            job => job.ProcessClaimAsync(claimId));
+
+        return Ok(new
+        {
+            Message = "Claim processing job has been queued successfully.",
+            ClaimId = claimId,
+            JobId = jobId
         });
     }
 }

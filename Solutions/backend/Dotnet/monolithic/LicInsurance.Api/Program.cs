@@ -1,20 +1,23 @@
+using Hangfire;
+using Hangfire.MySql;
+using LicInsurance.Api.Hangfire;
 using LicInsurance.Api.Helpers;
 using LicInsurance.Api.Middlewares;
 using LicInsurance.Api.Repositories;
 using LicInsurance.Api.Repositories.Connections;
 using LicInsurance.Api.Repositories.Dapper;
-using TFLInsurance.Licinsruance.Repositories.Interfaces;
-using TFLInsurance.Licinsruance.Repositories;
-using TFLInsurance.Licinsruance.Services.Interfaces;
-using TFLInsurance.Licinsruance.Services;
 using LicInsurance.Api.Repositories.Interfaces;
 using LicInsurance.Api.Services;
+using LicInsurance.Api.Services.Interfaces;
 using Serilog;
+using TFLInsurance.Licinsruance.Repositories;
+using TFLInsurance.Licinsruance.Repositories.Interfaces;
+using TFLInsurance.Licinsruance.Services;
+using TFLInsurance.Licinsruance.Services.Interfaces;
 using TFLInsurance.LicInsurance.Repositories;  
 using TFLInsurance.LicInsurance.Repositories.Interfaces;
 using TFLInsurance.LicInsurance.Services;
 using TFLInsurance.LicInsurance.Services.Interfaces;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +51,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
+
+builder.Services.AddScoped<IPolicyMasterRepository, PolicyMasterRepository>();
+builder.Services.AddScoped<IPolicyMasterService, PolicyMasterService>();
+
+
 builder.Services.AddScoped<IAgentsService, AgentsService>();
 builder.Services.AddScoped<IAgentsRepository, AgentsRepository>();
 
@@ -55,12 +63,51 @@ builder.Services.AddScoped<IAgentsRepository, AgentsRepository>();
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<IClaimService, ClaimService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IClaimProcessingJob, ClaimProcessingJob>();
 
 builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddOpenApi();
+
+
+
+// ---------------------------------------------------------
+// Hangfire Configuration
+// ---------------------------------------------------------
+
+var hangfireConnectionString =
+    builder.Configuration.GetConnectionString("HangfireConnection");
+
+builder.Services.AddHangfire(configuration =>
+{
+    configuration
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseStorage(new MySqlStorage(
+            hangfireConnectionString,
+            new MySqlStorageOptions
+            {
+                TablesPrefix = "Hangfire"
+            }));
+});
+
+
+// ---------------------------------------------------------
+// Hangfire Background Job Server
+// ---------------------------------------------------------
+
+builder.Services.AddHangfireServer();
+
+
+
+
+
+
+
 
 var app = builder.Build();
 
@@ -81,5 +128,13 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+// ---------------------------------------------------------
+// Hangfire Dashboard
+// ---------------------------------------------------------
+
+app.UseHangfireDashboard("/hangfire");
+
 app.MapControllers();
 app.Run();

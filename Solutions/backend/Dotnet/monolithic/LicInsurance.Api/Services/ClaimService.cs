@@ -140,4 +140,34 @@ public class ClaimService : IClaimService
             claimId,
             request.Remarks);
     }
+
+    public async Task ProcessClaimAsync(int claimId)
+    {
+        var claim = await _claimRepository.GetClaimByIdAsync(claimId);
+
+        if (claim == null)
+        {
+            throw new Exception($"Claim with ID {claimId} was not found.");
+        }
+
+        // ------------------------------------------------
+        // Hangfire background processing logic
+        // ------------------------------------------------
+
+        // Put whatever business processing you want here.
+        // For example, you can perform validations,
+        // calculations, policy checks, etc.
+
+        // For now, we are simply processing the
+        // existing claim and updating it using your
+        // existing UpdateClaimAsync() method.
+
+        var result = await _claimRepository.UpdateClaimAsync(claim);
+
+        if (result <= 0)
+        {
+            throw new Exception(
+                $"Claim with ID {claimId} could not be updated.");
+        }
+    }
 }

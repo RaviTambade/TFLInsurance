@@ -26,4 +26,7 @@ public interface IClaimService
     Task<int> RejectClaimAsync(
         int claimId,
         RejectClaimRequestDto request);
+
+    Task ProcessClaimAsync(int claimId);
+
 }

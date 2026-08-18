@@ -27,4 +27,6 @@ public interface IClaimRepository
     Task<int> RejectClaimAsync(
         int claimId,
         string? remarks);
+
+    
 }
