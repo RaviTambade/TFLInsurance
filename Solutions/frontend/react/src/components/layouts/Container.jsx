@@ -16,7 +16,9 @@ import CustomerList from "../customers/CustomerList";
 import PolicyListForAdmin from "../policies/PolicyListForAdmin"
 import UserListForAdmin from "../users/UserListForAdmin";
 import ResetPassword from "../auth/ResetPassword";
-
+import RegisterAgent from "../agents/RegisterAgent";
+import EmployeeRegistration from "../../pages/EmployeeRegistration";
+import PremiumHistory from "../premiums/PremiumHistory";
 
 function Container() {
   return (
@@ -28,8 +30,8 @@ function Container() {
         <nav>
           <Link to="/">Home</Link> | 
           <Link to="/Login">Login</Link> | 
-          <Link to="/RegisterCustomer">Register</Link> 
-          
+          <Link to="/RegisterCustomer">Register Customer</Link>|
+          <Link to="/EmployeeRegistration">Employee Registration</Link>
         </nav>
         <hr />
 
@@ -38,12 +40,14 @@ function Container() {
     <Route path="/" element={<Home />} />
     <Route path="/Login" element={<Login />} />
     <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
+    <Route path="/RegisterAgent" element={<RegisterAgent />} />
+    <Route path="/EmployeeRegistration" element={<EmployeeRegistration />} />
 
     <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
     <Route path="/AdminDashboard" element={<AdminDashboard />}/>
     <Route path="/PolicyListForAdmin" element={<PolicyListForAdmin />} />
-      <Route path="CustomerList" element={<CustomerList />}/>
-      <Route path="UserListForAdmin" element={<UserListForAdmin />} />
+      <Route path="/CustomerList" element={<CustomerList />}/>
+      <Route path="/UserListForAdmin" element={<UserListForAdmin />} />
       <Route path="/ResetPassword/:id" element={<ResetPassword />} />
       <Route path="/Profile" element={<Profile />}/>
       <Route path="/UpdateProfile" element={<UpdateProfile />}/>
@@ -52,6 +56,7 @@ function Container() {
       <Route path="/CancelPolicy" element={<CancelPolicy />}/>
       <Route path="/PolicyListInPremium" element={<PolicyListInPremium />}/>
       <Route path="/PayPremium" element={<PayPremium />}/>
+      <Route path="/PremiumHistory" element={<PremiumHistory />}/>
 
 </Routes>
       </BrowserRouter>

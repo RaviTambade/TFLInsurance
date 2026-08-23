@@ -6,6 +6,7 @@ exports.getAllUsers=(result)=>{
     // console.log("hello 3");
 };
 
+/*
 exports.getUserById = (id, result) => {
 
     connection.query(
@@ -23,6 +24,72 @@ exports.getUserById = (id, result) => {
         }
     );
 
+};*/
+
+exports.getUserById = (id, result) => {
+
+    const userSql = `
+        SELECT UserId, Username, Role, IsActive
+        FROM users
+        WHERE UserId = ?
+    `;
+
+    connection.query(userSql, [id], (err, users) => {
+
+        if (err) {
+            return result(err);
+        }
+
+        if (users.length === 0) {
+            return result(null, []);
+        }
+
+        const user = users[0];
+
+        if (user.Role === "Agent") {
+
+            const sql = `
+                SELECT users.UserId,
+                       users.Username,
+                       users.Role,
+                       users.IsActive,
+                       agents.AgentCode,
+                       agents.FullName,
+                       agents.Email,
+                       agents.MobileNumber,
+                       agents.Branch,
+                       agents.Designation
+                FROM users
+                INNER JOIN agents
+                    ON users.UserId = agents.UserId
+                WHERE users.UserId = ?
+            `;
+
+            connection.query(sql, [id], result);
+
+        }
+        else if (user.Role === "Customer") {
+
+            const sql = `
+                SELECT users.UserId,
+                       users.Username,
+                       users.Role,
+                       users.IsActive,
+                       customers.FirstName,
+                       customers.LastName,
+                       customers.Email
+                FROM users
+                INNER JOIN customers
+                    ON users.UserId = customers.UserId
+                WHERE users.UserId = ?
+            `;
+
+            connection.query(sql, [id], result);
+
+        }
+
+        // Add SalesPerson / AccountPerson here
+    });
 };
 
 exports.getUserCount = (result) => {

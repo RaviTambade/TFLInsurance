@@ -46,6 +46,9 @@ function PolicyListInPremium() {
         navigate("/PayPremium", { state: { policy } });
     };
 
+    const handlePaidPremiumList = (policy) => {
+        navigate("/PremiumHistory", {state:{policy}});
+    }
     return (
         <div className="container mt-5">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
@@ -77,6 +80,14 @@ function PolicyListInPremium() {
                                         <p className="mb-0"><strong className="me-2">Renewed:</strong>{policy.IsRenewed === "1" || policy.IsRenewed === 1 ? "Yes" : "No"}</p>
                                     </div>
                                     <div className="d-flex align-items-center">
+                                         <button
+                                            type="button"
+                                            className="btn btn-success"
+                                            onClick={() => handlePaidPremiumList(policy)}
+                                        >
+                                            Paid Premium List
+                                        </button>
+                                        
                                         <button
                                             type="button"
                                             className="btn btn-primary"

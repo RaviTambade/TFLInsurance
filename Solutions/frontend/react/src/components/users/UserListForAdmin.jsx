@@ -14,6 +14,9 @@ function UserListForAdmin() {
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
     const [selectedRole, setSelectedRole] = useState("Customer");
     const [feedback, setFeedback] = useState("");
+    
+    const navigate = useNavigate();
+    
     const [newUser, setNewUser] = useState({
         Username: "",
         Password: "",
@@ -21,7 +24,6 @@ function UserListForAdmin() {
         IsActive: true,
     });
 
-    const navigate = useNavigate();
 
     const openResetPasswordModal = (user) => {
         setSelectedUser(user);
@@ -519,7 +521,9 @@ function UserListForAdmin() {
                                     <strong>Name :</strong>{" "}
                                     {(selectedUserDetails.FirstName || "") +
                                         " " +
-                                        (selectedUserDetails.LastName || "")}
+                                        (selectedUserDetails.LastName || "") +
+                                         " " + 
+                                         (selectedUserDetails.FullName || "")} 
                                 </p>
 
                                 <p>

@@ -24,6 +24,10 @@ const Login = () => {
             });
 
             const result = await response.json();
+           /* if(result.IsActive !== 1) {
+                alert("Your account is inactive. Please contact support.");
+                return;
+            }*/
             const role = result.role || result.Role;
             const userId = result.userId || result.UserId || result.customerId || result.CustomerId || (result.user && (result.user.userId || result.user.UserId || result.user.customerId || result.user.CustomerId));
 
@@ -40,7 +44,7 @@ const Login = () => {
                 if (userId) {
                     localStorage.setItem("userId", userId.toString());
                 }
-
+                
                 alert("Login Successful");
 
                 switch (role) {
@@ -51,7 +55,7 @@ const Login = () => {
                         navigate("/employeeDashboard");
                         break;
                     case "Agent":
-                        navigate("/agentDashboard");
+                        navigate("/CustomerDashboard");
                         break;
                     case "Customer":
                         navigate("/CustomerDashboard");
@@ -75,7 +79,7 @@ const Login = () => {
                 <div className="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div className="card shadow-lg mx-auto" style={{ maxWidth: "520px" }}>
                         <div className="card-header bg-primary text-white text-center">
-                            <h3>Customer Login</h3>
+                            <h3>Login</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={onUserLogin}>

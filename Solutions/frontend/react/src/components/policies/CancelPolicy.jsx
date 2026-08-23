@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+//import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 
 function CancelPolicy() {
 
@@ -14,7 +14,21 @@ function CancelPolicy() {
    // const navigate = useNavigate();
 
   
-   
+    const loadPolicies = useCallback(async () => {
+
+                                    const response = await fetch(
+                                        `http://localhost:5000/api/policies/getPolicyByCustomerId/${customerId}`
+                                    );
+
+                                    const data = await response.json();
+
+                                    setPolicies(data);
+                                }, [customerId]);
+
+                        useEffect(() => {
+                            loadPolicies();
+                        }, [loadPolicies]);
+
  const deletePolicy = async (policyId) => {
 
 
@@ -31,23 +45,6 @@ function CancelPolicy() {
 
                             loadPolicies();   // Refresh table
                         };
-
-                        useEffect(() => {
-                            loadPolicies();
-                        }, []);
-
-
-    const loadPolicies = async () => {
-
-                                    const response = await fetch(
-                                        `http://localhost:5000/api/policies/getPolicyByCustomerId/${customerId}`
-                                    );
-
-                                    const data = await response.json();
-
-                                    setPolicies(data);
-                                };
-
 
                 return (
 

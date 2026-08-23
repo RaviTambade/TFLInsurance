@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 function AdminDashboard() {
 
@@ -8,152 +7,409 @@ function AdminDashboard() {
 
     const [customerCount, setCustomerCount] = useState(0);
     const [policyCount, setPolicyCount] = useState(0);
-    const [userCount, setUserCount] =useState(0);
+    const [userCount, setUserCount] = useState(0);
 
+    const [notifications, setNotifications] = useState([]);
+    const [unreadCount, setUnreadCount] = useState(0);
+    const [showNotifications, setShowNotifications] = useState(false);
+
+
+    // Load Customer Count
     useEffect(() => {
-
         loadCustomerCount();
-
     }, []);
 
-    useEffect(() => {
 
+    // Load Policy Count
+    useEffect(() => {
         loadPolicyCount();
-
     }, []);
 
+
+    // Load User Count
     useEffect(() => {
-
         loadUserCount();
+    }, []);
 
+
+    // Load Notifications
+    useEffect(() => {
+        loadNotifications();
     }, []);
 
 
     const loadCustomerCount = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/customers/count"
+            );
 
-        const response = await fetch(
-            "http://localhost:5000/api/customers/count"
-        );
+            const data = await response.json();
 
-        const data = await response.json();
-          console.log(data); 
-        setCustomerCount(data.count);
-      
+            setCustomerCount(data.count);
+
+        } catch (error) {
+            console.error("Error loading customer count:", error);
+        }
     };
 
+
     const loadPolicyCount = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/policies/count"
+            );
 
-        const response = await fetch(
-            "http://localhost:5000/api/policies/count"
-        );
+            const data = await response.json();
 
-        const data = await response.json();
-          console.log(data); 
-        setPolicyCount(data.count);
-      };
+            setPolicyCount(data.count);
+
+        } catch (error) {
+            console.error("Error loading policy count:", error);
+        }
+    };
+
 
     const loadUserCount = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/users/count"
+            );
 
-        const response = await fetch(
-            "http://localhost:5000/api/users/count"
-        );
+            const data = await response.json();
 
-        const data = await response.json();
-          console.log(data); 
-        setUserCount(data.count);
-      };
+            setUserCount(data.count);
+
+        } catch (error) {
+            console.error("Error loading user count:", error);
+        }
+    };
+
+
+    const loadNotifications = async () => {
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/notifications"
+            );
+
+            const data = await response.json();
+
+            console.log("Notifications:", data);
+
+            if (data.success) {
+
+                setNotifications(data.notifications);
+
+                const unread = data.notifications.filter(
+                    notification => Number(notification.IsRead) === 0
+                ).length;
+
+                setUnreadCount(unread);
+            }
+
+        } catch (error) {
+            console.error("Error loading notifications:", error);
+        }
+    };
+
 
     return (
 
         <div className="container-fluid">
 
-            {/* Header */}
+            {/* ================= HEADER ================= */}
 
-            <div className="bg-primary text-white p-3">
+            <div className="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
 
-                <h2>TFL Insurance Management System</h2>
+                <div>
 
-                <h5>Welcome Admin</h5>
+                    <h2 className="mb-1">
+                        TFL Insurance Management System
+                    </h2>
 
-            </div>
+                    <h5 className="mb-0">
+                        Welcome Admin
+                    </h5>
 
-                <div className="card shadow text-center h-100">
+                </div>
 
-                    <div className="container mt-4">
 
-                        <h3>Admin Dashboard</h3>
+                {/* ================= NOTIFICATION ================= */}
 
-                        <hr />
+                <div className="position-relative">
 
-                        <div className="row">
+                    <button
+                        type="button"
+                        className="btn btn-light position-relative"
+                        onClick={() =>
+                            setShowNotifications(!showNotifications)
+                        }
+                    >
 
-                            <div className="col-md-3 mb-3">
+                        🔔
 
-                                <div className="card bg-maroon-soft text-dark">
+                        {unreadCount > 0 && (
 
-                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/CustomerList") }>
-                                        <h5>Total Customers</h5>
-                                        <h2>{customerCount}</h2>
-                                    </button>
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 
-                                </div>
+                                {unreadCount}
+
+                            </span>
+
+                        )}
+
+                    </button>
+
+
+                    {/* Notification Dropdown */}
+
+                    {showNotifications && (
+
+                        <div
+                            className="position-absolute end-0 mt-2 bg-white text-dark shadow rounded"
+                            style={{
+                                width: "320px",
+                                maxHeight: "400px",
+                                overflowY: "auto",
+                                zIndex: 1000
+                            }}
+                        >
+
+                            {/* Notification Header */}
+
+                            <div className="p-2 border-bottom d-flex justify-content-between align-items-center">
+
+                                <strong>
+                                    Notifications
+                                </strong>
+
+                                <button
+                                    className="btn btn-sm btn-link p-0"
+                                    onClick={() =>
+                                        setUnreadCount(0)
+                                    }
+                                >
+                                    Mark all read
+                                </button>
 
                             </div>
 
-                            <div className="col-md-3 mb-3">
 
-                                <div className="card bg-maroon-light text-dark">
+                            {/* Notification List */}
 
-                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/PolicyListForAdmin") }>
-                                        <h5>Total Policies</h5>
-                                        <h2>{policyCount}</h2>
-                                    </button>
+                            {notifications.length === 0 ? (
 
-                                </div>
+                                <div className="p-3 text-center text-muted small">
 
-                            </div>
-
-                            <div className="col-md-3 mb-3">
-
-                                <div className="card bg-maroon-light text-dark">
-
-                                    <button type="button" className="btn btn-link-maroon text-start w-100 p-4" onClick={() => navigate("/UserListForAdmin") }>
-                                        <h5>Total Users</h5>
-                                        <h2>{userCount}</h2>
-                                    </button>
+                                    No notifications
 
                                 </div>
 
-                            </div>
+                            ) : (
 
-                            <div className="col-md-3 mb-3">
+                                notifications.map((notification) => (
 
-                                <div className="card bg-maroon-strong text-white">
+                                    <div
+                                        key={notification.NotificationId}
+                                        className="px-3 py-2 border-bottom"
+                                    >
 
-                                    <div className="card-body p-4">
+                                        <div className="fw-semibold small">
 
-                                        <h5>Premium Collection</h5>
+                                            {notification.Type === "Agent"}
+                                            {notification.Type === "SalesPerson"}
+                                            {notification.Type === "AccountPerson"}
 
-                                        <h2>₹35L</h2>
+                                            {notification.Title}
+
+                                        </div>
+
+
+                                        <div className="text-muted small">
+
+                                            {notification.Message}
+
+                                        </div>
+
+
+                                        <small className="text-secondary">
+
+                                            {new Date(
+                                                notification.CreatedAt
+                                            ).toLocaleString()}
+
+                                        </small>
 
                                     </div>
 
-                                </div>
+                                ))
+
+                            )}
+
+
+                            {/* View All */}
+
+                            <div className="p-2 text-center">
+
+                                <button
+                                    className="btn btn-sm btn-link"
+                                    onClick={() =>
+                                        navigate("/Notifications")
+                                    }
+                                >
+
+                                    View All Notifications →
+
+                                </button>
 
                             </div>
 
                         </div>
 
-                        <br />
+                    )}
 
-                       
+                </div>
+
+            </div>
+
+
+            {/* ================= DASHBOARD ================= */}
+
+            <div className="card shadow text-center h-100">
+
+                <div className="container mt-4">
+
+                    <h3>
+                        Admin Dashboard
+                    </h3>
+
+                    <hr />
+
+
+                    <div className="row">
+
+
+                        {/* Customer Card */}
+
+                        <div className="col-md-3 mb-3">
+
+                            <div className="card bg-maroon-soft text-dark">
+
+                                <button
+                                    type="button"
+                                    className="btn btn-link-maroon text-start w-100 p-4"
+                                    onClick={() =>
+                                        navigate("/CustomerList")
+                                    }
+                                >
+
+                                    <h5>
+                                        Total Customers
+                                    </h5>
+
+                                    <h2>
+                                        {customerCount}
+                                    </h2>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Policy Card */}
+
+                        <div className="col-md-3 mb-3">
+
+                            <div className="card bg-maroon-light text-dark">
+
+                                <button
+                                    type="button"
+                                    className="btn btn-link-maroon text-start w-100 p-4"
+                                    onClick={() =>
+                                        navigate("/PolicyListForAdmin")
+                                    }
+                                >
+
+                                    <h5>
+                                        Total Policies
+                                    </h5>
+
+                                    <h2>
+                                        {policyCount}
+                                    </h2>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* User Card */}
+
+                        <div className="col-md-3 mb-3">
+
+                            <div className="card bg-maroon-light text-dark">
+
+                                <button
+                                    type="button"
+                                    className="btn btn-link-maroon text-start w-100 p-4"
+                                    onClick={() =>
+                                        navigate("/UserListForAdmin")
+                                    }
+                                >
+
+                                    <h5>
+                                        Total Users
+                                    </h5>
+
+                                    <h2>
+                                        {userCount}
+                                    </h2>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Premium Card */}
+
+                        <div className="col-md-3 mb-3">
+
+                            <div className="card bg-maroon-strong text-white">
+
+                                <div className="card-body p-4">
+
+                                    <h5>
+                                        Premium Collection
+                                    </h5>
+
+                                    <h2>
+                                        ₹35L
+                                    </h2>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
                     </div>
 
+                    <br />
+
                 </div>
+
+            </div>
+
+        </div>
 
     );
 }
+
 export default AdminDashboard;
